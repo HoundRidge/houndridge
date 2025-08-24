@@ -1,0 +1,20 @@
+uuid: 26946da9-9d64-4152-ae01-2426a71d1ede
+langcode: en
+status: true
+dependencies:
+  theme:
+    - houndridgeb5
+_core:
+  default_config_hash: MV6Gbw_Nr5y184J68yvLQhR3jJARw_HiVWUCdZYVXeA
+id: houndridgeb5_local_actions
+theme: houndridgeb5
+region: content
+weight: -2
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

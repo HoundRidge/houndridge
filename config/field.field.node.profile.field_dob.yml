@@ -1,0 +1,21 @@
+uuid: 5783590f-a336-48a9-8457-4e6bbb6edf5d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_dob
+    - node.type.profile
+  module:
+    - datetime
+id: node.profile.field_dob
+field_name: field_dob
+entity_type: node
+bundle: profile
+label: DOB
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

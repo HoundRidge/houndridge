@@ -1,0 +1,22 @@
+uuid: 70478f90-b944-4b42-9f15-9ceb74ee74c7
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - houndridgeb5
+_core:
+  default_config_hash: QQk4eCU4A3tSM9hNAEtIrQ7AcbSH1erBz3fiGbawHJw
+id: houndridgeb5_breadcrumbs
+theme: houndridgeb5
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

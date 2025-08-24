@@ -1,0 +1,20 @@
+uuid: f8a4ab2e-cfa0-404e-bf4e-60b5da5cd3d9
+langcode: en
+status: true
+dependencies:
+  theme:
+    - houndridgeb5
+_core:
+  default_config_hash: duZt3P0tJEXADq6cbBn7IwnhrMdp9WlWEXwZCrcmqqk
+id: houndridgeb5_page_title
+theme: houndridgeb5
+region: content
+weight: -6
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

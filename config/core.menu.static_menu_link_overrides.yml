@@ -1,0 +1,75 @@
+_core:
+  default_config_hash: jdY7AU0tU-QsjmiOw3W8vwpYMb-By--_MSFgbqKUTYM
+definitions:
+  announcements_feed__announcement:
+    menu_name: admin
+    parent: system.admin
+    weight: 0
+    expanded: false
+    enabled: false
+  navigation_extra_tools__flush__help:
+    weight: -8
+    menu_name: admin
+    parent: navigation_extra_tools.help
+    enabled: true
+    expanded: false
+  navigation_extra_tools__css_js:
+    weight: -9
+    parent: navigation_extra_tools.help
+    menu_name: admin
+    expanded: false
+    enabled: true
+  'navigation_extra_tools__extra_links:project_browser':
+    weight: -7
+    menu_name: admin
+    parent: navigation_extra_tools.help
+    expanded: false
+    enabled: true
+  navigation_extra_tools__run_cron:
+    weight: -6
+    menu_name: admin
+    parent: navigation_extra_tools.help
+    expanded: false
+    enabled: true
+  navigation_extra_tools__db_update:
+    weight: -5
+    menu_name: admin
+    parent: navigation_extra_tools.help
+    expanded: false
+    enabled: true
+  navigation__content__node_type__page:
+    enabled: true
+    menu_name: content
+    parent: navigation.create
+    expanded: false
+    weight: -50
+  navigation__content__node_type__blog:
+    weight: -48
+    enabled: false
+    menu_name: content
+    parent: navigation.create
+    expanded: false
+  navigation__content__node_type__profile:
+    weight: -47
+    menu_name: content
+    parent: navigation.create
+    expanded: false
+    enabled: true
+  navigation__content__media_type__document:
+    weight: -46
+    menu_name: content
+    parent: navigation.create
+    expanded: false
+    enabled: true
+  navigation__content__media_type__image:
+    weight: -45
+    menu_name: content
+    parent: navigation.create
+    expanded: false
+    enabled: true
+  navigation__create__user:
+    weight: -44
+    menu_name: content
+    parent: navigation.create
+    expanded: false
+    enabled: true

@@ -1,0 +1,20 @@
+uuid: ce9f9841-bc04-4bcb-8a16-dd344b1953ba
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_died
+field_name: field_died
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

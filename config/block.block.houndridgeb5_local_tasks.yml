@@ -1,0 +1,22 @@
+uuid: 452e428e-8578-4900-b7f7-3d8931e22e9c
+langcode: en
+status: true
+dependencies:
+  theme:
+    - houndridgeb5
+_core:
+  default_config_hash: 9YOfLo1Gp557vZgE4jkLd7njh2hioSMlXN1CPT0WQDY
+id: houndridgeb5_local_tasks
+theme: houndridgeb5
+region: content
+weight: -3
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: true
+visibility: {  }

@@ -1,0 +1,23 @@
+uuid: be7b4a80-cff1-4b73-8f39-7da4dd177f90
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pedigree
+    - node.type.profile
+  module:
+    - link
+id: node.profile.field_pedigree
+field_name: field_pedigree
+entity_type: node
+bundle: profile
+label: Pedigree
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 17
+field_type: link

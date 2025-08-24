@@ -1,0 +1,29 @@
+uuid: c774a33c-3c41-4a41-a545-a55837384f9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.our_hounds
+  module:
+    - system
+    - views
+  theme:
+    - houndridgeb5
+id: houndridgeb5_views_block__our_hounds_wolfhounds_block
+theme: houndridgeb5
+region: content
+weight: -1
+provider: null
+plugin: 'views_block:our_hounds-wolfhounds_block'
+settings:
+  id: 'views_block:our_hounds-wolfhounds_block'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /irish-wolfhounds

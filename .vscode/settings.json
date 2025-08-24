@@ -1,0 +1,9 @@
+{
+    "liveSassCompile.settings.excludeList": [
+        "/**/node_modules/**",
+        "/.vscode/**",
+        "/web/themes/contrib"
+    ],
+    "liveSassCompile.settings.savePath": "~/web/themes/custom/houndridgeb5/css/",
+    "liveSassCompile.settings.showAnnouncements": false
+}

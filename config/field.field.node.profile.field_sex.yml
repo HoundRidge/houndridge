@@ -1,0 +1,21 @@
+uuid: bcffd774-4a60-4a29-b149-32dbd59aa79f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sex
+    - node.type.profile
+  module:
+    - options
+id: node.profile.field_sex
+field_name: field_sex
+entity_type: node
+bundle: profile
+label: Sex
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,261 @@
+// Hound Ridge customizations
+
+/* Color Theme Swatches Autumn-sunrise-in-the-rocky-mountains-of-British-Columbia in RGBA */
+$dk-blue: rgba(65,111,140, 1);
+$lt-blue: rgba(128,167,191, 1);
+$dk-green: rgba(101,114,81, 1);
+$dk-orange: rgba(165,110,62, 1);
+$lt-orange: rgba(216,162,114, 1);
+
+p, body {
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 87.5;
+  line-height: 1.75em;
+}
+
+a {
+  text-decoration: none;
+  color: $dk-blue;
+  font-weight: bold;
+  :hover {
+    text-decoration: underline;
+  }
+ }
+
+.toolbar-horizontal {
+  .navbar-brand img {
+    //margin-top: 80px;
+  }
+}
+.container, .container-fluid {
+  max-width: 1120px;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+.navbar-brand img {
+  margin: 1.5em 0 0 1.5em;
+  height: 140px;
+  z-index: 9;
+}
+a.active.dropdown-item.is-active {
+  background-color: $gray-600;
+  color: #ffffff;
+}
+h1.path-frontpage {
+  margin-top: 2em;
+}
+h1, h2, h3 {
+  font-family: "Noto Serif Display", serif;
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 65;
+  text-align: left;
+  letter-spacing: -0.035em;
+  line-height: 1.0em;
+//color: #a89052;
+  color: $dk-green;
+  a {
+   text-decoration: none;
+   color: #000000;
+   font-weight: normal;
+  }
+  &.teasertitle {
+    font-size: 1.5em;
+  }
+}
+main {
+  p:not(.view-header), h2, h3, h4, h5, h6, ul, ol:not(.breadcrumb), .node__links, .field--name-field-call-name, .field--name-field-sex, .field--name-field-dob, .field--name-field-pedigree, .comment-wrapper {
+    @media (min-width: 992px) {
+      width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }  
+  .node--view-mode-teaser, .node--view-mode-card {
+    margin-bottom: .5em;
+    h2 {
+      width: 100%;
+      font-size: 1.75rem;
+      font-size: 1.5em;
+      a::after {
+        content: "»";
+        color: $gray-500;
+      }
+   }
+  }
+}
+header {
+  height: 600px;
+  background: rgba(0, 0, 0, 0.5);
+  margin-bottom: 1em;
+}
+#block-nonfrontpageheader {
+  //background: rgba(0, 0, 0, 0.7);
+  height: 200px;
+}
+#block-houndridgeb5-branding {
+  position: relative;
+  top: 2em;
+  left: 2em;
+  //z-index: 999;
+}
+.site-title {
+  display: none;
+}
+// Main Menu
+.navbar {
+  background: rgba(210, 210, 210, 1);
+  margin-top: 30px;
+  padding: 0;
+  //margin-bottom: 2em;
+  .justify-content-md-end {
+    justify-content: flex-start !important;
+  }
+  ul.navbar-nav {
+    li.nav-item {
+      font-size: 1.1em;
+      padding-right: 1em;
+      a {
+        padding-right: 3em;
+        color: #000;
+        //font-size: 1.25em;
+      }
+      a:hover {
+        background: #000;
+        color: #fff;
+      }
+      a:active, a:target {
+        background: #000 !important;
+        color: #fff;
+      }
+    }
+  }
+}
+main {
+  margin: 0 auto 3em;
+}
+div.media--view-mode-hero {
+  @media (min-width: 992px) {
+    width: 130%;
+    margin-left: -15%;
+    margin-bottom: 2em;
+   }
+}
+
+footer {
+  background: rgba(0, 0, 0, 0.25);
+  background: #ccc;
+  //margin-top: 100px;
+}
+.feature {
+  width: 100%;
+  overflow: hidden;
+  :hover {
+    transition: transform 2s;
+    transform: scale(1.2);
+  }
+}
+
+
+.field--name-field-description, .node--view-mode-card .field--name-field-content p {
+  font-size: .9em;
+  line-height: 1.1em;
+  font-style: italic;
+  width: 100%;
+  }
+.block-views-blockgallery-block-1, #views-bootstrap-gallery-gallery-page, .path-gallery {
+  .media {
+    margin-bottom: 1.25em;
+  }
+  .gallery-title {
+    line-height: 1.1em !important;
+    font-family: "Noto Serif Display";
+    font-weight: 200 !important;
+    text-align: left;
+    width: 100%;
+    margin: 0.2em 0 1em 0;
+    a {
+      font-weight: 200 !important;
+    }
+  }
+  .gallery-link {
+  font-size: .9em;
+  line-height: 1em !important;
+  margin: 0 0 1em;
+  }
+  .gallery-pix {
+  margin: 1em 0 0;
+  }
+  .form-type-radio {
+    @extend .btn;
+    @extend .btn-secondary;
+    @extend .btn-sm;
+  }
+}
+#edit-comment-body-0-format {
+  display: none;
+}
+.comment-wrapper {
+  width: 100%;
+}
+.comment {
+  line-height: 1.2em;
+  .field--name-comment-body {
+    padding-left: 1.5em;
+    font-style: italic;
+    font-size: 1.2em;
+  }
+  footer {
+    background-color: #fff;
+    padding: 0;
+  }
+  h3 {
+    display: none;
+  }
+}
+.homefeed {
+  .feature-img {
+    float: left;
+  }
+}
+.align-left {
+  margin-right: 1em;
+}
+// Our Hounds
+.view-our-hounds, #views-bootstrap-our-hounds-deerhounds-block, #views-bootstrap-our-hounds-wolfhounds-block, #views-bootstrap-latest-latest {
+  display: flex;
+  .node--view-mode-teaser h2, .node--view-mode-card h2 {
+    height: 80px;
+    display:flex;
+    align-items: end;
+  }
+}
+// Hound Profile customization
+  .page-node-type-profile {
+    .field--name-field-content p:nth-child(1) {
+      border-top: 2px solid $gray-400;
+      padding-top: .5em;
+    }
+}
+
+blockquote p {
+  font-family: "Noto Serif", serif !important;
+  font-style: italic;
+  font-weight: 400;  
+  font-size: 2em;
+  line-height: 1.25em;
+  color: $dk-green;
+  border-top: solid 2px $gray-300;
+  border-bottom: solid 2px $gray-300;
+  background-color: $gray-100;
+  padding: .5em 1em;
+  width: 70%;
+  float: right;
+  margin-left: 1em;
+}
+.region-footer p {
+  line-height: 2.0em;
+  margin-bottom: 0;
+}

@@ -1,0 +1,24 @@
+uuid: 27c8eabe-d79a-408e-9322-e130e535bb89
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content
+    - filter.format.content_format
+    - node.type.profile
+  module:
+    - text
+id: node.profile.field_content
+field_name: field_content
+entity_type: node
+bundle: profile
+label: Biography
+description: 'The content of this page.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - content_format
+field_type: text_long

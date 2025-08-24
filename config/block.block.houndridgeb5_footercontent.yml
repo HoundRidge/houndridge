@@ -1,0 +1,25 @@
+uuid: f36cbf0f-010d-44b6-b215-ffcfc9235962
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic_block:addfb121-2355-483c-8676-911f780cd09b'
+  module:
+    - block_content
+  theme:
+    - houndridgeb5
+id: houndridgeb5_footercontent
+theme: houndridgeb5
+region: footer
+weight: 0
+provider: null
+plugin: 'block_content:addfb121-2355-483c-8676-911f780cd09b'
+settings:
+  id: 'block_content:addfb121-2355-483c-8676-911f780cd09b'
+  label: 'Footer Content'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

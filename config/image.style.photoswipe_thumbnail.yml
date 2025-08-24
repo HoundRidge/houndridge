@@ -1,0 +1,17 @@
+uuid: a3943e38-9f42-48d0-805b-2380492d9ad0
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: photoswipe_thumbnail
+label: 'Photoswipe Thumbnail'
+effects:
+  1123c50b-0acb-4834-9d93-65c82ed26a48:
+    uuid: 1123c50b-0acb-4834-9d93-65c82ed26a48
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 300
+      height: 300
+      crop_type: focal_point

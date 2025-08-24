@@ -1,0 +1,85 @@
+uuid: 18ce257c-468c-46da-ad40-423fa518f300
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.profile.field_call_name
+    - field.field.node.profile.field_content
+    - field.field.node.profile.field_died
+    - field.field.node.profile.field_dob
+    - field.field.node.profile.field_featured_image
+    - field.field.node.profile.field_pedigree
+    - field.field.node.profile.field_sex
+    - field.field.node.profile.field_site_section
+    - node.type.profile
+  module:
+    - datetime
+    - link
+    - options
+    - text
+    - user
+id: node.profile.default
+targetEntityType: node
+bundle: profile
+mode: default
+content:
+  field_call_name:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_content:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_dob:
+    type: datetime_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: html_date
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_featured_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_pedigree:
+    type: link
+    label: inline
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_sex:
+    type: list_default
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+hidden:
+  field_died: true
+  field_site_section: true

@@ -1,0 +1,52 @@
+uuid: 15421d8a-985e-4045-855f-6c190ecf164e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.card
+    - field.field.node.profile.field_call_name
+    - field.field.node.profile.field_content
+    - field.field.node.profile.field_died
+    - field.field.node.profile.field_dob
+    - field.field.node.profile.field_featured_image
+    - field.field.node.profile.field_pedigree
+    - field.field.node.profile.field_sex
+    - field.field.node.profile.field_site_section
+    - node.type.profile
+  module:
+    - text
+    - user
+id: node.profile.card
+targetEntityType: node
+bundle: profile
+mode: card
+content:
+  field_content:
+    type: text_trimmed
+    label: hidden
+    settings:
+      trim_length: 220
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_featured_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: 16_9_medium
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  field_call_name: true
+  field_died: true
+  field_dob: true
+  field_pedigree: true
+  field_sex: true
+  field_site_section: true

@@ -1,0 +1,29 @@
+uuid: bb95f2b2-58ae-475b-8188-ecac12a1173c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_site_section
+    - node.type.profile
+    - taxonomy.vocabulary.site_section
+id: node.profile.field_site_section
+field_name: field_site_section
+entity_type: node
+bundle: profile
+label: Breed
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      site_section: site_section
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

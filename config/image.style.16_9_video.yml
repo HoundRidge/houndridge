@@ -1,0 +1,15 @@
+uuid: 6091e6f6-2a9c-444c-a13e-3f887cbae229
+langcode: en
+status: true
+dependencies: {  }
+name: 16_9_video
+label: '16:9 Video'
+effects:
+  96fd5745-f09c-4a78-91ff-41c102654278:
+    uuid: 96fd5745-f09c-4a78-91ff-41c102654278
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1920
+      height: 1080
+      anchor: center-center

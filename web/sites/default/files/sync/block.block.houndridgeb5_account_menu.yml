@@ -1,0 +1,27 @@
+uuid: 990a1b3a-3748-48cc-bb35-4d914a512160
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - houndridgeb5
+_core:
+  default_config_hash: 9cCJzfm8PuLJ_7zGwSCwli2KhN5boDm43zZWsU577ys
+id: houndridgeb5_account_menu
+theme: houndridgeb5
+region: nav_additional
+weight: -7
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

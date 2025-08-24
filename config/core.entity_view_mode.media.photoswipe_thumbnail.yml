@@ -1,0 +1,11 @@
+uuid: df7f3544-eca2-4659-b7e7-ae88777ccd55
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.photoswipe_thumbnail
+label: 'Photoswipe Thumbnail'
+description: null
+targetEntityType: media
+cache: true

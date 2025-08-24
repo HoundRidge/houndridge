@@ -1,0 +1,22 @@
+uuid: 49bc90f7-13fb-475b-b321-69a052ea9f93
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - houndridgeb5
+_core:
+  default_config_hash: 5HyPKzomMPdAA7VyU7mczvhTQ-DgwE3BXeckYFsve1o
+id: houndridgeb5_content
+theme: houndridgeb5
+region: content
+weight: 1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

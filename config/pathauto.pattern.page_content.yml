@@ -1,0 +1,27 @@
+uuid: 4945ac89-906c-4a3b-8129-ff02bfd92e0d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  enforced:
+    config:
+      - node.type.page
+_core:
+  default_config_hash: ufS9yFb1v8YrfiIRN4steBSrb1NQGxkfZLSUls3rWU4
+id: page_content
+label: 'Page content'
+type: 'canonical_entities:node'
+pattern: '/[node:field_site_section]/[node:title]'
+selection_criteria:
+  5a35647a-4e17-4ac7-acf2-c82b35769d3c:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 5a35647a-4e17-4ac7-acf2-c82b35769d3c
+    context_mapping:
+      node: node
+    bundles:
+      page: page
+selection_logic: and
+weight: -5
+relationships: {  }
