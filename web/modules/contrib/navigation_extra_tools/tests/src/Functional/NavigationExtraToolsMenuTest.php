@@ -56,8 +56,7 @@ final class NavigationExtraToolsMenuTest extends BrowserTestBase {
    */
   public function testToolsMenu(): void {
     // Test for tools menu.
-    $this->assertSession()->responseContains('class="toolbar-button toolbar-button--icon--navigation-extra-tools-help toolbar-button--expand--side toolbar-button--collapsible toolbar-popover__control"');
-    $this->assertSession()->elementExists('xpath', '//button[contains(@class, "toolbar-button--icon--navigation-extra-tools-help")]/span[text() = "Tools"]');
+    $this->assertSession()->elementExists('xpath', '//button[contains(@class, "toolbar-button--icon--navigation-extra-tools-help") or contains(@class, "toolbar-button--icon--wrench")]/span[text() = "Tools"]');
     // Test for flush all caches menu option.
     $this->assertSession()->elementExists('xpath', '//li[contains(@class, "toolbar-menu__item--level-1")]/a[contains(@class, "toolbar-button")]/span[text() = "Flush all caches"]');
     // Test for flush individual caches submenu.

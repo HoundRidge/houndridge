@@ -5,6 +5,10 @@ navigation_extra_tools.help:
   menu_name: admin
   parent: system.admin
   weight: -100
+  options:
+    icon:
+      pack_id: navigation_extra_tools
+      icon_id: wrench
 
 navigation_extra_tools.flush:
   title: 'Flush all caches'

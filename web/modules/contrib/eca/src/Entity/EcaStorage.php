@@ -10,6 +10,7 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\ai\Service\FunctionCalling\FunctionCallPluginManager;
 use Drupal\field_widget_actions\PluginManager\FieldWidgetActionManager;
+use Random\RandomException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -95,7 +96,7 @@ class EcaStorage extends ConfigEntityStorage {
       try {
         $sleep = random_int(1000, 50000);
       }
-      catch (\Exception) {
+      catch (\Exception | RandomException) {
         $sleep = 2500;
       }
       usleep($sleep);

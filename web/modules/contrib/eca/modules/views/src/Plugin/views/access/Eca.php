@@ -44,7 +44,7 @@ class Eca extends AccessPluginBase implements CacheableDependencyInterface {
    * {@inheritdoc}
    */
   public function access(AccountInterface $account): bool {
-    $result = AccessResult::forbidden();
+    $result = AccessResult::forbidden("No ECA configuration set an access result");
     $event = $this->triggerEvent->dispatchFromPlugin('eca_views:access', $this->view, $account);
     if ($event instanceof AccessEventInterface) {
       $result = $event->getAccessResult();
@@ -55,9 +55,7 @@ class Eca extends AccessPluginBase implements CacheableDependencyInterface {
   /**
    * {@inheritdoc}
    */
-  public function alterRouteDefinition(Route $route): void {
-    $route->setRequirement('_eca_views_access_check', 'TRUE');
-  }
+  public function alterRouteDefinition(Route $route): void {}
 
   /**
    * {@inheritdoc}

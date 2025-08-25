@@ -10,6 +10,10 @@ Functions available:
 - Run cron
 - Run database updates
 
+If the [Devel](https://www.drupal.org/project/devel) module is installed, a
+Development menu will be added under Tools. This can be configured by the Devel
+Toolbar Settings page.
+
 ## REQUIREMENTS
 
 This module requires the core Navigation module to be enabled.
@@ -20,7 +24,19 @@ Install as you would normally install a contributed Drupal module.
 
 ## CONFIGURATION
 
-No configuration is required.
+Currently no configuration in this module, but if Devel module enabled, will
+show a development menu that can be configured in:
+
+/admin/config/development/devel/toolbar
+
+In Admin Toolbar Extra Tools, this list was hard coded. So the configurable list
+initializes to the same items for consistency.
+
+Note that the module adds new permissions, so users must be granted permission
+to see parts of the Tools menu.
+
+- Access navigation extra tools: cache flushing
+- Access navigation extra tools: cron
 
 ## IMAGE CREDITS
 
@@ -33,4 +49,3 @@ Project logo designed by James Shields using [Inkscape](https://inkscape.org/), 
 Current maintainers for Drupal 10 and 11:
 
 - [James Shields (lostcarpark)](https://www.drupal.org/u/lostcarpark)
-

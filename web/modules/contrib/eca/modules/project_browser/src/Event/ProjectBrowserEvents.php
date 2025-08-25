@@ -12,6 +12,6 @@ class ProjectBrowserEvents {
    *
    * @var string
    */
-  const SOURCE_INFO_ALTER = 'source_info_alter';
+  const string SOURCE_INFO_ALTER = 'source_info_alter';
 
 }

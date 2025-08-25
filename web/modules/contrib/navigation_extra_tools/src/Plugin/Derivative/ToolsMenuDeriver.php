@@ -7,6 +7,8 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeHandlerInterface;
+use Drupal\Core\Menu\MenuLinkTreeInterface;
+use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -30,6 +32,7 @@ class ToolsMenuDeriver extends DeriverBase implements ContainerDeriverInterface 
     protected ThemeHandlerInterface $themeHandler,
     protected ConfigFactoryInterface $configFactory,
     protected AccountInterface $currentUser,
+    protected MenuLinkTreeInterface $menuLinkTree,
   ) {
   }
 
@@ -43,7 +46,8 @@ class ToolsMenuDeriver extends DeriverBase implements ContainerDeriverInterface 
       $container->get('router.route_provider'),
       $container->get('theme_handler'),
       $container->get('config.factory'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('menu.link_tree'),
     );
   }
 
@@ -55,6 +59,13 @@ class ToolsMenuDeriver extends DeriverBase implements ContainerDeriverInterface 
 
     // If module Devel is enabled.
     if ($this->moduleHandler->moduleExists('devel')) {
+
+      // Load devel menu options configured by the devel module form
+      // admin/config/development/devel/toolbar.
+      $parameters = new MenuTreeParameters();
+      $parameters->onlyEnabledLinks()->setTopLevelOnly();
+      $develMenuTree = $this->menuLinkTree->load('devel', $parameters);
+
       $links['devel'] = [
         'title' => $this->t('Development'),
         'description' => 'Development functions provided by the Devel module.',
@@ -62,67 +73,28 @@ class ToolsMenuDeriver extends DeriverBase implements ContainerDeriverInterface 
         'parent' => 'navigation_extra_tools.help',
         'weight' => '-8',
       ] + $base_plugin_definition;
-      $links['devel.admin_settings'] = [
-        'title' => $this->t('Devel settings'),
-        'route_name' => 'devel.admin_settings',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-31',
-      ] + $base_plugin_definition;
-      $links['devel.configs_list'] = [
-        'title' => $this->t('Config editor'),
-        'route_name' => 'devel.configs_list',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-30',
-      ] + $base_plugin_definition;
-      $links['devel.reinstall'] = [
-        'title' => $this->t('Reinstall modules'),
-        'route_name' => 'devel.reinstall',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-29',
-      ] + $base_plugin_definition;
-      $links['devel.menu_rebuild'] = [
-        'title' => $this->t('Rebuild menu'),
-        'route_name' => 'devel.menu_rebuild',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-28',
-      ] + $base_plugin_definition;
-      $links['devel.state_system_page'] = [
-        'title' => $this->t('State editor'),
-        'route_name' => 'devel.state_system_page',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-27',
-      ] + $base_plugin_definition;
-      $links['devel.theme_registry'] = [
-        'title' => $this->t('Theme registry'),
-        'route_name' => 'devel.theme_registry',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-26',
-      ] + $base_plugin_definition;
-      $links['devel.entity_info_page'] = [
-        'title' => $this->t('Entity info'),
-        'route_name' => 'devel.entity_info_page',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-25',
-      ] + $base_plugin_definition;
-      $links['devel.session'] = [
-        'title' => $this->t('Session viewer'),
-        'route_name' => 'devel.session',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-24',
-      ] + $base_plugin_definition;
-      $links['devel.element_info'] = [
-        'title' => $this->t('Element Info'),
-        'route_name' => 'devel.elements_page',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-23',
-      ] + $base_plugin_definition;
-      // Menu link for the Toolbar module.
-      $links['devel.toolbar.settings'] = [
-        'title' => $this->t('Devel Toolbar Settings'),
-        'route_name' => 'devel.toolbar.settings_form',
-        'parent' => $base_plugin_definition['id'] . ':devel',
-        'weight' => '-22',
-      ] + $base_plugin_definition;
+
+      foreach ($develMenuTree as $key => $element) {
+        // Add by default in tools menu.
+        if ($key == 'devel.cache_clear' || $key == 'devel.run_cron') {
+          continue;
+        }
+
+        // Add only if the link is selected in Devel Toolbar settings.
+        $develToolbarConfig = $this->configFactory->get('devel.toolbar.settings');
+        if (!$develToolbarConfig->get('toolbar_items') || !in_array($key, $develToolbarConfig->get('toolbar_items'))) {
+          continue;
+        }
+
+        $link = $element->link;
+        $links[$key] = [
+          'title' => $link->getTitle(),
+          'route_name' => $link->getRouteName(),
+          'parent' => $base_plugin_definition['id'] . ':devel',
+          'weight' => $link->getWeight(),
+        ] + $base_plugin_definition;
+      }
+
       if ($this->moduleHandler->moduleExists('webprofiler')) {
         $links['devel.webprofiler'] = [
           'title' => $this->t('Webprofiler settings'),
