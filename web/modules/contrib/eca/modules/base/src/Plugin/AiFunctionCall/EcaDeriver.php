@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\eca\Plugin\AiFunctionCall;
+namespace Drupal\eca_base\Plugin\AiFunctionCall;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Component\Serialization\Yaml;
@@ -67,22 +67,25 @@ final class EcaDeriver extends DeriverBase implements ContainerDeriverInterface 
         ] + $base_plugin_definition;
         $arguments = Yaml::decode($ecaEvent->getConfiguration()['arguments']) ?? [];
         foreach ($arguments as $name => $argument) {
+          if (!isset($argument['data_type'])) {
+            continue;
+          }
           if (str_starts_with($argument['data_type'], 'entity:')) {
             $this->derivatives[$id]['context_definitions'][$name] = new EntityContextDefinition(
               $argument['data_type'],
-              $argument['label'],
-              $argument['required'],
+              $argument['label'] ?? 'No label',
+              $argument['required'] ?? FALSE,
               FALSE,
-              $argument['description'],
+              $argument['description'] ?? '',
             );
           }
           else {
             $this->derivatives[$id]['context_definitions'][$name] = new ContextDefinition(
               $argument['data_type'],
-              $argument['label'],
-              $argument['required'],
+              $argument['label'] ?? 'No label',
+              $argument['required'] ?? FALSE,
               FALSE,
-              $argument['description'],
+              $argument['description'] ?? '',
             );
           }
         }

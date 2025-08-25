@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\eca\Plugin\AiFunctionCall;
+namespace Drupal\eca_base\Plugin\AiFunctionCall;
 
 use Drupal\ai\Attribute\FunctionCall;
 use Drupal\ai\Base\FunctionCallBase;
@@ -23,7 +23,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
   function_name: 'placeholder',
   name: 'placeholder',
   description: 'placeholder',
-  deriver: '\Drupal\eca\Plugin\AiFunctionCall\EcaDeriver',
+  deriver: '\Drupal\eca_base\Plugin\AiFunctionCall\EcaDeriver',
 )]
 class Eca extends FunctionCallBase implements ExecutableFunctionCallInterface {
 

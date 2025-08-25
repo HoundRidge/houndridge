@@ -38,7 +38,7 @@
         "drupal/drupal_cms_project": "^1.2",
         "drupal/drupal_cms_seo_tools": "^1.2",
         "drupal/drupal_cms_starter": "^1.2",
-        "drupal/eca": "2.1.11",
+        "drupal/eca": "2.1.13",
         "drupal/linkit": "7.0.8",
         "drupal/navigation_extra_tools": "1.3.0",
         "drupal/photoswipe": "^5.0",

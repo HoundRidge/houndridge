@@ -875,9 +875,9 @@
             'dev_requirement' => false,
         ),
         'drupal/eca' => array(
-            'pretty_version' => '2.1.11',
-            'version' => '2.1.11.0',
-            'reference' => '2.1.11',
+            'pretty_version' => '2.1.13',
+            'version' => '2.1.13.0',
+            'reference' => '2.1.13',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/eca',
             'aliases' => array(),

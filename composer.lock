@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fafe7604267d3678d24544807b7ce77",
+    "content-hash": "06735fe9b228192658a7a40b6dd4f722",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4400,17 +4400,17 @@
         },
         {
             "name": "drupal/eca",
-            "version": "2.1.11",
+            "version": "2.1.13",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/eca.git",
-                "reference": "2.1.11"
+                "reference": "2.1.13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/eca-2.1.11.zip",
-                "reference": "2.1.11",
-                "shasum": "851b00d8f2b2d9702c6aec8e4af44366e74ad592"
+                "url": "https://ftp.drupal.org/files/projects/eca-2.1.13.zip",
+                "reference": "2.1.13",
+                "shasum": "9327ab05af994bfd2174c82f89a42c5146686c70"
             },
             "require": {
                 "dragonmantank/cron-expression": "^3.1",
@@ -4434,8 +4434,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.11",
-                    "datestamp": "1753534704",
+                    "version": "2.1.13",
+                    "datestamp": "1755341278",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
