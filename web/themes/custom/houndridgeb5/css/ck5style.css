@@ -12317,6 +12317,10 @@ a > .ck-content code {
   border-top: 2px solid #ced4da;
   padding-top: 0.5em;
 }
+.ck-content .region-footer p {
+  line-height: 2em;
+  margin-bottom: 0;
+}
 .ck-content blockquote p {
   font-family: "Noto Serif", serif !important;
   font-style: italic;
@@ -12331,10 +12335,6 @@ a > .ck-content code {
   width: 70%;
   float: right;
   margin-left: 1em;
-}
-.ck-content .region-footer p {
-  line-height: 2em;
-  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=ck5style.css.map */

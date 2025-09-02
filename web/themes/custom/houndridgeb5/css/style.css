@@ -13284,6 +13284,11 @@ footer {
   padding-top: 0.5em;
 }
 
+.region-footer p {
+  line-height: 2em;
+  margin-bottom: 0;
+}
+
 blockquote p {
   font-family: "Noto Serif", serif !important;
   font-style: italic;
@@ -13298,11 +13303,6 @@ blockquote p {
   width: 70%;
   float: right;
   margin-left: 1em;
-}
-
-.region-footer p {
-  line-height: 2em;
-  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
