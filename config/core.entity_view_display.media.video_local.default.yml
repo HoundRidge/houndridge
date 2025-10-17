@@ -18,7 +18,7 @@ content:
     settings:
       controls: true
       autoplay: true
-      loop: true
+      loop: false
       multiple_file_display_type: tags
       muted: false
       playsinline: false

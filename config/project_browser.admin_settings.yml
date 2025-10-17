@@ -1,7 +1,9 @@
 enabled_sources:
-  - drupalorg_jsonapi
-  - recipes
+  drupal_core: {  }
+  recipes: {  }
+  drupalorg_jsonapi: {  }
 allow_ui_install: true
+max_selections: 1
 allowed_projects:
   recipes:
     - drupal_cms_accessibility_tools
@@ -16,4 +18,3 @@ allowed_projects:
     - drupal_cms_project
     - drupal_cms_search
     - drupal_cms_seo_tools
-max_selections: 1
