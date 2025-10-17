@@ -10,10 +10,11 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
-/**
- * @group drupal_cms_seo_tools
- */
+#[Group('drupal_cms_seo_tools')]
+#[IgnoreDeprecations]
 class ComponentValidationTest extends BrowserTestBase {
 
   use RecipeTestTrait {

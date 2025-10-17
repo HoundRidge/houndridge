@@ -4,10 +4,11 @@ dependencies:
   module:
     - eca_base
     - eca_form
+    - eca_user
 id: user_register
 modeller: bpmn_io
 label: 'User registration'
-version: 1.0.0
+version: 1.0.1
 weight: 0
 events:
   Event_build_user_reg_form:
@@ -21,7 +22,7 @@ events:
     successors:
       -
         id: Activity_set_weight_mail
-        condition: ''
+        condition: Flow_0x4d8cz
   Event_validate_user_reg_form:
     plugin: 'form:form_validate'
     label: 'Validate user register form'
@@ -32,9 +33,14 @@ events:
       operation: ''
     successors:
       -
-        id: Activity_get_random_string
+        id: Gateway_0esk9dm
         condition: Flow_notify_on
 conditions:
+  Flow_0x4d8cz:
+    plugin: eca_current_user_id
+    configuration:
+      user_id: '0'
+      negate: true
   Flow_notify_on:
     plugin: eca_form_field_value
     configuration:
@@ -47,7 +53,18 @@ conditions:
       xss_filter: true
       operator: equal
       type: numeric
-gateways: {  }
+  Flow_0xwcjpm:
+    plugin: eca_current_user_id
+    configuration:
+      user_id: '0'
+      negate: true
+gateways:
+  Gateway_0esk9dm:
+    type: 0
+    successors:
+      -
+        id: Activity_get_random_string
+        condition: Flow_0xwcjpm
 actions:
   Activity_password_field_not_required:
     plugin: eca_form_field_require
@@ -65,7 +82,7 @@ actions:
     configuration:
       token_name: password
       mode: password
-      length: true
+      length: '15'
     successors:
       -
         id: Activity_set_password
@@ -76,6 +93,7 @@ actions:
     configuration:
       field_value: '[password]'
       use_yaml: false
+      validate_yaml: false
       field_name: pass
       strip_tags: false
       trim: false
@@ -136,9 +154,9 @@ actions:
     configuration:
       value: '1'
       field_name: notify
-      strip_tags: true
-      trim: true
-      xss_filter: true
+      strip_tags: false
+      trim: false
+      xss_filter: false
     successors: {  }
   Activity_invisible_state_status:
     plugin: eca_form_field_add_state
@@ -166,8 +184,9 @@ actions:
     configuration:
       field_value: '1'
       use_yaml: false
+      validate_yaml: false
       field_name: status
-      strip_tags: true
-      trim: true
-      xss_filter: true
+      strip_tags: false
+      trim: false
+      xss_filter: false
     successors: {  }

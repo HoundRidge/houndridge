@@ -19,15 +19,16 @@ install:
   - automatic_updates
   - automatic_updates_extensions
   - dashboard
+  - drupal_cms_helper
   - drupal_cms_olivero
   - eca_base
   - eca_config
   - eca_content
   - eca_misc
-  - eca_project_browser
   - eca_render
   - eca_user
   - menu_link_content
+  - navigation
   - olivero
   - package_manager
   - project_browser
@@ -55,6 +56,33 @@ config:
       - core.entity_view_mode.user.compact
       - views.view.user_admin_people
   actions:
+    navigation.block_layout:
+      # To prevent duplicated items if this recipe is applied more than once,
+      # this needs to be changed as simple config. That's okay, though, because
+      # even though Navigation treats this as a layout section, it's still just
+      # a simple config object at heart.
+      simpleConfigUpdate:
+        # Replace the Shortcuts block with the Dashboard. (The UUID is from
+        # navigation.block_layout.yml.)
+        sections.0.components.2622e40b-8786-4b8c-8883-19e49da53023.configuration:
+          id: navigation_dashboard
+          label: Dashboard
+          label_display: '0'
+          provider: dashboard
+        # Add a link to the Drupal CMS user guide.
+        sections.0.components.52e884dd-0301-4265-b2b3-9cea53a403f3:
+          uuid: 52e884dd-0301-4265-b2b3-9cea53a403f3
+          region: footer
+          configuration:
+            id: navigation_link
+            label: Help
+            label_display: '0'
+            provider: navigation
+            title: Help
+            uri: 'https://new.drupal.org/docs/drupal-cms'
+            icon_class: help
+          weight: -2
+          additional: []
     package_manager.settings:
       simpleConfigUpdate:
         additional_trusted_composer_plugins:
@@ -62,28 +90,12 @@ config:
           - tbachert/spi
     project_browser.admin_settings:
       simpleConfigUpdate:
-        allowed_projects:
-          recipes:
-            - drupal_cms_accessibility_tools
-            - drupal_cms_ai
-            - drupal_cms_blog
-            - drupal_cms_case_study
-            - drupal_cms_events
-            - drupal_cms_forms
-            - drupal_cms_google_analytics
-            - drupal_cms_news
-            - drupal_cms_person
-            - drupal_cms_project
-            - drupal_cms_search
-            - drupal_cms_seo_tools
         enabled_sources:
-          - drupalorg_jsonapi
-          - recipes
+          recommended:
+            uri: 'https://git.drupalcode.org/api/v4/projects/167158/repository/files/recommended.yml/raw?ref=HEAD'
+          drupalorg_jsonapi: []
         allow_ui_install: true
         max_selections: 1
-    system.site:
-      simpleConfigUpdate:
-        page.front: '/home'
     system.theme:
       simpleConfigUpdate:
         default: drupal_cms_olivero
@@ -142,3 +154,6 @@ config:
     update.settings:
       simpleConfigUpdate:
         check.disabled_extensions: true
+extra:
+  drupal_cms:
+    front_page: '/home'

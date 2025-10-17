@@ -71,6 +71,7 @@ function photoswipe_dynamic_caption_field_formatter_third_party_settings_form(Fo
       'entity_label' => t('Entity label'),
       'custom' => t('Custom (with tokens)'),
     ];
+
     // Add media entity name if the target is a media entity:
     $field_settings = $field_definition->getSettings();
     if (isset($field_settings['target_type']) && $field_settings['target_type'] === 'media') {
@@ -83,6 +84,21 @@ function photoswipe_dynamic_caption_field_formatter_third_party_settings_form(Fo
         if ($parent_field != $field_definition->getName()) {
           $caption_options[$parent_field] = $parent_field;
         }
+      }
+    }
+
+    // If we target another entity, also add its field as potential caption
+    // options:
+    if ($field_definition->getType() == 'entity_reference') {
+      $target_type = $field_definition->getSetting('target_type');
+      $target_bundles = $field_definition->getSetting('handler_settings')['target_bundles'];
+
+      // We always have 1 target, so we can access it directly:
+      /** @var \Drupal\Core\Field\FieldDefinitionInterface[] $fields */
+      $fields = \Drupal::service('entity_field.manager')->getFieldDefinitions($target_type, reset($target_bundles));
+
+      foreach ($fields as $field) {
+        $caption_options['photoswipe_dynamic_caption_referenced_entity_' . $field->getName()] = 'Referenced Entity: ' . $field->getName();
       }
     }
 
@@ -233,11 +249,27 @@ function photoswipe_dynamic_caption_get_caption(ImageDTO $imageDTO) {
         return '';
 
       default:
+        // The caption setting starts with
+        // "photoswipe_dynamic_caption_referenced_entity_", we need to check the
+        // field values of the referenced entity:
+        if (str_starts_with($caption_setting, 'photoswipe_dynamic_caption_referenced_entity_')) {
+          $entity = $imageDTO->getItem()->getParent()->getEntity();
+          $caption_setting = str_replace('photoswipe_dynamic_caption_referenced_entity_', '', $caption_setting);
+        }
+        // Else we check the entity itself:
+        else {
+          $entity = $imageDTO->getEntity();
+        }
         // Assume the user wants to use another node field as the caption.
-        $entity = $imageDTO->getEntity();
-        if (isset($entity->{$caption_setting}) && ($fieldValue = $entity->get($caption_setting)->value) !== NULL) {
+        if ($entity->hasField($caption_setting)) {
           // Note, even if we have a field with a cardinality > 1, "value" will
           // always resolve to a single value here.
+          $fieldValue = $entity->get($caption_setting)->value;
+          // The field value is empty, return early:
+          if (empty($fieldValue)) {
+            $caption = '';
+            break;
+          }
           // The caption value needs to get escaped:
           $caption = Xss::filter($fieldValue);
         }
@@ -246,7 +278,7 @@ function photoswipe_dynamic_caption_get_caption(ImageDTO $imageDTO) {
           $bundle = $entity->bundle();
           $entityType = $entity->getEntityTypeId();
           $entityId = $entity->id();
-          \Drupal::logger('photoswipe_dynamic_caption')->warning("The caption for an image inside entity '@entityId' (entity type: '@entityType', bundle '@bundle') could not get generated. Either the field '@fieldName' doesn't exist on the entity, or its value is NULL.", [
+          \Drupal::logger('photoswipe_dynamic_caption')->warning("The caption for an image inside entity '@entityId' (entity type: '@entityType', bundle '@bundle') could not get generated. The field '@fieldName' doesn't exist on the entity.", [
             '@entityId' => $entityId,
             '@bundle' => $bundle,
             '@entityType' => $entityType,

@@ -52,6 +52,20 @@ formatter applied to, or you can add a media / image field, where you set the
 'Photoswipe' or 'Photoswipe Responsive' display mode similar to
 "Images in entities".
 
+By default, using the Photoswipe formatter on a views field will open single 
+images (not a gallery). To have a gallery of images, you need to set a 
+"photoswipe-gallery" class on any wrapper.
+
+For example: If you have an image field with multiple values and you want to 
+group them, set this class on the field wrapper.
+If you have multiple image fields and you want to group them all, set the 
+class on the views-row wrapper (this may or may not be possible depending on 
+the display plugin used).
+
+See the Views documentation page section
+[Customize the output style of a view field or list > Customize a view list](https://www.drupal.org/docs/8/core/modules/views/customize-the-output-style-of-a-view-field-or-list#s-customize-a-view-list)
+for details on how to add a class in a View.
+
 ### Photoswipe images in twig templates:
 To use the photoswipe formatter for images inside a custom twig template, you
 can use the `attach_photoswipe()` twig function.

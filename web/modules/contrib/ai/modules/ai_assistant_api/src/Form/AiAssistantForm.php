@@ -15,7 +15,6 @@ use Drupal\ai\Service\AiProviderFormHelper;
 use Drupal\ai\Utility\CastUtility;
 use Drupal\ai_assistant_api\AiAssistantActionPluginManager;
 use Drupal\ai_assistant_api\Entity\AiAssistant;
-use Drupal\user\Entity\Role;
 
 /**
  * AI Assistant form.
@@ -395,7 +394,7 @@ final class AiAssistantForm extends EntityForm {
     $system_prompt = file_get_contents($this->extensionPathResolver->getPath('module', 'ai_assistant_api') . '/resources/system_prompt.txt');
 
     $options = [];
-    foreach (Role::loadMultiple() as $role) {
+    foreach ($this->entityTypeManager->getStorage('user_role')->loadMultiple() as $role) {
       $options[$role->id()] = $role->label();
     }
 
@@ -500,6 +499,13 @@ final class AiAssistantForm extends EntityForm {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
     $this->formHelper->validateAiProvidersConfig($form, $form_state, 'chat', 'llm');
+
+    // Even if the model is required, it can be empty.
+    // Trigger an error if the provider is not set to default and the model is
+    // empty.
+    if ($form_state->getValue('llm_ai_provider') !== '__default__' && empty($form_state->getValue('llm_ai_model'))) {
+      $form_state->setErrorByName('llm_ai_model', $this->t('You need to select a model for the AI provider.'));
+    }
 
     // If the rag is enabled, we need to check if the database is selected.
     if ($form_state->getValue('enable_rag') && !$form_state->getValue('rag_database')) {

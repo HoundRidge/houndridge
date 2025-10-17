@@ -7,10 +7,12 @@ namespace Drupal\Tests\drupal_cms_starter\Functional;
 use Composer\InstalledVersions;
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
+use PHPUnit\Framework\Attributes\TestWith;
 
-/**
- * @group drupal_cms_starter
- */
+#[Group('drupal_cms_starter')]
+#[IgnoreDeprecations]
 class ListingPagesTest extends BrowserTestBase {
 
   use RecipeTestTrait;
@@ -35,14 +37,12 @@ class ListingPagesTest extends BrowserTestBase {
     ]);
   }
 
-  /**
-   * @testWith ["drupal/drupal_cms_blog", "blog", "Blog", "/blog", "Add a blog post"]
-   *   ["drupal/drupal_cms_case_study", "case_study", "Case studies", "/case-studies", "Add a case study"]
-   *   ["drupal/drupal_cms_events", "event", "Events", "/events", "Add an event"]
-   *   ["drupal/drupal_cms_news", "news", "News", "/news", "Add a news item"]
-   *   ["drupal/drupal_cms_project", "project", "Projects", "/projects", "Add a project"]
-   *   ["drupal/drupal_cms_person", "person", "People", "/people", "Add a person profile"]
-   */
+  #[TestWith(['drupal/drupal_cms_blog', 'blog', 'Blog', '/blog', 'Add a blog post'])]
+  #[TestWith(['drupal/drupal_cms_case_study', 'case_study', 'Case studies', '/case-studies', 'Add a case study'])]
+  #[TestWith(['drupal/drupal_cms_events', 'event', 'Events', '/events', 'Add an event'])]
+  #[TestWith(['drupal/drupal_cms_news', 'news', 'News', '/news', 'Add a news item'])]
+  #[TestWith(['drupal/drupal_cms_project', 'project', 'Projects', '/projects', 'Add a project'])]
+  #[TestWith(['drupal/drupal_cms_person', 'person', 'People', '/people', 'Add a person profile'])]
   public function testListingPages(string $recipe, string $content_type, string $link_text, string $url, string $create_link_text): void {
     $dir = InstalledVersions::getInstallPath($recipe);
     $this->applyRecipe($dir);

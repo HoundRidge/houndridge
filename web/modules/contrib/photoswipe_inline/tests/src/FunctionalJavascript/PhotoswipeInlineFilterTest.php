@@ -93,4 +93,48 @@ class PhotoswipeInlineFilterTest extends WebDriverTestBase {
     $session->elementsCount('css', '.pswp--open img.pswp__img', 1);
   }
 
+  /**
+   * Test the inline PhotoSwipe launches when classes exist.
+   */
+  public function testInlinePhotoSwipeWithExistingClass(): void {
+    $session = $this->assertSession();
+
+    $this->node = $this->createNode([
+      'body' => [
+        'value' => '<img src="https://www.drupal.org/files/cta/graphic/Association_Supporting_Partner_Badge_3.png" alt="Supporting Partner Badge" width="217" height="217" class="align-right">',
+        'format' => 'full_html',
+      ],
+    ]);
+
+    $this->drupalGet('node/' . $this->node->id());
+
+    $this->click('a.photoswipe');
+    $this->getSession()->wait(500);
+    $session->elementsCount('css', '.pswp--open img.pswp__img', 1);
+  }
+
+  /**
+   * Test that inline PhotoSwipe works with resized images.
+   */
+  public function testInlinePhotoSwipeResizedImages(): void {
+    $session = $this->assertSession();
+
+    $this->node = $this->createNode([
+      'body' => [
+        'value' => '<img src="https://www.drupal.org/files/cta/graphic/Association_Supporting_Partner_Badge_3.png" alt="Supporting Partner Badge" width="20" height="20">',
+        'format' => 'full_html',
+      ],
+    ]);
+
+    $this->drupalGet('node/' . $this->node->id());
+
+    // Check resized image size.
+    $session->elementAttributeContains('css', 'img[src*="Association_Supporting_Partner_Badge_3.png"]', 'width', '20');
+    $session->elementAttributeContains('css', 'img[src*="Association_Supporting_Partner_Badge_3.png"]', 'height', '20');
+    $session->elementAttributeExists('css', 'a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe', 'data-pswp-width');
+    $session->elementAttributeExists('css', 'a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe', 'data-pswp-height');
+    $session->elementAttributeContains('css', 'a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe', 'data-pswp-width', '217');
+    $session->elementAttributeContains('css', 'a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe', 'data-pswp-height', '217');
+  }
+
 }

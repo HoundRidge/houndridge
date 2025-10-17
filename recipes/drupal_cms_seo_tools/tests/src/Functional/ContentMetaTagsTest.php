@@ -11,10 +11,12 @@ use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\media\Entity\Media;
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
+use PHPUnit\Framework\Attributes\TestWith;
 
-/**
- * @group drupal_cms_seo_tools
- */
+#[Group('drupal_cms_seo_tools')]
+#[IgnoreDeprecations]
 class ContentMetaTagsTest extends BrowserTestBase {
 
   use RecipeTestTrait;
@@ -46,15 +48,13 @@ class ContentMetaTagsTest extends BrowserTestBase {
     return $media;
   }
 
-  /**
-   * @testWith ["drupal/drupal_cms_blog", "blog"]
-   *   ["drupal/drupal_cms_case_study", "case_study"]
-   *   ["drupal/drupal_cms_events", "event"]
-   *   ["drupal/drupal_cms_news", "news"]
-   *   ["drupal/drupal_cms_page", "page"]
-   *   ["drupal/drupal_cms_person", "person"]
-   *   ["drupal/drupal_cms_project", "project"]
-   */
+  #[TestWith(['drupal/drupal_cms_blog', 'blog'])]
+  #[TestWith(['drupal/drupal_cms_case_study', 'case_study'])]
+  #[TestWith(['drupal/drupal_cms_events', 'event'])]
+  #[TestWith(['drupal/drupal_cms_news', 'news'])]
+  #[TestWith(['drupal/drupal_cms_page', 'page'])]
+  #[TestWith(['drupal/drupal_cms_person', 'person'])]
+  #[TestWith(['drupal/drupal_cms_project', 'project'])]
   public function testMetaTagsForContentType(string $recipe, string $node_type): void {
     $dir = InstalledVersions::getInstallPath($recipe);
     $this->applyRecipe($dir);

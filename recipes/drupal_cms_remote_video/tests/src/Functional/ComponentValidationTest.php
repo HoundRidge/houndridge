@@ -7,10 +7,11 @@ namespace Drupal\Tests\drupal_cms_remote_video\Functional;
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\media\Entity\Media;
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
-/**
- * @group drupal_cms_remote_video
- */
+#[Group('drupal_cms_remote_video')]
+#[IgnoreDeprecations]
 class ComponentValidationTest extends BrowserTestBase {
 
   use RecipeTestTrait;

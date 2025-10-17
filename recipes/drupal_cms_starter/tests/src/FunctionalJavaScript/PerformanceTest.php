@@ -7,16 +7,19 @@ namespace Drupal\Tests\drupal_cms_starter\FunctionalJavascript;
 use Composer\InstalledVersions;
 use Drupal\FunctionalJavascriptTests\PerformanceTestBase;
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 
 /**
  * Tests the performance of the drupal_cms_starter recipe.
  *
  * Stark is used as the default theme so that this test is not Olivero specific.
- *
- * @group OpenTelemetry
- * @group #slow
- * @requires extension apcu
  */
+#[Group('OpenTelemetry')]
+#[Group('#slow')]
+#[RequiresPhpExtension('apcu')]
+#[IgnoreDeprecations]
 class PerformanceTest extends PerformanceTestBase {
 
   use RecipeTestTrait;

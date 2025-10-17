@@ -12,9 +12,9 @@
     "drupal/drupal_cms_privacy_basic": "^1.2",
     "drupal/geocoder": "^4.10",
     "drupal/geofield": "^1.47",
-    "drupal/leaflet": "^10.2.33",
+    "drupal/leaflet": "^10.3.4",
     "drupal/smart_date": "^4.2.1",
     "geocoder-php/nominatim-provider": "^5.7"
   },
-  "version": "1.2.0"
+  "version": "1.2.8"
 }

@@ -14,6 +14,7 @@ use Drupal\Core\Recipe\Recipe;
 use Drupal\Core\Recipe\RecipeRunner;
 use Drupal\Core\Render\Element\Password;
 use Drupal\Core\StringTranslation\Translator\FileTranslation as CoreFileTranslation;
+use Drupal\RecipeKit\Installer\Form\SiteSettingsFormDecorator;
 use Drupal\RecipeKit\Installer\FormInterface as InstallerFormInterface;
 
 /**
@@ -107,6 +108,10 @@ final class Hooks {
       $forms[$class] = $class::toInstallTask($install_state);
     }
     $insert_before('install_settings_form', $forms);
+
+    // Wrap the database settings form, because we cannot rely on the installer
+    // to invoke the profile's hook_form_alter().
+    $tasks['install_settings_form']['function'] = SiteSettingsFormDecorator::class;
 
     $configure_form_task = $tasks['install_configure_form'];
     unset(
@@ -212,17 +217,8 @@ final class Hooks {
    * Implements hook_form_alter().
    */
   public static function formAlter(array &$form, FormStateInterface $form_state, string $form_id): void {
-    switch ($form_id) {
-      case 'install_configure_form':
-        static::installConfigureFormAlter($form);
-        break;
-
-      case 'install_settings_form':
-        static::installSettingsFormAlter($form);
-        break;
-
-      default:
-        break;
+    if ($form_id === 'install_configure_form') {
+      self::installConfigureFormAlter($form);
     }
   }
 
@@ -301,26 +297,6 @@ final class Hooks {
   }
 
   /**
-   * Implements hook_form_alter() for install_settings_form.
-   *
-   * @see \Drupal\Core\Installer\Form\SiteSettingsForm
-   */
-  private static function installSettingsFormAlter(array &$form): void {
-    $sqlite = 'Drupal\sqlite\Driver\Database\sqlite';
-
-    // Default to SQLite, if available, because it doesn't require any
-    // additional configuration.
-    if (extension_loaded('pdo_sqlite') && array_key_exists($sqlite, $form['driver']['#options'])) {
-      $form['driver']['#default_value'] = $sqlite;
-
-      // The database file path has a sensible default value, so move it into the
-      // advanced options.
-      $form['settings'][$sqlite]['advanced_options']['database'] = $form['settings'][$sqlite]['database'];
-      unset($form['settings'][$sqlite]['database']);
-    }
-  }
-
-  /**
    * Runs a batch job that applies the chosen set of recipes.
    *
    * @param array $install_state
@@ -330,15 +306,12 @@ final class Hooks {
    *   The batch job definition.
    */
   public static function applyRecipes(array &$install_state): array {
-    // Always apply required recipes first.
-    $recipes_to_apply = $install_state['profile_info']['recipes']['required'] ?? [];
-
-    $additional_recipes = $install_state['parameters']['recipes'] ?? NULL;
-    // This might be an empty string if no recipes were chosen by RecipesForm.
-    // @see \Drupal\RecipeKit\Installer\Form\RecipesForm::submitForm()
-    if (is_array($additional_recipes)) {
-      array_push($recipes_to_apply, ...$additional_recipes);
-    }
+    // Apply required recipes first, followed by any additional recipes the user
+    // has chosen (i.e., via our forms).
+    $recipes_to_apply = array_merge(
+      $install_state['profile_info']['recipes']['required'] ?? [],
+      $install_state['parameters']['recipes'] ?? [],
+    );
 
     // If the installer ran before but failed mid-stream, don't reapply any
     // recipes that were successfully applied.
@@ -423,7 +396,12 @@ final class Hooks {
     \Drupal::service('kernel')->invalidateContainer();
   }
 
-  private static function getRecipePath(string $name): string {
+  /**
+   * @internal
+   *   This method is internal, which means it could be changed in any way, or
+   *   removed at any time, without warning. Don't rely on it.
+   */
+  public static function getRecipePath(?string $name = NULL): string {
     try {
       return InstalledVersions::getInstallPath($name);
     }
@@ -440,7 +418,11 @@ final class Hooks {
         // The first configured install path which matches the criteria is the
         // one we'll use, since that is what Composer would also do.
         if (in_array($name, $criteria, TRUE) || in_array('type:' . Recipe::COMPOSER_PROJECT_TYPE, $criteria, TRUE)) {
-          return str_replace(['{$vendor}', '{$name}'], explode('/', $name, 2), $project_root . DIRECTORY_SEPARATOR . $path);
+          $path = $project_root . DIRECTORY_SEPARATOR . $path;
+
+          return $name
+            ? str_replace(['{$vendor}', '{$name}'], explode('/', $name, 2), $path)
+            : str_replace('{$name}', '', $path);
         }
       }
       // We couldn't figure it out; throw the original exception.

@@ -9,10 +9,11 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\drupal_cms_content_type_base\ContentModelTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
-/**
- * @group drupal_cms_events
- */
+#[Group('drupal_cms_events')]
+#[IgnoreDeprecations]
 class ComponentValidationTest extends BrowserTestBase {
 
   use ContentModelTestTrait;
@@ -43,6 +44,10 @@ class ComponentValidationTest extends BrowserTestBase {
     $footer_menu = $this->assertSession()
       ->elementExists('css', 'nav > h2:contains("Footer") + ul');
     $this->assertTrue($footer_menu->hasLink('My privacy settings'));
+  }
+
+  public function testEditForm(): void {
+    $this->assertEditForm('event');
   }
 
   public function testContentModel(): void {

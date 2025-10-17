@@ -18,7 +18,6 @@ use Drupal\ai\OperationType\TranslateText\TranslateTextInput;
 use Drupal\ai\OperationType\TranslateText\TranslateTextInterface;
 use Drupal\ai\OperationType\TranslateText\TranslateTextOutput;
 use Drupal\ai\Plugin\ProviderProxy;
-use Drupal\language\Entity\ConfigurableLanguage;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -68,12 +67,21 @@ class ChatTranslationProvider extends AiProviderClientBase implements
   protected TwigEnvironment $twig;
 
   /**
+   * The Entity Type Manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
     $instance->manager = $container->get('ai.provider');
     $instance->twig = $container->get('twig');
+    $instance->configFactory = $container->get('config.factory');
+    $instance->entityTypeManager = $container->get('entity_type.manager');
     return $instance;
   }
 
@@ -162,7 +170,8 @@ class ChatTranslationProvider extends AiProviderClientBase implements
     $text = $input->getText();
 
     // We can guess source, but not target language.
-    $targetLanguage = ConfigurableLanguage::load($input->getTargetLanguage());
+    /** @var \Drupal\language\Entity\ConfigurableLanguage $targetLanguage */
+    $targetLanguage = $this->entityTypeManager->getStorage('configurable_language')->load($input->getTargetLanguage());
     if (!$targetLanguage) {
       // @todo TranslateText-specific exception, documented in
       // TranslateTextInterface::translateText() docblock.
@@ -172,36 +181,56 @@ class ChatTranslationProvider extends AiProviderClientBase implements
       return new TranslateTextOutput('', '', '');
     }
 
-    $aiConfig = $this->configFactory->get('ai_translate.settings');
-    $prompt = $aiConfig->get($targetLanguage->getId() . '_prompt');
-    if (empty($prompt)) {
-      $prompt = $aiConfig->get('prompt');
+    $aiConfig = $this->configFactory->get('ai_translate.settings')->get('language_settings') ?? [];
+    $prompt = NULL;
+    // Get target language-specific prompt, if it exists.
+    if ($aiConfig[$targetLanguage->getId()]['prompt']) {
+      $promptId = $aiConfig[$targetLanguage->getId()]['prompt'];
+      if ($languageSpecificPrompt = $this->configFactory->get('ai.ai_prompt.' . $promptId)->get('prompt')) {
+        $prompt = $languageSpecificPrompt;
+      }
     }
-    $context = [
-      'dest_lang' => $targetLanguage->getId(),
-      'dest_lang_name' => $targetLanguage->getName(),
-      'input_text' => $text,
+
+    // If no language-specific prompt config exists, fall back to the default.
+    if (!$prompt) {
+      $promptId = $this->configFactory->get('ai_translate.settings')->get('prompt');
+      $prompt = $this->configFactory->get('ai.ai_prompt.' . $promptId)->get('prompt');
+    }
+
+    // Define replacement variables.
+    $twigContext = [];
+    $replacements = [
+      '{destLang}' => $targetLanguage->getId(),
+      '{destLangName}' => $targetLanguage->getName(),
+      '{inputText}' => $text,
     ];
     try {
-      $sourceLanguage = ConfigurableLanguage::load($input->getSourceLanguage());
+      /** @var \Drupal\language\Entity\ConfigurableLanguage $sourceLanguage */
+      $sourceLanguage = $this->entityTypeManager->getStorage('configurable_language')->load($input->getSourceLanguage());
       if ($sourceLanguage) {
-        $context['source_lang'] = $sourceLanguage->getId();
-        $context['source_lang_name'] = $sourceLanguage->getName();
+        $twigContext['sourceLang'] = $sourceLanguage->getId();
+        $replacements['{sourceLang}'] = $sourceLanguage->getId();
+        $twigContext['sourceLangName'] = $sourceLanguage->getName();
+        $replacements['{sourceLangName}'] = $sourceLanguage->getName();
       }
     }
     // Ignore failure to load source language.
     catch (\AssertionError) {
     }
-    $promptText = $this->twig->renderInline($prompt, $context);
+    // Only use Twig for conditional logic. We only need source lang Twig
+    // variables for this use case. Other variables are replaced via AI prompts
+    // replacement logic.
+    $promptText = (string) $this->twig->renderInline($prompt, $twigContext);
+    $promptText = strtr($promptText, $replacements);
     try {
-      $this->setChatSystemRole('You are a helpful translator.');
       $messages = new ChatInput([
         new chatMessage('user', $promptText),
       ]);
+      $messages->setSystemPrompt('You are a helpful translator.');
 
       $this->loadTranslator($messages);
       /** @var /Drupal\ai\OperationType\Chat\ChatOutput $message */
-      $message = $this->realTranslator->chat($messages, $this->chatConfiguration['model_id']);
+      $message = $this->realTranslator->chat($messages, $this->chatConfiguration['model_id'], ['ai_translate']);
     }
     catch (GuzzleException $exception) {
       // Error handling for the API call.

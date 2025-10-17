@@ -22,9 +22,7 @@ use Drupal\geofield\Plugin\GeofieldBackendManager;
 use Drupal\geofield\WktGeneratorInterface;
 use Drupal\leaflet\LeafletService;
 use Drupal\leaflet\LeafletSettingsElementsTrait;
-use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 
 /**
  * Plugin implementation of the "leaflet_widget" widget.
@@ -599,9 +597,6 @@ class LeafletDefaultWidget extends GeofieldDefaultWidget {
       '#title' => $element['value']['#title'],
       '#weight' => -2,
     ];
-
-    // Alter/customise the Value Title property.
-    $element['value']['#title'] = $this->t('GeoJSON Data');
 
     // Build JS settings for the Leaflet Widget.
     $leaflet_widget_js_settings = [

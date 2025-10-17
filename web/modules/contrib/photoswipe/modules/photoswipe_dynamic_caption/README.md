@@ -1,8 +1,19 @@
 # Photoswipe Dynamic Caption
+
 This module provides integration with the
 [photoswipe dynamic caption plugin](https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin/tree/main).
 Starting from [photoswipe 5](https://photoswipe.com/caption/), there is separate
 plugin dedicated to (dynamic) captions.
+
+**Note**: In PhotoSwipe 5 the "Photoswipe image caption" option is present on
+the regular Display page of image fields (on 
+`/admin/structure/types/manage/library/display`), but missing for the same
+image field in a View.
+
+The solution to the problem is Drupal core issue
+[Formatter third party settings missing from Views UI](https://www.drupal.org/project/drupal/issues/2686145)
+and you should 
+[patch Drupal core](https://www.drupal.org/docs/develop/using-composer/manage-dependencies#s-patching-drupal-core-and-modules) until it gets fixed.
 
 ## Installation
 

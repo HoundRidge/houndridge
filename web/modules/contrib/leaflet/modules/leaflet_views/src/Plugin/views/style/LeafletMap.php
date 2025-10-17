@@ -295,15 +295,16 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
       // (i.e. Search API views).
       if (!isset($this->entityType) && $this->moduleHandler->moduleExists('search_api')) {
         $index_id = substr($base_table, 17);
-        $index = Index::load($index_id);
-        foreach ($index->getDatasources() as $datasource) {
-          if ($datasource instanceof DatasourceInterface) {
-            $this->entityType = $datasource->getEntityTypeId();
-            try {
-              $this->entityInfo = $this->entityManager->getDefinition($this->entityType);
-            }
-            catch (\Exception $e) {
-              $this->getLogger('Leaflet View')->warning($e->getMessage());
+        if ($index = Index::load($index_id)) {
+          foreach ($index->getDatasources() as $datasource) {
+            if ($datasource instanceof DatasourceInterface) {
+              $this->entityType = $datasource->getEntityTypeId();
+              try {
+                $this->entityInfo = $this->entityManager->getDefinition($this->entityType);
+              }
+              catch (\Exception $e) {
+                $this->getLogger('Leaflet View')->warning($e->getMessage());
+              }
             }
           }
         }
@@ -527,7 +528,7 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
       '#title' => $this->t('Disabled Layers'),
       '#description' => $this->t('Choose the Layers that should start as disabled / switched off'),
       '#options' => $overlays_options,
-      '#default_value' => $this->options["grouping"][0]['overlays_options']['disabled_overlays'],
+      '#default_value' => $this->options["grouping"][0]['overlays_options']['disabled_overlays'] ?? NULL,
       // The #validated setting to TRUE skips the "An illegal choice has been
       // detected" error message after Ajax refresh.
       '#validated' => TRUE,
@@ -550,7 +551,7 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
       '#title' => $this->t('Hidden Layers Controls'),
       '#description' => $this->t('Choose the Layers that will not appear in the Layers Control'),
       '#options' => $overlays_options,
-      '#default_value' => $this->options["grouping"][0]['overlays_options']['hidden_overlays_controls'],
+      '#default_value' => $this->options["grouping"][0]['overlays_options']['hidden_overlays_controls'] ?? NULL,
       // The #validated setting to TRUE skips the "An illegal choice has been
       // detected" error message after Ajax refresh.
       '#validated' => TRUE,
@@ -898,7 +899,7 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
 
       // Order the data features based on the 'weight' element.
       if (isset($features_groups) && count($features_groups) > 1) {
-        uasort($features_groups, [
+        usort($features_groups, [
           'Drupal\Component\Utility\SortArray',
           'sortByWeightElement',
         ]);
@@ -946,7 +947,7 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
         $features_group = array_merge(...$features_group);
 
         // Order the data features based on the 'weight' element.
-        uasort($features_group, [
+        usort($features_group, [
           'Drupal\Component\Utility\SortArray',
           'sortByWeightElement',
         ]);
@@ -1006,6 +1007,9 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
             $group_label,
             $view_results_groups
           );
+
+          // Allow modules to adjust the single features.
+          $this->moduleHandler->alter('leaflet_views_features', $features, $this);
 
           // Increment Features Group with new Features element.
           $features_group[] = $features;
@@ -1492,7 +1496,11 @@ class LeafletMap extends StylePluginBase implements ContainerFactoryPluginInterf
    */
   protected function processFeatureIcons(array &$feature, array $tokens): void {
     // Set the custom Marker icon (DivIcon, Icon Url or Circle Marker).
-    if ($feature['type'] === 'point' && isset($this->options['icon'])) {
+    if (in_array($feature['type'], [
+      'point',
+      'multipoint',
+      'geometrycollection',
+    ]) && isset($this->options['icon'])) {
       // Set Feature Icon properties.
       $feature['icon'] = $this->options['icon'];
 

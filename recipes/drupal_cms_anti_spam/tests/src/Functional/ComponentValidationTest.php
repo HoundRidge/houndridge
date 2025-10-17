@@ -6,10 +6,11 @@ namespace Drupal\Tests\drupal_cms_anti_spam\Functional;
 
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
-/**
- * @group drupal_cms_anti_spam
- */
+#[Group('drupal_cms_anti_spam')]
+#[IgnoreDeprecations]
 class ComponentValidationTest extends BrowserTestBase {
 
   use RecipeTestTrait;

@@ -6,10 +6,11 @@ namespace Drupal\Tests\drupal_cms_accessibility_tools\Functional;
 
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
-/**
- * @group drupal_cms_accessibility_tools
- */
+#[Group('drupal_cms_accessibility_tools')]
+#[IgnoreDeprecations]
 class ComponentValidationTest extends BrowserTestBase {
 
   use RecipeTestTrait;

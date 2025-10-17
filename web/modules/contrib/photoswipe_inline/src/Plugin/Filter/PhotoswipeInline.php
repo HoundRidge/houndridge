@@ -31,16 +31,33 @@ class PhotoswipeInline extends FilterBase {
     }
 
     foreach ($elements as $element) {
-      if (!$element->hasAttribute('class')) {
-        $a = $dom->createElement('a');
-        $element->parentNode->insertBefore($a, $element);
-        $a->appendChild($element);
-        $img_width = $element->getAttribute('width');
-        $img_height = $element->getAttribute('height');
-        $a->setAttribute('href', $element->getAttribute('src'));
-        $a->setAttribute('class', 'photoswipe');
-        $a->setAttribute('data-pswp-width', $img_width);
-        $a->setAttribute('data-pswp-height', $img_height);
+      if (!$element->hasAttribute('class') || str_contains($element->getAttribute('class'), 'photoswipe') === FALSE) {
+        $anchor = $dom->createElement('a');
+        $element->parentNode->insertBefore($anchor, $element);
+        $anchor->appendChild($element);
+
+        // Set the source image.
+        $source = $element->getAttribute('src');
+        $anchor->setAttribute('href', $source);
+
+        // Image size logic.
+        if (isset(parse_url($source)['host'])) {
+          [$img_width, $img_height, $type, $attr] = getimagesize($source);
+        }
+        else {
+          $path = urldecode(strtok($source, '?'));
+          [$img_width, $img_height, $type, $attr] = getimagesize(DRUPAL_ROOT . $path);
+        }
+        $anchor->setAttribute('data-pswp-width', $img_width ?: $element->getAttribute('width'));
+        $anchor->setAttribute('data-pswp-height', $img_height ?: $element->getAttribute('height'));
+
+        // Add photoswipe class.
+        if ($element->hasAttribute('class')) {
+          $anchor->setAttribute('class', $element->getAttribute('class') . ' photoswipe');
+        }
+        else {
+          $anchor->setAttribute('class', 'photoswipe');
+        }
       }
     }
 

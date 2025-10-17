@@ -219,7 +219,6 @@ third_party_settings:
                   leaflet_markercluster:
                     control: false
                     options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
-                    excluded: ''
                     include_path: false
                   fullscreen:
                     control: false
@@ -493,7 +492,6 @@ content:
       leaflet_markercluster:
         control: false
         options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds": false}'
-        excluded: ''
         include_path: false
       fullscreen:
         control: false

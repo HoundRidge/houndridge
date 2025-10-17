@@ -212,6 +212,10 @@ const ed11yInitializer = function () {
   options.preventCheckingIfPresent = !!drupalSettings.editoria11y.no_load ?
     drupalSettings.editoria11y.no_load + ', .layout-builder-form' :
     '.layout-builder-form';
+  if (!!(parent?.drupalSettings?.canvas) && !parent.document.body.querySelector('[class^=_PagePreviewIframe]')) {
+    // Only run when Drupal Canvas is running if it is in Preview mode.
+    options.preventCheckingIfPresent = 'body';
+  }
   // todo postpone: preventCheckingIfAbsent
   options.linkStringsNewWindows = !!drupalSettings.editoria11y.link_strings_new_windows ?
     new RegExp (drupalSettings.editoria11y.link_strings_new_windows, 'gi')

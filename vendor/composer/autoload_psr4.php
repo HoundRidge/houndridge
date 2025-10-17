@@ -61,6 +61,8 @@ return array(
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'Peast\\' => array($vendorDir . '/mck89/peast/lib/Peast'),
     'OpenAI\\' => array($vendorDir . '/openai-php/client/src'),
+    'OomphInc\\ComposerInstallersExtender\\' => array($vendorDir . '/oomphinc/composer-installers-extender/src'),
+    'Nette\\' => array($vendorDir . '/nette/utils/src'),
     'Mtownsend\\XmlToArray\\' => array($vendorDir . '/mtownsend/xml-to-array/src'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'League\\HTMLToMarkdown\\' => array($vendorDir . '/league/html-to-markdown/src'),

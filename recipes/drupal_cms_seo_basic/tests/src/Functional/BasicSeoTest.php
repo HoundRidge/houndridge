@@ -7,12 +7,14 @@ namespace Drupal\Tests\drupal_cms_seo_basic\Functional;
 use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
 /**
  * Tests basic SEO optimizations aimed at machine readability and performance.
- *
- * @group drupal_cms_seo_basic
  */
+#[Group('drupal_cms_seo_basic')]
+#[IgnoreDeprecations]
 class BasicSeoTest extends BrowserTestBase {
 
   use RecipeTestTrait;
@@ -80,6 +82,14 @@ class BasicSeoTest extends BrowserTestBase {
     $assert_session = $this->assertSession();
     $assert_session->statusCodeEquals(200);
     $assert_session->pageTextNotContains('nope');
+  }
+
+  public function testContentEditorsCanManageRedirects(): void {
+    $account = $this->createUser();
+    $account->addRole('content_editor')->save();
+    $this->drupalLogin($account);
+    $this->drupalGet('/admin/config/search/redirect');
+    $this->assertSession()->statusCodeEquals(200);
   }
 
 }

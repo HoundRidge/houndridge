@@ -9,10 +9,11 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\FunctionalTests\Core\Recipe\RecipeTestTrait;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\drupal_cms_content_type_base\ContentModelTestTrait;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 
-/**
- * @group drupal_cms_person
- */
+#[Group('drupal_cms_person')]
+#[IgnoreDeprecations]
 class ComponentValidationTest extends BrowserTestBase {
 
   use ContentModelTestTrait;
@@ -36,6 +37,10 @@ class ComponentValidationTest extends BrowserTestBase {
     $this->applyRecipe($dir);
 
     $this->ensureFileExists('5a635060-8540-4be7-bad9-8a51414731ad');
+  }
+
+  public function testEditForm(): void {
+    $this->assertEditForm('person');
   }
 
   public function testContentModel(): void {

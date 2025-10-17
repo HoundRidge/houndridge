@@ -49,19 +49,21 @@ final class DevelMenu {
       // Get initial enabled list.
       $config = $this->configFactory->getEditable('devel.toolbar.settings');
       $toolbarItems = $config->get('toolbar_items');
-      // Loop through items to be enabled.
-      foreach (self::TO_ENABLE as $item) {
-        // Add item to toolbar items if not there already.
-        if (!in_array($item, $toolbarItems)) {
-          $toolbarItems[] = $item;
+      if ($toolbarItems) {
+        // Loop through items to be enabled.
+        foreach (self::TO_ENABLE as $item) {
+          // Add item to toolbar items if not there already.
+          if (!in_array($item, $toolbarItems)) {
+            $toolbarItems[] = $item;
+          }
         }
+        // Update and save config.
+        $config
+          ->set('toolbar_items', $toolbarItems)
+          ->save();
+        // Rebuild menu.
+        $this->pluginManagerMenuLink->rebuild();
       }
-      // Update and save config.
-      $config
-        ->set('toolbar_items', $toolbarItems)
-        ->save();
-      // Rebuild menu.
-      $this->pluginManagerMenuLink->rebuild();
     }
   }
 
