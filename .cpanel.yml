@@ -2,5 +2,12 @@
 deployment:
  tasks:
  - export DEPLOYPATH=/home/user/public_html/site/
- - /bin/cp index.html $DEPLOYPATH
- - /bin/cp style.css $DEPLOYPATH
+  - /bin/cp -R config $DEPLOYPATH
+  - /bin/cp -R recipes $DEPLOYPATH
+  - /bin/cp -R vendor $DEPLOYPATH
+  - /bin/cp composer.json $DEPLOYPATH
+  - /bin/cp composer.lock $DEPLOYPATH
+  - /bin/cp package.lock $DEPLOYPATH
+  - /bin/cp package.json $DEPLOYPATH
+
+  
