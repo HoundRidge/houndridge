@@ -1,0 +1,112 @@
+{
+    "uuid": [
+        {
+            "value": "8b18f0dd-c73b-4d1b-a193-9bfd51b34996"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2025-10-24T01:50:28+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": false
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "IW History: Florence Nagle, Sulhamstead"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-08-02T15:54:42+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-10-24T01:50:28+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "unpublished"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/irish-wolfhounds\/iw-history-florence-nagle-sulhamstead",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>\"...To get a good kennel of Wolfhounds, you have got to line-breed or in-breed. But inbreeding has its dangers as well as its good points...and you are going to emphasize the bad just as much as the good...But I do think you have got to remember that an IW is not just a big, sound dog. It should have graceful lines, curves and not be too long. I know that the standard says a long back but if you get too long a back, you are apt to get a gay tail and a dippy back. You want the loin to be strong and wide and the tail to be fairly low set and then it will probably hang in the right place.<\/p><p>\"Now the bitch is in my opinion probably 85% to 90% and it is from the bitch you get (probably) your conformation...and you want to get that right back because the most difficult thing to get right is the hindquarters. You can get a good head, a good eye, a good ear in probably one mating...but you are not going to get good hindquarters unless you have it way back with your bitches. The dog will probably put in the presence...and by the way, that is one thing I rather missed today. I don\u2019t know that if you know what presence is...it is the Hound\u2019s ability to hold up its head and move proudly without being tugged along like a fish on a string....And the whole thing of presence is something...is the same as Quality. You cannot just define it but every great dog has it. And the thing to aim at, is breeding a great dog. Good dogs are much more difficult to breed than good bitches...With your great dog, you want to get good bitches because although he can sire and possibly get one good puppy out of a mediocre bitch; out of a good bitch he will probably get...most of the litter will be good ones and you will have a reputation of being a good breeder....<\/p><p>&nbsp;<\/p>",
+            "format": "content_format",
+            "processed": "<p>\"...To get a good kennel of Wolfhounds, you have got to line-breed or in-breed. But inbreeding has its dangers as well as its good points...and you are going to emphasize the bad just as much as the good...But I do think you have got to remember that an IW is not just a big, sound dog. It should have graceful lines, curves and not be too long. I know that the standard says a long back but if you get too long a back, you are apt to get a gay tail and a dippy back. You want the loin to be strong and wide and the tail to be fairly low set and then it will probably hang in the right place.<\/p>\n<p>\"Now the bitch is in my opinion probably 85% to 90% and it is from the bitch you get (probably) your conformation...and you want to get that right back because the most difficult thing to get right is the hindquarters. You can get a good head, a good eye, a good ear in probably one mating...but you are not going to get good hindquarters unless you have it way back with your bitches. The dog will probably put in the presence...and by the way, that is one thing I rather missed today. I don\u2019t know that if you know what presence is...it is the Hound\u2019s ability to hold up its head and move proudly without being tugged along like a fish on a string....And the whole thing of presence is something...is the same as Quality. You cannot just define it but every great dog has it. And the thing to aim at, is breeding a great dog. Good dogs are much more difficult to breed than good bitches...With your great dog, you want to get good bitches because although he can sire and possibly get one good puppy out of a mediocre bitch; out of a good bitch he will probably get...most of the litter will be good ones and you will have a reputation of being a good breeder....<\/p>\n<p>&nbsp;<\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "Important influencers in Irish Wolfhounds"
+        }
+    ],
+    "field_featured_image": [],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "82230c74-98fe-4326-b597-8430e2eeedce"
+        }
+    ],
+    "field_tags": []
+}

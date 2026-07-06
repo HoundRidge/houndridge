@@ -1,0 +1,118 @@
+{
+    "uuid": [
+        {
+            "value": "5f7bb9f4-005b-4e23-a3e0-f5483b2b4a0a"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "target_id": "image",
+            "target_type": "media_type",
+            "target_uuid": "48689db2-f06f-4b9a-91d3-1b1c6ea17072"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-11-12T04:06:34+00:00"
+        }
+    ],
+    "revision_user": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log_message": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "name": [
+        {
+            "value": "2wks-3348"
+        }
+    ],
+    "thumbnail": [
+        {
+            "alt": "Very young deerhound puppy with open eyes",
+            "title": null,
+            "width": 1600,
+            "height": 2133,
+            "target_type": "file",
+            "target_uuid": "d4059f69-ccd1-4726-ab4f-88f1795ccf95"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-11-12T04:05:39+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-11-12T04:06:34+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_add_to_gallery": [
+        {
+            "value": true
+        }
+    ],
+    "field_description": [],
+    "field_media_image": [
+        {
+            "alt": "Very young deerhound puppy with open eyes",
+            "title": "",
+            "width": 1600,
+            "height": 2133,
+            "target_type": "file",
+            "target_uuid": "d4059f69-ccd1-4726-ab4f-88f1795ccf95"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "0990bbed-f5a0-4d69-9f3c-4c1ee136db9b"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "d5299cdf-5f81-4568-aa41-a37cadbdaa56"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "233bca58-ba04-4667-b262-042d52c0d5b1"
+        }
+    ]
+}

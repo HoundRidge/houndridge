@@ -1,0 +1,56 @@
+{
+    "enabled": [
+        {
+            "value": true
+        }
+    ],
+    "uuid": [
+        {
+            "value": "8d9c6cd9-d55b-4354-9da4-92e30584884d"
+        }
+    ],
+    "hash": [
+        {
+            "value": "kPQigwfSDSDBs9JQIygU1bd4y4p8iotqr8m6hGewKBs"
+        }
+    ],
+    "type": [
+        {
+            "value": "redirect"
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "redirect_source": [
+        {
+            "path": "people",
+            "query": []
+        }
+    ],
+    "redirect_redirect": [
+        {
+            "uri": "internal:\/node\/5",
+            "title": null,
+            "options": []
+        }
+    ],
+    "language": [
+        {
+            "value": "en"
+        }
+    ],
+    "status_code": [
+        {
+            "value": 301
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-10-24T01:51:54+00:00"
+        }
+    ]
+}

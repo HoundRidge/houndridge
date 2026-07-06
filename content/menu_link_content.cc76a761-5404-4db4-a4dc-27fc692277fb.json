@@ -1,0 +1,83 @@
+{
+    "uuid": [
+        {
+            "value": "cc76a761-5404-4db4-a4dc-27fc692277fb"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "value": "menu_link_content"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-07-18T22:21:48+00:00"
+        }
+    ],
+    "revision_user": [],
+    "revision_log_message": [],
+    "enabled": [
+        {
+            "value": false
+        }
+    ],
+    "title": [
+        {
+            "value": "Updates"
+        }
+    ],
+    "description": [],
+    "menu_name": [
+        {
+            "value": "main"
+        }
+    ],
+    "link": [
+        {
+            "uri": "entity:node\/d32a5516-1f37-46d4-8040-e9dad062b194",
+            "title": "",
+            "options": []
+        }
+    ],
+    "external": [
+        {
+            "value": false
+        }
+    ],
+    "rediscover": [
+        {
+            "value": false
+        }
+    ],
+    "weight": [
+        {
+            "value": -43
+        }
+    ],
+    "expanded": [
+        {
+            "value": false
+        }
+    ],
+    "parent": [],
+    "changed": [
+        {
+            "value": "2026-01-11T19:49:47+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ]
+}

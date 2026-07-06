@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
- * Bootstrap  v5.3.7 (https://getbootstrap.com/)
+ * Bootstrap  v5.3.8 (https://getbootstrap.com/)
  * Copyright 2011-2025 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
@@ -539,6 +539,10 @@ legend + * {
 [type=search] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
+}
+[type=search]::-webkit-search-cancel-button {
+  cursor: pointer;
+  filter: grayscale(1);
 }
 
 /* rtl:raw:
@@ -6307,6 +6311,7 @@ textarea.form-control-lg {
 .spinner-grow,
 .spinner-border {
   display: inline-block;
+  flex-shrink: 0;
   width: var(--bs-spinner-width);
   height: var(--bs-spinner-height);
   vertical-align: var(--bs-spinner-vertical-align);
@@ -13195,6 +13200,25 @@ main {
   }
 }
 
+@media (max-width: 991px) {
+  .field--name-field-featured-image div.media--view-mode-hero.media--type-video-local {
+    aspect-ratio: 16/9;
+    max-width: 100%;
+    max-height: 460px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (min-width: 992px) {
+  .field--name-field-featured-image div.media--view-mode-hero.media--type-video-local {
+    width: 130%;
+    margin-left: -15%;
+    margin-bottom: 2em;
+  }
+}
+
 footer {
   background: rgba(0, 0, 0, 0.25);
   background: #ccc;
@@ -13303,6 +13327,37 @@ blockquote p {
   width: 70%;
   float: right;
   margin-left: 1em;
+}
+
+.align-center.media--view-mode-_6-9-large {
+  margin-left: 0;
+}
+@media (max-width: 991px) {
+  .align-center.media--view-mode-_6-9-large {
+    margin-left: auto;
+    margin-bottom: 0.75em;
+  }
+}
+@media (min-width: 992px) {
+  .align-center.media--view-mode-_6-9-large {
+    margin-left: 5%;
+    margin-bottom: 1.5em !important;
+  }
+}
+
+.media--view-mode-_-3-medium,
+.media--view-mode-_-3-medium .caption-drupal-media .align-left {
+  width: 30%;
+  margin-bottom: 1em;
+}
+
+div.view-footer > h3 > a, div.view-footer > .h3 > a {
+  text-align: right;
+}
+
+p.me {
+  visibility: hidden;
+  line-height: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

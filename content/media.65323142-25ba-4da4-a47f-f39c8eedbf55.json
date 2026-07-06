@@ -1,0 +1,105 @@
+{
+    "uuid": [
+        {
+            "value": "65323142-25ba-4da4-a47f-f39c8eedbf55"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "target_id": "image",
+            "target_type": "media_type",
+            "target_uuid": "48689db2-f06f-4b9a-91d3-1b1c6ea17072"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-11-12T03:42:11+00:00"
+        }
+    ],
+    "revision_user": [],
+    "revision_log_message": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "name": [
+        {
+            "value": "2wks-featured-3369.jpg"
+        }
+    ],
+    "thumbnail": [
+        {
+            "alt": "Black deerhound puppy with open eyes",
+            "title": null,
+            "width": 1600,
+            "height": 2133,
+            "target_type": "file",
+            "target_uuid": "ea772ac7-766e-48b0-91c0-9b0e0ff19d19"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-11-12T03:42:11+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-11-12T03:42:11+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_add_to_gallery": [
+        {
+            "value": true
+        }
+    ],
+    "field_description": [],
+    "field_media_image": [
+        {
+            "alt": "Black deerhound puppy with open eyes",
+            "title": "",
+            "width": 1600,
+            "height": 2133,
+            "target_type": "file",
+            "target_uuid": "ea772ac7-766e-48b0-91c0-9b0e0ff19d19"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "0990bbed-f5a0-4d69-9f3c-4c1ee136db9b"
+        }
+    ]
+}

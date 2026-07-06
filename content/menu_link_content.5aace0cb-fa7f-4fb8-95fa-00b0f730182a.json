@@ -1,0 +1,87 @@
+{
+    "uuid": [
+        {
+            "value": "5aace0cb-fa7f-4fb8-95fa-00b0f730182a"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "value": "menu_link_content"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-08-02T16:41:07+00:00"
+        }
+    ],
+    "revision_user": [],
+    "revision_log_message": [],
+    "enabled": [
+        {
+            "value": true
+        }
+    ],
+    "title": [
+        {
+            "value": "Preservation Breeders"
+        }
+    ],
+    "description": [],
+    "menu_name": [
+        {
+            "value": "main"
+        }
+    ],
+    "link": [
+        {
+            "uri": "entity:node\/0d1eac27-208a-4d0f-b38c-7304657119b6",
+            "title": null,
+            "options": []
+        }
+    ],
+    "external": [
+        {
+            "value": false
+        }
+    ],
+    "rediscover": [
+        {
+            "value": false
+        }
+    ],
+    "weight": [
+        {
+            "value": -48
+        }
+    ],
+    "expanded": [
+        {
+            "value": false
+        }
+    ],
+    "parent": [
+        {
+            "value": "menu_link_content:30db52cd-e3e0-4c40-8327-db32fd8c9597"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-08-05T21:55:27+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ]
+}

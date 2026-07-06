@@ -1,0 +1,119 @@
+{
+    "uuid": [
+        {
+            "value": "989aeaa4-9336-4809-b0b2-ce9c26dfe80d"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "blog",
+            "target_type": "node_type",
+            "target_uuid": "761f8199-0d14-47fd-bbc1-e504c8489fee"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-11T21:43:58+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "The Puppy Pack Tackles the Backyard"
+        }
+    ],
+    "created": [
+        {
+            "value": "2026-01-10T22:20:17+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-11T21:43:58+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/updates\/2026-01\/puppy-pack-tackles-backyard",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "unpublish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "field_content": [
+        {
+            "value": "<p>Now 10-weeks old, the LaDoc La Vita litter is growing up fast. Every day is a new adventure and nothing beats getting to fully stretch their legs while tearing around the backyard. Great exercise and a learning experience every time. The new year is upon us and we're preparing ourselves for these beautiful souls to soon venture out to their new homes. If you are looking for a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver<\/strong><\/a> about puppy availability.<\/p><drupal-media data-entity-type=\"media\" data-entity-uuid=\"1a6a9c75-6137-41b2-aab0-73278ad40762\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"8b85f907-9e51-4371-ae89-2acee73f8d60\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"292879e9-eeb4-47bb-953d-21bc804c6fc6\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"fa31d27d-1666-48d6-b638-fcc1f3865de2\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"85b00478-9690-494f-a622-7015fdc15f7c\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"da8340c6-391d-4be3-a63a-60ddb819bf3a\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media>",
+            "format": "content_format",
+            "processed": "<p>Now 10-weeks old, the LaDoc La Vita litter is growing up fast. Every day is a new adventure and nothing beats getting to fully stretch their legs while tearing around the backyard. Great exercise and a learning experience every time. The new year is upon us and we're preparing ourselves for these beautiful souls to soon venture out to their new homes. If you are looking for a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver<\/strong><\/a> about puppy availability.<\/p>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Go-go-go-go-go-Jan4.jpg.webp?itok=5l9DkDWC 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Go-go-go-go-go-Jan4.jpg.webp?itok=vAwb2AxM 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2026-01\/Go-go-go-go-go-Jan4.jpg.webp?itok=_QfjjE38 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Go-go-go-go-go-Jan4.jpg.webp?itok=5l9DkDWC\" alt=\"Deerhound puppies running in yard\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4930.jpg.webp?itok=atzz66vW 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4930.jpg.webp?itok=nsR2gVO4 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4930.jpg.webp?itok=e0vEr7Nm 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4930.jpg.webp?itok=atzz66vW\" alt=\"Puppy pack running at us\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4931.jpg.webp?itok=Ty5OFNGB 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4931.jpg.webp?itok=PCft6R8J 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4931.jpg.webp?itok=bIJH3h1D 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Here-they-come-Jan4-4931.jpg.webp?itok=Ty5OFNGB\" alt=\"Puppies running hard \">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yard-rumpus-1-Jan4.jpg.webp?itok=fnjl8Ukl 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Yard-rumpus-1-Jan4.jpg.webp?itok=4ZyoT-nX 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2026-01\/Yard-rumpus-1-Jan4.jpg.webp?itok=6hIH7j-F 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yard-rumpus-1-Jan4.jpg.webp?itok=fnjl8Ukl\" alt=\"The flying puppy\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Meeting-Arlo-Jan4.jpg.webp?itok=3MX4xgqB 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Meeting-Arlo-Jan4.jpg.webp?itok=mAA5QVjl 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2026-01\/Meeting-Arlo-Jan4.jpg.webp?itok=5AdIrwkx 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Meeting-Arlo-Jan4.jpg.webp?itok=3MX4xgqB\" alt=\"Deerhound puppies meeting the mini donkey\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yard-rumpus-Jan4-4938.jpg.webp?itok=MfhEp16d 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Yard-rumpus-Jan4-4938.jpg.webp?itok=2Q3oQzbK 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2026-01\/Yard-rumpus-Jan4-4938.jpg.webp?itok=Q-cFHqIX 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yard-rumpus-Jan4-4938.jpg.webp?itok=MfhEp16d\" alt=\"Romping puppies in the yard\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "Now 10-weeks old, the LaDoc La Vita litter is growing up fast. Every day is a new adventure and nothing beats getting to fully stretch their legs while tearing around the backyard. "
+        }
+    ],
+    "field_featured_image": [
+        {
+            "target_type": "media",
+            "target_uuid": "82333fb2-7f05-4b38-9366-34742a2fa293"
+        }
+    ],
+    "field_tags": []
+}

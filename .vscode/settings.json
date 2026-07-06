@@ -3,7 +3,17 @@
         "/**/node_modules/**",
         "/.vscode/**",
         "/web/themes/contrib"
+        "/web/themes/contrib/**"
     ],
-    "liveSassCompile.settings.savePath": "~/web/themes/custom/houndridgeb5/css/",
-    "liveSassCompile.settings.showAnnouncements": false
+    "liveSassCompile.settings.savePath": "/web/themes/custom/houndridgeb5/css/",
+    "liveSassCompile.settings.showAnnouncements": false,
+    "liveSassCompile.settings.formats": [
+
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath": "/web/themes/custom/houndridgeb5/css/",
+            "savePathReplacementPairs": null
+        }
+    ]
 }

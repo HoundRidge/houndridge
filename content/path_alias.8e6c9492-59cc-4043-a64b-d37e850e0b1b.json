@@ -1,0 +1,27 @@
+{
+    "uuid": [
+        {
+            "value": "8e6c9492-59cc-4043-a64b-d37e850e0b1b"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "path": [
+        {
+            "value": "\/node\/1e71739a-3c25-410d-9cd7-376ccfd622c4"
+        }
+    ],
+    "alias": [
+        {
+            "value": "\/updates\/2025-11\/eyes-have-it"
+        }
+    ],
+    "status": [
+        {
+            "value": true
+        }
+    ]
+}

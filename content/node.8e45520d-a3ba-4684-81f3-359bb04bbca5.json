@@ -1,0 +1,128 @@
+{
+    "uuid": [
+        {
+            "value": "8e45520d-a3ba-4684-81f3-359bb04bbca5"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "blog",
+            "target_type": "node_type",
+            "target_uuid": "761f8199-0d14-47fd-bbc1-e504c8489fee"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-10T22:01:39+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Nine Week Old Deerhound Stack Photos"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-12-22T20:54:43+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-10T22:01:39+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/updates\/2025-12\/nine-week-old-deerhound-stack-photos",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "unpublish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "field_content": [
+        {
+            "value": "<p>AKC Grand Champion Eynhallow Ladybird for Hound Ridge's Scottish deerhound litter is now nine weeks old.&nbsp;<\/p><p>Here are just a few of the lovely and consistent, large litter whelped October 24 from Fritzen\u2019s Doc of the Bay for Hound Ridge X GCH Eynhallow Ladybird for Hound Ridge. We are forever grateful to Bj\u00f6rn, Klaus and Debbie for our wonderful sire and dam. The puppies will be going to their forever homes in early 2026. If you are interested in loving a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m interested in puppies\">contact Joyce Weaver<\/a> about puppy availability.<\/p><drupal-media data-entity-type=\"media\" data-entity-uuid=\"80a95faa-3993-4e8c-8df7-e5bd7aed5970\" data-view-mode=\"16_9_wide\" data-align=\"center\" data-caption=\"Magenta girl\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"b670be7a-a918-484f-85be-b7c4755dabae\" data-view-mode=\"16_9_wide\" data-align=\"center\" data-caption=\"Orange girl\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"f03bc6cd-1b02-454c-bd9b-f46e0c9d62e5\" data-align=\"center\" data-view-mode=\"16_9_wide\" data-caption=\"Pink girl\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"2c207370-431a-4e2b-9c9b-dd5c2313bb70\" data-view-mode=\"16_9_wide\" data-align=\"center\" data-caption=\"Yellow girl\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"2da5d077-3536-467d-8b10-aea274ac493d\" data-view-mode=\"16_9_wide\" data-align=\"center\" data-caption=\"Green boy\">&nbsp;<\/drupal-media><drupal-media data-entity-type=\"media\" data-entity-uuid=\"45b860a8-1bdf-4879-baba-a5a2465b73df\" data-view-mode=\"16_9_wide\" data-align=\"center\" data-caption=\"Red boy\">&nbsp;<\/drupal-media>",
+            "format": "content_format",
+            "processed": "<p>AKC Grand Champion Eynhallow Ladybird for Hound Ridge's Scottish deerhound litter is now nine weeks old.&nbsp;<\/p>\n<p>Here are just a few of the lovely and consistent, large litter whelped October 24 from Fritzen\u2019s Doc of the Bay for Hound Ridge X GCH Eynhallow Ladybird for Hound Ridge. We are forever grateful to Bj\u00f6rn, Klaus and Debbie for our wonderful sire and dam. The puppies will be going to their forever homes in early 2026. If you are interested in loving a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m interested in puppies\">contact Joyce Weaver<\/a> about puppy availability.<\/p>\n<figure role=\"group\" class=\"caption caption-drupal-media align-center\">\n<div class=\"media media--type-image media--view-mode-_6-9-wide\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Magenta-stack-12-20.jpg.webp?itok=6o9N8ZlD 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Magenta-stack-12-20.jpg.webp?itok=LMmF1AUx 704w, \/sites\/default\/files\/styles\/16_9_1008x567_focal_point_webp\/public\/2026-01\/Magenta-stack-12-20.jpg.webp?itok=-CuxRTsU 1008w, \/sites\/default\/files\/styles\/16_9_1312x738_focal_point_webp\/public\/2026-01\/Magenta-stack-12-20.jpg.webp?itok=M9v0TFTM 1312w, \/sites\/default\/files\/styles\/16_9_1800x1080_focal_point_webp\/public\/2026-01\/Magenta-stack-12-20.jpg.webp?itok=U7AoUYMM 1800w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"704\" height=\"396\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Magenta-stack-12-20.jpg.webp?itok=6o9N8ZlD\" alt=\"Magenta stacked\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n\n<figcaption>Magenta girl<\/figcaption>\n<\/figure>\n<figure role=\"group\" class=\"caption caption-drupal-media align-center\">\n<div class=\"media media--type-image media--view-mode-_6-9-wide\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Orange-stack-12-20.jpg.webp?itok=In6W004M 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Orange-stack-12-20.jpg.webp?itok=rJ_PPJua 704w, \/sites\/default\/files\/styles\/16_9_1008x567_focal_point_webp\/public\/2026-01\/Orange-stack-12-20.jpg.webp?itok=JiLa6ASc 1008w, \/sites\/default\/files\/styles\/16_9_1312x738_focal_point_webp\/public\/2026-01\/Orange-stack-12-20.jpg.webp?itok=WNfnjEyB 1312w, \/sites\/default\/files\/styles\/16_9_1800x1080_focal_point_webp\/public\/2026-01\/Orange-stack-12-20.jpg.webp?itok=02MRN5E1 1800w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"704\" height=\"396\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Orange-stack-12-20.jpg.webp?itok=In6W004M\" alt=\"Orange girl stacked\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n\n<figcaption>Orange girl<\/figcaption>\n<\/figure>\n<figure role=\"group\" class=\"caption caption-drupal-media align-center\">\n<div class=\"media media--type-image media--view-mode-_6-9-wide\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Pink-stack-12-20.jpg.webp?itok=PLC0RWC1 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Pink-stack-12-20.jpg.webp?itok=Lsyx2SU9 704w, \/sites\/default\/files\/styles\/16_9_1008x567_focal_point_webp\/public\/2026-01\/Pink-stack-12-20.jpg.webp?itok=ogvMJB2k 1008w, \/sites\/default\/files\/styles\/16_9_1312x738_focal_point_webp\/public\/2026-01\/Pink-stack-12-20.jpg.webp?itok=2n40RNKA 1312w, \/sites\/default\/files\/styles\/16_9_1800x1080_focal_point_webp\/public\/2026-01\/Pink-stack-12-20.jpg.webp?itok=Fpch8Vhx 1800w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"704\" height=\"396\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Pink-stack-12-20.jpg.webp?itok=PLC0RWC1\" alt=\"Pink girl stacked\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n\n<figcaption>Pink girl<\/figcaption>\n<\/figure>\n<figure role=\"group\" class=\"caption caption-drupal-media align-center\">\n<div class=\"media media--type-image media--view-mode-_6-9-wide\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yellow-stack-12-20.jpg.webp?itok=rzxIpQWq 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Yellow-stack-12-20.jpg.webp?itok=VZFwZE6A 704w, \/sites\/default\/files\/styles\/16_9_1008x567_focal_point_webp\/public\/2026-01\/Yellow-stack-12-20.jpg.webp?itok=ziQzdQtb 1008w, \/sites\/default\/files\/styles\/16_9_1312x738_focal_point_webp\/public\/2026-01\/Yellow-stack-12-20.jpg.webp?itok=0XXQpmQQ 1312w, \/sites\/default\/files\/styles\/16_9_1800x1080_focal_point_webp\/public\/2026-01\/Yellow-stack-12-20.jpg.webp?itok=mLYjgzc2 1800w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"704\" height=\"396\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yellow-stack-12-20.jpg.webp?itok=rzxIpQWq\" alt=\"Yellow girl stacked\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n\n<figcaption>Yellow girl<\/figcaption>\n<\/figure>\n<figure role=\"group\" class=\"caption caption-drupal-media align-center\">\n<div class=\"media media--type-image media--view-mode-_6-9-wide\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Green-boy-stack-12-20.jpg.webp?itok=EJKe2szO 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Green-boy-stack-12-20.jpg.webp?itok=XoHUSuO7 704w, \/sites\/default\/files\/styles\/16_9_1008x567_focal_point_webp\/public\/2026-01\/Green-boy-stack-12-20.jpg.webp?itok=X1Zn-tNA 1008w, \/sites\/default\/files\/styles\/16_9_1312x738_focal_point_webp\/public\/2026-01\/Green-boy-stack-12-20.jpg.webp?itok=SkeMkTkH 1312w, \/sites\/default\/files\/styles\/16_9_1800x1080_focal_point_webp\/public\/2026-01\/Green-boy-stack-12-20.jpg.webp?itok=V5xYLhIc 1800w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"704\" height=\"396\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Green-boy-stack-12-20.jpg.webp?itok=EJKe2szO\" alt=\"Stacked Scottish deerhound puppy\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n\n<figcaption>Green boy<\/figcaption>\n<\/figure>\n<figure role=\"group\" class=\"caption caption-drupal-media align-center\">\n<div class=\"media media--type-image media--view-mode-_6-9-wide\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Red-boy-stack-12-20.jpg.webp?itok=GXk27M07 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Red-boy-stack-12-20.jpg.webp?itok=yxe1c1bJ 704w, \/sites\/default\/files\/styles\/16_9_1008x567_focal_point_webp\/public\/2026-01\/Red-boy-stack-12-20.jpg.webp?itok=G-BPFW7H 1008w, \/sites\/default\/files\/styles\/16_9_1312x738_focal_point_webp\/public\/2026-01\/Red-boy-stack-12-20.jpg.webp?itok=y2nQK3Mr 1312w, \/sites\/default\/files\/styles\/16_9_1800x1080_focal_point_webp\/public\/2026-01\/Red-boy-stack-12-20.jpg.webp?itok=be_d1OWu 1800w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"704\" height=\"396\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Red-boy-stack-12-20.jpg.webp?itok=GXk27M07\" alt=\"Red boy stacked\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n\n<figcaption>Red boy<\/figcaption>\n<\/figure>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "AKC Grand Champion Eynhallow Ladybird for Hound Ridge's Scottish deerhound litter is now nine weeks old. The puppies will be going to their forever homes in early 2026."
+        }
+    ],
+    "field_featured_image": [
+        {
+            "target_type": "media",
+            "target_uuid": "b2ef6a91-4650-41bf-8c77-ae33d58876b4"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "d5299cdf-5f81-4568-aa41-a37cadbdaa56"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "233bca58-ba04-4667-b262-042d52c0d5b1"
+        }
+    ]
+}

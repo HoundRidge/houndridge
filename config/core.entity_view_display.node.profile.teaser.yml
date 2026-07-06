@@ -12,8 +12,10 @@ dependencies:
     - field.field.node.profile.field_pedigree
     - field.field.node.profile.field_sex
     - field.field.node.profile.field_site_section
+    - image.style.16_9_512x288_focal_point_webp
     - node.type.profile
   module:
+    - media
     - user
 id: node.profile.teaser
 targetEntityType: node
@@ -21,26 +23,20 @@ bundle: profile
 mode: teaser
 content:
   field_featured_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: 4_3_medium
-      link: false
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  field_site_section:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: false
+      image_link: content
+      image_style: 16_9_512x288_focal_point_webp
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 0
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
 hidden:
   field_call_name: true
@@ -49,3 +45,4 @@ hidden:
   field_dob: true
   field_pedigree: true
   field_sex: true
+  field_site_section: true

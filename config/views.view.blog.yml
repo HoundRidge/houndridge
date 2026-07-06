@@ -11,8 +11,8 @@ dependencies:
     - add_content_by_bundle
     - better_exposed_filters
     - node
-    - taxonomy
     - user
+    - views_bootstrap
 _core:
   default_config_hash: ZZMKSnWc0ogzXlaquysvdOjwglpHFJ7KYpYaFf6rEnE
 id: blog
@@ -29,7 +29,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Blog
+      title: 'Updates from Hound Ridge'
       fields:
         title:
           id: title
@@ -289,7 +289,18 @@ display:
             default_group_multiple: {  }
             group_items: {  }
       style:
-        type: default
+        type: views_bootstrap_grid
+        options:
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+          grid_class: ''
+          col_xs: col-12
+          col_sm: none
+          col_md: col-md-6
+          col_lg: none
+          col_xl: none
+          col_xxl: col-xxl-4
       row:
         type: 'entity:node'
         options:
@@ -408,95 +419,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        langcode:
-          id: langcode
-          table: node_field_data
-          field: langcode
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: langcode
-          plugin_id: language
-          operator: in
-          value:
-            '***LANGUAGE_language_interface***': '***LANGUAGE_language_interface***'
-            und: und
-            zxx: zxx
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        field_tags_target_id:
-          id: field_tags_target_id
-          table: node__field_tags
-          field: field_tags_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_tags_target_id_op
-            label: Filter
-            description: ''
-            use_operator: false
-            operator: field_tags_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: tags
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          vid: tags
-          type: select
-          hierarchy: false
-          limit: true
-          error_message: true
         status:
           id: status
           table: node_field_data
@@ -542,7 +464,10 @@ display:
         groups:
           1: AND
       defaults:
+        title: true
         exposed_form: false
+        style: true
+        row: true
         filters: false
         filter_groups: false
         header: false
@@ -568,7 +493,6 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
         - url.query_args
         - 'user.node_grants:view'
         - user.permissions

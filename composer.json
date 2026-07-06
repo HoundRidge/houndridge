@@ -55,6 +55,7 @@
         "drupal/svg_image": "3.2.2",
         "drupal/tagify": "1.2.42",
         "drupal/token": "1.16.0",
+        "drupal/tome": "^1.13",
         "drupal/trash": "^3.0",
         "drupal/views_bootstrap": "^5.5@RC",
         "drupal/views_taxonomy_term_name_depth": "^7.3",

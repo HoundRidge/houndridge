@@ -1,0 +1,64 @@
+{
+    "uuid": [
+        {
+            "value": "addfb121-2355-483c-8676-911f780cd09b"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "basic_block",
+            "target_type": "block_content_type",
+            "target_uuid": "ab00889a-7dcb-4851-b039-665d5dd917b6"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-08-07T00:14:13+00:00"
+        }
+    ],
+    "revision_user": [],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "info": [
+        {
+            "value": "Footer Content"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-02-07T22:25:04+00:00"
+        }
+    ],
+    "reusable": [
+        {
+            "value": true
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "body": [
+        {
+            "value": "<p>Brooksville, Florida<\/p><p><a href=\"mailto:info@HoundRidge.net?subject=We saw your website\">Contact Us<\/a><\/p><p>We are members of the <a href=\"https:\/\/deerhound.org\" data-entity-type=\"external\">Scottish Deerhound Club of America<\/a>, <a href=\"https:\/\/iwclubofamerica.org\/\" data-entity-type=\"external\">Irish Wolfhound Club of America<\/a>, <a href=\"https:\/\/hernandocountykennelclub.org\" data-entity-type=\"external\">Hernando County Kennel Club<\/a> and <a href=\"https:\/\/www.akc.org\" data-entity-type=\"external\">AKC<\/a>. Website content, design and development by the humans of Hound Ridge. Powered by Drupal. <a href=\"https:\/\/www.facebook.com\/profile.php?id=61586736430743\" data-entity-type=\"external\"><strong>Follow us on Facebook<\/strong><\/a>.<\/p><p class=\"me\"><a href=\"https:\/\/mastodon.online\/@DonWeaver\">Mastodon<\/a><\/p>",
+            "format": "content_format",
+            "processed": "<p>Brooksville, Florida<\/p>\n<p><a href=\"mailto:info@HoundRidge.net?subject=We saw your website\">Contact Us<\/a><\/p>\n<p>We are members of the <a href=\"https:\/\/deerhound.org\" data-entity-type=\"external\">Scottish Deerhound Club of America<\/a>, <a href=\"https:\/\/iwclubofamerica.org\/\" data-entity-type=\"external\">Irish Wolfhound Club of America<\/a>, <a href=\"https:\/\/hernandocountykennelclub.org\" data-entity-type=\"external\">Hernando County Kennel Club<\/a> and <a href=\"https:\/\/www.akc.org\" data-entity-type=\"external\">AKC<\/a>. Website content, design and development by the humans of Hound Ridge. Powered by Drupal. <a href=\"https:\/\/www.facebook.com\/profile.php?id=61586736430743\" data-entity-type=\"external\"><strong>Follow us on Facebook<\/strong><\/a>.<\/p>\n<p class=\"me\"><a href=\"https:\/\/mastodon.online\/@DonWeaver\">Mastodon<\/a><\/p>\n",
+            "summary": ""
+        }
+    ]
+}

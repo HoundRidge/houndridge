@@ -1,0 +1,19 @@
+uuid: 02580907-8db4-476d-933b-4708419e661d
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.puppy_homing_questionnaire
+id: contact_message.puppy_homing_questionnaire.default
+targetEntityType: contact_message
+bundle: puppy_homing_questionnaire
+mode: default
+content:
+  message:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -16,6 +16,7 @@ settings:
       - heading
       - bold
       - italic
+      - style
       - blockQuote
       - bulletedList
       - numberedList
@@ -49,7 +50,13 @@ settings:
         startIndex: true
       multiBlock: true
     ckeditor5_sourceEditing:
-      allowed_tags: {  }
+      allowed_tags:
+        - '<class>'
+    ckeditor5_style:
+      styles:
+        -
+          label: 'Display:none'
+          element: '<p class="me">'
     linkit_extension:
       linkit_enabled: true
       linkit_profile: default

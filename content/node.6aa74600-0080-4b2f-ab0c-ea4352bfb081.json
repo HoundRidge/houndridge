@@ -1,0 +1,128 @@
+{
+    "uuid": [
+        {
+            "value": "6aa74600-0080-4b2f-ab0c-ea4352bfb081"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "blog",
+            "target_type": "node_type",
+            "target_uuid": "761f8199-0d14-47fd-bbc1-e504c8489fee"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-11T18:07:52+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Hound Ridge Welcomes the LaDoc la Vita litter!"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-11-12T00:38:37+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-11T18:07:52+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/updates\/2025-11\/hound-ridge-welcomes-ladoc-la-vita-litter",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "unpublish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "field_content": [
+        {
+            "value": "<p>The humans and hounds of Hound Ridge are thrilled to announce Hound Ridge LaDoc la Vita litter \u2764\ufe0f &nbsp;13 girls and 2 boys totaling 15 beautiful puppies! &nbsp; It was love at first sight for our Ladybird and Doc. &nbsp;GCH Eynhallow Ladybird for Hound Ridge X Fritzens Doc of the Bay for Hound Ridge. &nbsp;Puppies arrived into loving arms on Friday, October 24, 2025. There\u2019s been no sleep to speak of for humans since \u2764\ufe0f\ud83d\ude01\ud83e\udef6 but we are deliriously happy!<\/p><drupal-media data-entity-type=\"media\" data-entity-uuid=\"60ed9e5f-9139-4532-b95a-d88295c463ef\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media><p>&nbsp;&nbsp;<\/p><drupal-media data-entity-type=\"media\" data-entity-uuid=\"c43f8a2b-9178-40ce-bcae-4d19b9481be5\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media>",
+            "format": "content_format",
+            "processed": "<p>The humans and hounds of Hound Ridge are thrilled to announce Hound Ridge LaDoc la Vita litter \u2764\ufe0f &nbsp;13 girls and 2 boys totaling 15 beautiful puppies! &nbsp; It was love at first sight for our Ladybird and Doc. &nbsp;GCH Eynhallow Ladybird for Hound Ridge X Fritzens Doc of the Bay for Hound Ridge. &nbsp;Puppies arrived into loving arms on Friday, October 24, 2025. There\u2019s been no sleep to speak of for humans since \u2764\ufe0f\ud83d\ude01\ud83e\udef6 but we are deliriously happy!<\/p>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2025-11\/NewBorn-4288.jpg.webp?itok=SO82ekKS 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2025-11\/NewBorn-4288.jpg.webp?itok=XBSQJ3ld 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2025-11\/NewBorn-4288.jpg.webp?itok=EArhUp5A 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2025-11\/NewBorn-4288.jpg.webp?itok=SO82ekKS\" alt=\"Newborn puppies lying in whelping box\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n<p>&nbsp;&nbsp;<\/p>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2025-11\/2wks-3375.jpg.webp?itok=vprZMdOF 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2025-11\/2wks-3375.jpg.webp?itok=B1wQbBMu 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2025-11\/2wks-3375.jpg.webp?itok=RG7vfRWW 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2025-11\/2wks-3375.jpg.webp?itok=vprZMdOF\" alt=\"Very young puppy licking littermate\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "The humans and hounds of Hound Ridge are thrilled to announce Hound Ridge LaDoc la Vita litter."
+        }
+    ],
+    "field_featured_image": [
+        {
+            "target_type": "media",
+            "target_uuid": "e02f0bd3-a009-4546-bfc6-a80d4883e513"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "d5299cdf-5f81-4568-aa41-a37cadbdaa56"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "233bca58-ba04-4667-b262-042d52c0d5b1"
+        }
+    ]
+}

@@ -1,0 +1,112 @@
+{
+    "uuid": [
+        {
+            "value": "4e694edc-9ba8-4ce1-bf83-d301bc02b641"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2025-10-24T01:50:11+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": false
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Resources"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-07-31T23:35:43+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-10-24T01:50:11+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "unpublished"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/about\/resources",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>Add links to:<\/p><p>AKC<\/p><p>IWCA<\/p><p>IWDB<\/p><p>SDCA<\/p><p>SD Archive<\/p><p>other organizations<\/p><p>international clubs<\/p><p>Medical stuff<\/p><p>specialties?<\/p>",
+            "format": "content_format",
+            "processed": "<p>Add links to:<\/p>\n<p>AKC<\/p>\n<p>IWCA<\/p>\n<p>IWDB<\/p>\n<p>SDCA<\/p>\n<p>SD Archive<\/p>\n<p>other organizations<\/p>\n<p>international clubs<\/p>\n<p>Medical stuff<\/p>\n<p>specialties?<\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "Learn more about Irish Wolfhounds and Scottish Deerhounds."
+        }
+    ],
+    "field_featured_image": [],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "f6945fb1-0d44-4009-bc9d-a715a07bfa22"
+        }
+    ],
+    "field_tags": []
+}

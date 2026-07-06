@@ -12,7 +12,7 @@ dependencies:
 id: houndridgeb5_views_block__our_hounds_wolfhounds_block
 theme: houndridgeb5
 region: content
-weight: -1
+weight: 0
 provider: null
 plugin: 'views_block:our_hounds-wolfhounds_block'
 settings:

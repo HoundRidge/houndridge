@@ -1,0 +1,87 @@
+{
+    "uuid": [
+        {
+            "value": "38dc22da-835e-47be-a194-4d30676b2e5d"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "value": "menu_link_content"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-07-18T22:21:51+00:00"
+        }
+    ],
+    "revision_user": [],
+    "revision_log_message": [],
+    "enabled": [
+        {
+            "value": false
+        }
+    ],
+    "title": [
+        {
+            "value": "People"
+        }
+    ],
+    "description": [],
+    "menu_name": [
+        {
+            "value": "main"
+        }
+    ],
+    "link": [
+        {
+            "uri": "entity:node\/43833f92-bc41-4902-a1ef-0101c8865ac2",
+            "title": "",
+            "options": []
+        }
+    ],
+    "external": [
+        {
+            "value": false
+        }
+    ],
+    "rediscover": [
+        {
+            "value": false
+        }
+    ],
+    "weight": [
+        {
+            "value": -50
+        }
+    ],
+    "expanded": [
+        {
+            "value": false
+        }
+    ],
+    "parent": [
+        {
+            "value": "menu_link_content:cc76a761-5404-4db4-a4dc-27fc692277fb"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-07-31T22:42:57+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ]
+}

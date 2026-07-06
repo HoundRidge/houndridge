@@ -1,0 +1,68 @@
+{
+    "uuid": [
+        {
+            "value": "21a7c10c-44f4-4cbb-8a1d-82940c84a586"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "focal_point",
+            "target_type": "crop_type",
+            "target_uuid": "72884b05-1068-4399-b240-d10daccbccc7"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "entity_id": [
+        {
+            "value": 89
+        }
+    ],
+    "entity_type": [
+        {
+            "value": "file"
+        }
+    ],
+    "uri": [
+        {
+            "value": "public:\/\/2026-01\/Green-boy-stack-12-20.jpg"
+        }
+    ],
+    "height": [],
+    "width": [],
+    "x": [
+        {
+            "value": 1024
+        }
+    ],
+    "y": [
+        {
+            "value": 768
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-10T21:50:52+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ]
+}

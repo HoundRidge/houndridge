@@ -1,0 +1,112 @@
+{
+    "uuid": [
+        {
+            "value": "0d1eac27-208a-4d0f-b38c-7304657119b6"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2025-10-24T01:52:09+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": false
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Preservation Breeders"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-08-02T16:35:27+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-10-24T01:52:09+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "unpublished"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/about\/preservation-breeders",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>Anyone who breeds purebred dogs is a preservationist \u2014 if only by default. By taking a bitch of a particular breed to a dog of the same breed in order for her to conceive, carry, whelp and wean a litter of puppies with success, her owner is ensuring the preservation of her breed. This is Dog Breeding 101, of course, but the arrival of puppies begs the sincere question: Can the dam\u2019s owner be considered a preservation breeder?<\/p><p>&nbsp;<\/p><p>https:\/\/www.akc.org\/expert-advice\/dog-breeding\/breed-preservation-everything-old-new<\/p><p>https:\/\/showsightmagazine.com\/what-does-it-mean-to-be-a-preservation-breeder<\/p>",
+            "format": "content_format",
+            "processed": "<p>Anyone who breeds purebred dogs is a preservationist \u2014 if only by default. By taking a bitch of a particular breed to a dog of the same breed in order for her to conceive, carry, whelp and wean a litter of puppies with success, her owner is ensuring the preservation of her breed. This is Dog Breeding 101, of course, but the arrival of puppies begs the sincere question: Can the dam\u2019s owner be considered a preservation breeder?<\/p>\n<p>&nbsp;<\/p>\n<p><a href=\"https:\/\/www.akc.org\/expert-advice\/dog-breeding\/breed-preservation-everything-old-new\">https:\/\/www.akc.org\/expert-advice\/dog-breeding\/breed-preservation-every\u2026<\/a><\/p>\n<p><a href=\"https:\/\/showsightmagazine.com\/what-does-it-mean-to-be-a-preservation-breeder\">https:\/\/showsightmagazine.com\/what-does-it-mean-to-be-a-preservation-br\u2026<\/a><\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "Why it's so important."
+        }
+    ],
+    "field_featured_image": [],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "f6945fb1-0d44-4009-bc9d-a715a07bfa22"
+        }
+    ],
+    "field_tags": []
+}

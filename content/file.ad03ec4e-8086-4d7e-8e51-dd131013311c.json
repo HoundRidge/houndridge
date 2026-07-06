@@ -1,0 +1,54 @@
+{
+    "uuid": [
+        {
+            "value": "ad03ec4e-8086-4d7e-8e51-dd131013311c"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "filename": [
+        {
+            "value": "2wks-3375.jpg"
+        }
+    ],
+    "uri": [
+        {
+            "value": "public:\/\/2025-11\/2wks-3375.jpg",
+            "url": "\/sites\/default\/files\/2025-11\/2wks-3375.jpg"
+        }
+    ],
+    "filemime": [
+        {
+            "value": "image\/jpeg"
+        }
+    ],
+    "filesize": [
+        {
+            "value": 314478
+        }
+    ],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-11-12T04:07:11+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-11-12T04:07:53+00:00"
+        }
+    ]
+}

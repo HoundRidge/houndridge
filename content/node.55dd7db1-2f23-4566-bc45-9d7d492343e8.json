@@ -1,0 +1,112 @@
+{
+    "uuid": [
+        {
+            "value": "55dd7db1-2f23-4566-bc45-9d7d492343e8"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2025-10-24T01:50:44+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": false
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "IW History: Captain Graham"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-08-02T16:00:00+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-10-24T01:50:44+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "unpublished"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/irish-wolfhounds\/iw-history-captain-graham",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>Captain George Augustus Graham was a Scot, born in 1833. Early on he became interested in the Scottish Deerhound and started collecting their pedigrees (he collected over 800, which were published in 1894) but it was through this that he became interested in the old Irish wolfdog. It was in 1859, at the age of 26, whilst living in Rednock, Dursley, Gloucestershire, that he became the owner of his first \"Irish wolfhound\", Faust. From that date he devoted his life to the resuscitation of the Irish wolfhound. He felt that the breed had not died out, but had simply not been kept up to its original standard due to lack of its natural prey, so he searched out any he could find that went back to the original wolfdog and obtained as many as he could and then bred from them if at all possible. He felt that the Scottish Deerhound was the Irish wolfhound in all but size and substance and bred with them, mainly those of the Glengarry strain. As he writes in his monograph, compiled in August 1879, \"That we are in possession of the breed in its original integrity is not pretended; at the same time it is confidently believed that there are strains now existing tracing back, more or less clearly, to the original breed; and it also appears to be tolerably certain that our modern Deerhound is descended from that noble animal....\"<\/p><p>Whether this was actually the case was the basis for prolonged argument. Richardson had considered it so, (at least, after hearing a talk by a Mr. Haffield in Dublin on the subject) and so did several other writers besides Capt. Graham, but others begged to differ and sometimes quite strongly. Though no-one at this time carried the argument as far as one translation of Buffon had in claiming that he wrote \"The large Dane, the Irish greyhound, and the common greyhound though they appear different at the first sight, are nevertheless the same dog; the large Dane is no more than a plump Irish greyhound; and the common greyhound is only the Irish greyhound, rendered more thin and delicate by care; for there is not more difference between these three dogs than between a Dutchman, a Frenchman, and an Italian.\" Although in this piece, Buffon was actually talking about the M\u00e2tin, which name was given different meanings by different translators. Buffon considered the Irish wolf-dog to have been similar to the Great Dane and not to have been a greyhound at all, although the Great Dane of his time was not unlike a Greyhound.<\/p><p>Father Edmund Hogan, writing in 1897, says: \"A race has started which claims to be a lawful representative of our celebrated hounds. They are acknowledged as such by the English Kennel Club, and their breeders and supporters have formed themselves into \"The Irish Wolfhound Club\" of Great Britain and Ireland.<br>But is this \"Claimant\" \"the Real Roger\"? - that is the question; or is he of the same strain and form and mould? This problem has been passionately debated for many years, and may find its solution in the evidence, which I am about to produce without pressing such evidence into the service of any preconceived theory. The reader will draw conclusions for himself; but I may be allowed to say that I agree, on the whole, with Captain Graham, of Rednock, and I apply to the modern wolfdog the proverbial saw of Maccombich in Waverley, \"Mar \u00e9 Bran, is \u00e9 a br\u00e1thair,\" if it be not Bran, it is his brother.\"<\/p><p>Hugh Dalziel, on the other hand, in his book British Dogs, writes \"Captain Graham states that he has dogs of Irish Wolfhound blood whose pedigree can be traced for forty years. I take it that these go back to Richardson's strain; but, as Richardson fails, in my opinion, to show that he had genuine material to work upon, and as I consider it undeniable that, if he had any pure Irish Wolfhound blood to start with, he greatly diluted it; and, further, as I presume that Captain Graham must have carried on the diluting process, I find it difficult to understand how any thing more than infinitesimally allied to the original Irish Wolfhound can remain.<\/p><p>http:\/\/www.irishwolfhounds.org\/graham.htm<\/p>",
+            "format": "content_format",
+            "processed": "<p>Captain George Augustus Graham was a Scot, born in 1833. Early on he became interested in the Scottish Deerhound and started collecting their pedigrees (he collected over 800, which were published in 1894) but it was through this that he became interested in the old Irish wolfdog. It was in 1859, at the age of 26, whilst living in Rednock, Dursley, Gloucestershire, that he became the owner of his first \"Irish wolfhound\", Faust. From that date he devoted his life to the resuscitation of the Irish wolfhound. He felt that the breed had not died out, but had simply not been kept up to its original standard due to lack of its natural prey, so he searched out any he could find that went back to the original wolfdog and obtained as many as he could and then bred from them if at all possible. He felt that the Scottish Deerhound was the Irish wolfhound in all but size and substance and bred with them, mainly those of the Glengarry strain. As he writes in his monograph, compiled in August 1879, \"That we are in possession of the breed in its original integrity is not pretended; at the same time it is confidently believed that there are strains now existing tracing back, more or less clearly, to the original breed; and it also appears to be tolerably certain that our modern Deerhound is descended from that noble animal....\"<\/p>\n<p>Whether this was actually the case was the basis for prolonged argument. Richardson had considered it so, (at least, after hearing a talk by a Mr. Haffield in Dublin on the subject) and so did several other writers besides Capt. Graham, but others begged to differ and sometimes quite strongly. Though no-one at this time carried the argument as far as one translation of Buffon had in claiming that he wrote \"The large Dane, the Irish greyhound, and the common greyhound though they appear different at the first sight, are nevertheless the same dog; the large Dane is no more than a plump Irish greyhound; and the common greyhound is only the Irish greyhound, rendered more thin and delicate by care; for there is not more difference between these three dogs than between a Dutchman, a Frenchman, and an Italian.\" Although in this piece, Buffon was actually talking about the M\u00e2tin, which name was given different meanings by different translators. Buffon considered the Irish wolf-dog to have been similar to the Great Dane and not to have been a greyhound at all, although the Great Dane of his time was not unlike a Greyhound.<\/p>\n<p>Father Edmund Hogan, writing in 1897, says: \"A race has started which claims to be a lawful representative of our celebrated hounds. They are acknowledged as such by the English Kennel Club, and their breeders and supporters have formed themselves into \"The Irish Wolfhound Club\" of Great Britain and Ireland.<br>But is this \"Claimant\" \"the Real Roger\"? - that is the question; or is he of the same strain and form and mould? This problem has been passionately debated for many years, and may find its solution in the evidence, which I am about to produce without pressing such evidence into the service of any preconceived theory. The reader will draw conclusions for himself; but I may be allowed to say that I agree, on the whole, with Captain Graham, of Rednock, and I apply to the modern wolfdog the proverbial saw of Maccombich in Waverley, \"Mar \u00e9 Bran, is \u00e9 a br\u00e1thair,\" if it be not Bran, it is his brother.\"<\/p>\n<p>Hugh Dalziel, on the other hand, in his book British Dogs, writes \"Captain Graham states that he has dogs of Irish Wolfhound blood whose pedigree can be traced for forty years. I take it that these go back to Richardson's strain; but, as Richardson fails, in my opinion, to show that he had genuine material to work upon, and as I consider it undeniable that, if he had any pure Irish Wolfhound blood to start with, he greatly diluted it; and, further, as I presume that Captain Graham must have carried on the diluting process, I find it difficult to understand how any thing more than infinitesimally allied to the original Irish Wolfhound can remain.<\/p>\n<p><a href=\"http:\/\/www.irishwolfhounds.org\/graham.htm\">http:\/\/www.irishwolfhounds.org\/graham.htm<\/a><\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "The history"
+        }
+    ],
+    "field_featured_image": [],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "82230c74-98fe-4326-b597-8430e2eeedce"
+        }
+    ],
+    "field_tags": []
+}

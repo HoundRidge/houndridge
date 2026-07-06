@@ -200,8 +200,26 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
+      use_more: false
+      use_more_always: true
+      use_more_text: more
+      link_display: custom_url
+      link_url: /updates/recent-updates-hound-ridge
       header: {  }
-      footer: {  }
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: false
+          content:
+            value: '<h3 style="text-align:right;"><a href="/updates/recent-updates-hound-ridge" title="View all updates">View All Updates »</h3></a>'
+            format: content_format
+          tokenize: false
       display_extenders: {  }
     cache_metadata:
       max-age: -1

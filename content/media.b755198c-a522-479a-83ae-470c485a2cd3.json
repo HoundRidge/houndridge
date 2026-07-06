@@ -1,0 +1,110 @@
+{
+    "uuid": [
+        {
+            "value": "b755198c-a522-479a-83ae-470c485a2cd3"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "target_id": "image",
+            "target_type": "media_type",
+            "target_uuid": "48689db2-f06f-4b9a-91d3-1b1c6ea17072"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2026-02-07T21:05:32+00:00"
+        }
+    ],
+    "revision_user": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log_message": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "name": [
+        {
+            "value": "Facebook_Logo_32.png"
+        }
+    ],
+    "thumbnail": [
+        {
+            "alt": "Facebook logo",
+            "title": null,
+            "width": 36,
+            "height": 36,
+            "target_type": "file",
+            "target_uuid": "fac7cf3b-7dcd-4eac-a651-c15bbe6d44fe"
+        }
+    ],
+    "created": [
+        {
+            "value": "2026-02-07T20:45:21+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-02-07T21:05:32+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_add_to_gallery": [
+        {
+            "value": true
+        }
+    ],
+    "field_description": [],
+    "field_media_image": [
+        {
+            "alt": "Facebook logo",
+            "title": "",
+            "width": 36,
+            "height": 36,
+            "target_type": "file",
+            "target_uuid": "fac7cf3b-7dcd-4eac-a651-c15bbe6d44fe"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "0990bbed-f5a0-4d69-9f3c-4c1ee136db9b"
+        }
+    ]
+}

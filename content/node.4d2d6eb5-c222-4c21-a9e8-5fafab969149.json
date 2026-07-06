@@ -1,0 +1,117 @@
+{
+    "uuid": [
+        {
+            "value": "4d2d6eb5-c222-4c21-a9e8-5fafab969149"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-11T17:13:34+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "The Hound Ridge Story"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-07-31T22:57:10+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-11T17:13:34+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/about\/hound-ridge-story",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>Twenty-five years ago we visited an Irish wolfhound litter for the first time. We immediately fell in love with our first Irish wolfhound. Life hasn't been the same since.<\/p><p>We are Joyce and Don Weaver. Dogs have always been part of both of our lives and we've been drawn to the giant breeds for years. After moving to Florida and beginning to get over the loss of our 10-year-old great dane, we got our first Irish wolfhound. Aonghus was a lovable, happy wheaten boy who unfortunately began showing signs of health problems at a young age. Despite those issues, he lived a full and long life. And Joyce began researching and studying hound health, longevity, nutrition and breeding.<\/p><p>From one, to two, to three and more ... our pack gradually expanded. From Irish wolfhound to Scottish deerhounds, our understanding and appreciation for these special breeds continued to grow. Eventually, we moved from our Tampa home to a small rural acreage in outside of Brooksville, Florida. Here our hound have plenty of fenced room to stretch their legs and enjoy their life to the fullest.<\/p><p>We currently have Scottish deerhound puppies available for sale, going to their forever homes in early 2026. For additional information about a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver <\/strong><\/a>about possible puppy availability.<\/p><p>&nbsp;<\/p>",
+            "format": "content_format",
+            "processed": "<p>Twenty-five years ago we visited an Irish wolfhound litter for the first time. We immediately fell in love with our first Irish wolfhound. Life hasn't been the same since.<\/p>\n<p>We are Joyce and Don Weaver. Dogs have always been part of both of our lives and we've been drawn to the giant breeds for years. After moving to Florida and beginning to get over the loss of our 10-year-old great dane, we got our first Irish wolfhound. Aonghus was a lovable, happy wheaten boy who unfortunately began showing signs of health problems at a young age. Despite those issues, he lived a full and long life. And Joyce began researching and studying hound health, longevity, nutrition and breeding.<\/p>\n<p>From one, to two, to three and more ... our pack gradually expanded. From Irish wolfhound to Scottish deerhounds, our understanding and appreciation for these special breeds continued to grow. Eventually, we moved from our Tampa home to a small rural acreage in outside of Brooksville, Florida. Here our hound have plenty of fenced room to stretch their legs and enjoy their life to the fullest.<\/p>\n<p>We currently have Scottish deerhound puppies available for sale, going to their forever homes in early 2026. For additional information about a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver <\/strong><\/a>about possible puppy availability.<\/p>\n<p>&nbsp;<\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "more to come"
+        }
+    ],
+    "field_featured_image": [
+        {
+            "target_type": "media",
+            "target_uuid": "8c95c7c9-69b8-4e52-9843-a0779247694c"
+        }
+    ],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "f6945fb1-0d44-4009-bc9d-a715a07bfa22"
+        }
+    ],
+    "field_tags": []
+}

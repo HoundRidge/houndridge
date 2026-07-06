@@ -1,0 +1,117 @@
+{
+    "uuid": [
+        {
+            "value": "0d15fffd-d3a2-4f4d-82fe-1de54f466c90"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-19T18:24:59+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Scottish Deerhound Puppies for Sale in Florida"
+        }
+    ],
+    "created": [
+        {
+            "value": "2026-01-11T18:54:01+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-19T18:24:59+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/about\/scottish-deerhound-puppies-sale",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>As preservation breeders, Hound Ridge occasionally breeds Irish wolfhounds puppy litters and Scottish deerhounds puppy litters. We only breed a bitch once and we only breed hounds that we believe embody the essence of these special breeds. We are passionate about Irish wolfhounds. We are passionate about Scottish deerhounds. Our life revolves around our hounds.<\/p><p>Currently, we have limited availability for several female Scottish deerhounds for sale near Brooksville, Florida. If you are interested in loving a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver<\/strong><\/a> about puppy availability. We are dedicated to finding the best homes possible for each of our puppies. We'd like to know more about what your experience and expectations are for your new deerhound family member. When you contact us, please be prepared for questions!<\/p><drupal-media data-entity-type=\"media\" data-entity-uuid=\"34c92a90-6efd-4043-a4f9-a3300ef72276\" data-view-mode=\"16_9_large\" data-align=\"center\">&nbsp;<\/drupal-media>",
+            "format": "content_format",
+            "processed": "<p>As preservation breeders, Hound Ridge occasionally breeds Irish wolfhounds puppy litters and Scottish deerhounds puppy litters. We only breed a bitch once and we only breed hounds that we believe embody the essence of these special breeds. We are passionate about Irish wolfhounds. We are passionate about Scottish deerhounds. Our life revolves around our hounds.<\/p>\n<p>Currently, we have limited availability for several female Scottish deerhounds for sale near Brooksville, Florida. If you are interested in loving a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver<\/strong><\/a> about puppy availability. We are dedicated to finding the best homes possible for each of our puppies. We'd like to know more about what your experience and expectations are for your new deerhound family member. When you contact us, please be prepared for questions!<\/p>\n<article class=\"align-center media media--type-image media--view-mode-_6-9-large\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yard-Romp-Leaping-5023.jpg.webp?itok=X2Kbb04s 512w, \/sites\/default\/files\/styles\/16_9_704x396_focal_point_webp\/public\/2026-01\/Yard-Romp-Leaping-5023.jpg.webp?itok=Rb4tfxE4 704w, \/sites\/default\/files\/styles\/16_9_960x540_focal_point_webp\/public\/2026-01\/Yard-Romp-Leaping-5023.jpg.webp?itok=Gr73Pl_D 960w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"960\" height=\"540\">\n                  <img loading=\"lazy\" width=\"512\" height=\"288\" src=\"\/sites\/default\/files\/styles\/16_9_512x288_focal_point_webp\/public\/2026-01\/Yard-Romp-Leaping-5023.jpg.webp?itok=X2Kbb04s\" alt=\"Puppies leaping and running in yard\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/article>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "As preservation breeders, we occasionally breeds Irish wolfhounds puppies and Scottish deerhounds puppies. In early 2026, Hound Ridge has limited availability for several female Scottish deerhounds for sale.\r\n"
+        }
+    ],
+    "field_featured_image": [
+        {
+            "target_type": "media",
+            "target_uuid": "310ae7a7-d4d7-4ba6-ab3f-d90a6b22f997"
+        }
+    ],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "f6945fb1-0d44-4009-bc9d-a715a07bfa22"
+        }
+    ],
+    "field_tags": []
+}

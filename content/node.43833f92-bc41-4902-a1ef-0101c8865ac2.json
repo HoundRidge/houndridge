@@ -1,0 +1,106 @@
+{
+    "uuid": [
+        {
+            "value": "43833f92-bc41-4902-a1ef-0101c8865ac2"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2025-10-24T01:51:54+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": false
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "People"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-01-10T02:41:56+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-10-24T01:51:54+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "unpublished"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/people",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [],
+    "field_description": [
+        {
+            "value": "A listing page for person profiles."
+        }
+    ],
+    "field_featured_image": [],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "f6945fb1-0d44-4009-bc9d-a715a07bfa22"
+        }
+    ],
+    "field_tags": []
+}

@@ -1,0 +1,94 @@
+{
+    "uuid": [
+        {
+            "value": "7903e037-fdb3-4b12-bf63-b0196bc1d1a5"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "default",
+            "target_type": "easy_email_type",
+            "target_uuid": "3cbe93b3-715b-4ef9-aba8-d7053d9e9e21"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2026-01-19T17:01:29+00:00"
+        }
+    ],
+    "revision_user": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log_message": [],
+    "label": [
+        {
+            "value": "Default"
+        }
+    ],
+    "key": [],
+    "creator_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "recipient_uid": [],
+    "recipient_address": [
+        {
+            "value": "info@HoundRidge.net"
+        }
+    ],
+    "cc_uid": [],
+    "cc_address": [],
+    "bcc_uid": [],
+    "bcc_address": [],
+    "from_name": [
+        {
+            "value": "Hound Ridge"
+        }
+    ],
+    "from_address": [
+        {
+            "value": "dweaver@tampabay.rr.com"
+        }
+    ],
+    "reply_to": [
+        {
+            "value": "dweaver@tampabay.rr.com"
+        }
+    ],
+    "subject": [
+        {
+            "value": "[Puppy Homing Questionnaire] TLS again"
+        }
+    ],
+    "body_html": [
+        {
+            "value": "Don Weaver (https:\/\/houndridge.ddev.site\/user\/1) sent a message using the contact form at https:\/\/houndridge.ddev.site\/contact.<br \/>\n<br \/>\n<br \/>\n  <div class=\"field field--name-message field--type-string-long field--label-above\"><br \/>\n    <div class=\"field__label\">Message<\/div><br \/>\n              <div class=\"field__item\">testing<\/div><br \/>\n          <\/div><br \/>\n",
+            "format": "easy_email",
+            "processed": "Don Weaver (<a href=\"https:\/\/houndridge.ddev.site\/user\/1\">https:\/\/houndridge.ddev.site\/user\/1<\/a>) sent a message using the contact form at <a href=\"https:\/\/houndridge.ddev.site\/contact\">https:\/\/houndridge.ddev.site\/contact<\/a>.<br>\n<br>\n<br>\n  <div class=\"field field--name-message field--type-string-long field--label-above\"><br>\n    <div class=\"field__label\">Message<\/div><br>\n              <div class=\"field__item\">testing<\/div><br>\n          <\/div><br>\n"
+        }
+    ],
+    "body_plain": [
+        {
+            "value": "Don Weaver (https:\/\/houndridge.ddev.site\/user\/1) sent a message using the contact form at https:\/\/houndridge.ddev.site\/contact.\n\n\n  <div class=\"field field--name-message field--type-string-long field--label-above\">\n    <div class=\"field__label\">Message<\/div>\n              <div class=\"field__item\">testing<\/div>\n          <\/div>\n"
+        }
+    ],
+    "inbox_preview": [],
+    "attachment": [],
+    "attachment_path": [],
+    "created": [
+        {
+            "value": "2026-01-19T17:01:29+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-19T17:01:29+00:00"
+        }
+    ],
+    "sent": []
+}

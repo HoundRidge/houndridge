@@ -1,0 +1,118 @@
+{
+    "uuid": [
+        {
+            "value": "e02f0bd3-a009-4546-bfc6-a80d4883e513"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "target_id": "image",
+            "target_type": "media_type",
+            "target_uuid": "48689db2-f06f-4b9a-91d3-1b1c6ea17072"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-11-12T04:03:33+00:00"
+        }
+    ],
+    "revision_user": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log_message": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "name": [
+        {
+            "value": "NewBorn-4286"
+        }
+    ],
+    "thumbnail": [
+        {
+            "alt": "Newborn puppies nursing",
+            "title": null,
+            "width": 2133,
+            "height": 1600,
+            "target_type": "file",
+            "target_uuid": "f26c1af4-908a-437b-901c-c2833dcad936"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-11-12T04:02:46+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-11-12T04:03:33+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_add_to_gallery": [
+        {
+            "value": true
+        }
+    ],
+    "field_description": [],
+    "field_media_image": [
+        {
+            "alt": "Newborn puppies nursing",
+            "title": "",
+            "width": 2133,
+            "height": 1600,
+            "target_type": "file",
+            "target_uuid": "f26c1af4-908a-437b-901c-c2833dcad936"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "0990bbed-f5a0-4d69-9f3c-4c1ee136db9b"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "d5299cdf-5f81-4568-aa41-a37cadbdaa56"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "233bca58-ba04-4667-b262-042d52c0d5b1"
+        }
+    ]
+}

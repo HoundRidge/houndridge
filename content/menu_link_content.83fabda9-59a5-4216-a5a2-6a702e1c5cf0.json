@@ -1,0 +1,87 @@
+{
+    "uuid": [
+        {
+            "value": "83fabda9-59a5-4216-a5a2-6a702e1c5cf0"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "value": "menu_link_content"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-07-31T22:58:04+00:00"
+        }
+    ],
+    "revision_user": [],
+    "revision_log_message": [],
+    "enabled": [
+        {
+            "value": true
+        }
+    ],
+    "title": [
+        {
+            "value": "The Hound Ridge Story"
+        }
+    ],
+    "description": [],
+    "menu_name": [
+        {
+            "value": "main"
+        }
+    ],
+    "link": [
+        {
+            "uri": "entity:node\/4d2d6eb5-c222-4c21-a9e8-5fafab969149",
+            "title": null,
+            "options": []
+        }
+    ],
+    "external": [
+        {
+            "value": false
+        }
+    ],
+    "rediscover": [
+        {
+            "value": false
+        }
+    ],
+    "weight": [
+        {
+            "value": -50
+        }
+    ],
+    "expanded": [
+        {
+            "value": false
+        }
+    ],
+    "parent": [
+        {
+            "value": "menu_link_content:30db52cd-e3e0-4c40-8327-db32fd8c9597"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-08-02T16:04:59+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ]
+}

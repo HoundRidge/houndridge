@@ -1,0 +1,117 @@
+{
+    "uuid": [
+        {
+            "value": "e939b485-ca10-4061-9036-3d6d394d7214"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-23T22:24:46+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Welcome to Hound Ridge!"
+        }
+    ],
+    "created": [
+        {
+            "value": "2024-04-26T22:22:06+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-23T22:24:46+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/welcome",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>Greetings from the hounds and humans of Hound Ridge. We are breeders of AKC-registered Irish wolfhounds and Scottish deerhounds. We're located in west-central Florida, on a small farm outside of Brooksville, Florida. Please feel free to learn more about our hounds, our experience and our philosophy about breeding, raising and living with these special giant breed hounds.<\/p>",
+            "format": "content_format",
+            "processed": "<p>Greetings from the hounds and humans of Hound Ridge. We are breeders of AKC-registered Irish wolfhounds and Scottish deerhounds. We're located in west-central Florida, on a small farm outside of Brooksville, Florida. Please feel free to learn more about our hounds, our experience and our philosophy about breeding, raising and living with these special giant breed hounds.<\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "We are breeders of AKC-registered Irish wolfhounds and Scottish deerhounds. We're located in west-central Florida, on a small farm outside of Brooksville, Florida. Please feel free to learn more about our hounds, our experience and our philosophy about breeding, raising and living with these special giant breed hounds."
+        }
+    ],
+    "field_featured_image": [
+        {
+            "target_type": "media",
+            "target_uuid": "2a1580d0-d263-4bec-a35a-04b0b239b418"
+        }
+    ],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "f6945fb1-0d44-4009-bc9d-a715a07bfa22"
+        }
+    ],
+    "field_tags": []
+}

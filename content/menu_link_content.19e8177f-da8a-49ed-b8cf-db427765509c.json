@@ -1,0 +1,87 @@
+{
+    "uuid": [
+        {
+            "value": "19e8177f-da8a-49ed-b8cf-db427765509c"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "value": "menu_link_content"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2025-08-02T16:02:28+00:00"
+        }
+    ],
+    "revision_user": [],
+    "revision_log_message": [],
+    "enabled": [
+        {
+            "value": true
+        }
+    ],
+    "title": [
+        {
+            "value": "IW History: Captain Graham"
+        }
+    ],
+    "description": [],
+    "menu_name": [
+        {
+            "value": "main"
+        }
+    ],
+    "link": [
+        {
+            "uri": "entity:node\/55dd7db1-2f23-4566-bc45-9d7d492343e8",
+            "title": null,
+            "options": []
+        }
+    ],
+    "external": [
+        {
+            "value": false
+        }
+    ],
+    "rediscover": [
+        {
+            "value": false
+        }
+    ],
+    "weight": [
+        {
+            "value": -48
+        }
+    ],
+    "expanded": [
+        {
+            "value": false
+        }
+    ],
+    "parent": [
+        {
+            "value": "menu_link_content:2f659ce1-61c4-4a69-ba67-da72d57a6585"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-08-05T20:50:36+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ]
+}

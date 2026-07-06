@@ -1,0 +1,54 @@
+{
+    "uuid": [
+        {
+            "value": "169103a7-a12b-4f2e-b188-231fb98693f5"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "filename": [
+        {
+            "value": "NewBorn-4287.jpg"
+        }
+    ],
+    "uri": [
+        {
+            "value": "public:\/\/2025-11\/NewBorn-4287.jpg",
+            "url": "\/sites\/default\/files\/2025-11\/NewBorn-4287.jpg"
+        }
+    ],
+    "filemime": [
+        {
+            "value": "image\/jpeg"
+        }
+    ],
+    "filesize": [
+        {
+            "value": 434844
+        }
+    ],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-11-12T04:03:50+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2025-11-12T04:04:22+00:00"
+        }
+    ]
+}

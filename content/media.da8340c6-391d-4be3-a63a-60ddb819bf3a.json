@@ -1,0 +1,122 @@
+{
+    "uuid": [
+        {
+            "value": "da8340c6-391d-4be3-a63a-60ddb819bf3a"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "bundle": [
+        {
+            "target_id": "image",
+            "target_type": "media_type",
+            "target_uuid": "48689db2-f06f-4b9a-91d3-1b1c6ea17072"
+        }
+    ],
+    "revision_created": [
+        {
+            "value": "2026-01-10T22:17:59+00:00"
+        }
+    ],
+    "revision_user": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log_message": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "name": [
+        {
+            "value": "Yard-rumpus-Jan4-4938"
+        }
+    ],
+    "thumbnail": [
+        {
+            "alt": "Romping puppies in the yard",
+            "title": null,
+            "width": 2400,
+            "height": 1493,
+            "target_type": "file",
+            "target_uuid": "3a4a16a8-3123-4472-85fe-ffbd4143af7f"
+        }
+    ],
+    "created": [
+        {
+            "value": "2026-01-10T22:17:09+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-10T22:17:59+00:00"
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "path": [
+        {
+            "alias": null,
+            "pid": null,
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_add_to_gallery": [
+        {
+            "value": true
+        }
+    ],
+    "field_description": [
+        {
+            "value": "Running for the joy of it."
+        }
+    ],
+    "field_media_image": [
+        {
+            "alt": "Romping puppies in the yard",
+            "title": "",
+            "width": 2400,
+            "height": 1493,
+            "target_type": "file",
+            "target_uuid": "3a4a16a8-3123-4472-85fe-ffbd4143af7f"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "0990bbed-f5a0-4d69-9f3c-4c1ee136db9b"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "d5299cdf-5f81-4568-aa41-a37cadbdaa56"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "233bca58-ba04-4667-b262-042d52c0d5b1"
+        }
+    ]
+}

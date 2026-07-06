@@ -1,0 +1,27 @@
+{
+    "uuid": [
+        {
+            "value": "41dd0192-83d4-4685-a1e6-997253debc59"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "path": [
+        {
+            "value": "\/node\/43833f92-bc41-4902-a1ef-0101c8865ac2"
+        }
+    ],
+    "alias": [
+        {
+            "value": "\/about\/people"
+        }
+    ],
+    "status": [
+        {
+            "value": true
+        }
+    ]
+}

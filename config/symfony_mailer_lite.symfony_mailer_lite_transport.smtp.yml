@@ -1,0 +1,20 @@
+uuid: 51f4d027-abc8-499f-a43c-d61ca50f5b9d
+langcode: en
+status: true
+dependencies: {  }
+id: smtp
+label: SMTP
+plugin: smtp
+configuration:
+  user: _mainaccount@houndridge.net
+  pass: WhatGr8Hounds!
+  pass_key: ''
+  use_key_module: false
+  host: 'mail.houndridge.net '
+  port: 465
+  query:
+    verify_peer: true
+    local_domain: ''
+    restart_threshold: 100
+    restart_threshold_sleep: 0
+    ping_threshold: 100

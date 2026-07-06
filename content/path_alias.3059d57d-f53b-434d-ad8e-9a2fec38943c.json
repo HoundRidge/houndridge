@@ -1,0 +1,27 @@
+{
+    "uuid": [
+        {
+            "value": "3059d57d-f53b-434d-ad8e-9a2fec38943c"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "path": [
+        {
+            "value": "\/node\/d32a5516-1f37-46d4-8040-e9dad062b194"
+        }
+    ],
+    "alias": [
+        {
+            "value": "\/updates\/recent-updates-hound-ridge"
+        }
+    ],
+    "status": [
+        {
+            "value": true
+        }
+    ]
+}

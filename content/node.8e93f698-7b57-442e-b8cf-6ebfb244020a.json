@@ -1,0 +1,112 @@
+{
+    "uuid": [
+        {
+            "value": "8e93f698-7b57-442e-b8cf-6ebfb244020a"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "page",
+            "target_type": "node_type",
+            "target_uuid": "8fe3cbb0-63ae-4f45-8e42-6925f979b7ef"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-11T18:52:19+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Scottish Deerhounds"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-08-02T21:22:35+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-11T18:52:19+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/scottish-deerhounds",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [],
+    "unpublish_state": [],
+    "field_content": [
+        {
+            "value": "<p>We are passionate about Scottish deerhounds. Our first Scottish deerhound was a rescue\/rehome hound that we met back in 2012. We feel in love with the breed and knew that they needed to be part of the Hound Ridge pack from then on. When Rose left us after a well-lived long life, we started a worldwide search for our next deerhounds.&nbsp;<\/p><p>We now have limited availability for Scottish deerhound puppies in Brooksville, Florida from our beautiful large litter <a href=\"\/node\/3\" data-entity-type=\"node\" data-entity-uuid=\"d32a5516-1f37-46d4-8040-e9dad062b194\" data-entity-substitution=\"canonical\">Hound Ridge LaDoc la Vita litter<\/a> from GCH Eynhallow Ladybird for Hound Ridge x Fritzens Doc of the Bay for Hound Ridge. &nbsp;The puppies were whelped on October 24, 2025. Several female deerhound puppies are available for sale in early 2026 to new homes in Florida, the southeast and other areas. If you are looking for a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver<\/strong><\/a> about puppy availability and learn more.<\/p>",
+            "format": "content_format",
+            "processed": "<p>We are passionate about Scottish deerhounds. Our first Scottish deerhound was a rescue\/rehome hound that we met back in 2012. We feel in love with the breed and knew that they needed to be part of the Hound Ridge pack from then on. When Rose left us after a well-lived long life, we started a worldwide search for our next deerhounds.&nbsp;<\/p>\n<p>We now have limited availability for Scottish deerhound puppies in Brooksville, Florida from our beautiful large litter <a href=\"\/updates\/recent-updates-hound-ridge\" data-entity-type=\"node\" data-entity-uuid=\"d32a5516-1f37-46d4-8040-e9dad062b194\" data-entity-substitution=\"canonical\">Hound Ridge LaDoc la Vita litter<\/a> from GCH Eynhallow Ladybird for Hound Ridge x Fritzens Doc of the Bay for Hound Ridge. &nbsp;The puppies were whelped on October 24, 2025. Several female deerhound puppies are available for sale in early 2026 to new homes in Florida, the southeast and other areas. If you are looking for a Scottish deerhound puppy, please <a href=\"mailto:Joyce@HoundRidge.net?subject=I&amp;apos;m%20interested%20in%20puppies\"><strong>contact Joyce Weaver<\/strong><\/a> about puppy availability and learn more.<\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "We are passionate about Scottish deerhounds. We now have limited availability for Scottish deerhound puppies in Brooksville, Florida from our beautiful large litter Hound Ridge LaDoc la Vita litter from GCH Eynhallow Ladybird for Hound Ridge x Fritzens Doc of the Bay for Hound Ridge.  "
+        }
+    ],
+    "field_featured_image": [],
+    "field_site_section": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "e3b878d9-3dd9-4b2f-924f-bff9be3ee6cc"
+        }
+    ],
+    "field_tags": []
+}

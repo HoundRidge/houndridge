@@ -1,0 +1,128 @@
+{
+    "uuid": [
+        {
+            "value": "fd726fbc-34b8-45fa-ba94-8f452a4e3f66"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "type": [
+        {
+            "target_id": "blog",
+            "target_type": "node_type",
+            "target_uuid": "761f8199-0d14-47fd-bbc1-e504c8489fee"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "2026-01-10T20:51:33+00:00"
+        }
+    ],
+    "revision_uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "revision_log": [],
+    "status": [
+        {
+            "value": true
+        }
+    ],
+    "uid": [
+        {
+            "target_type": "user",
+            "target_uuid": "0798d352-030b-4d89-ae1d-d4004e704110"
+        }
+    ],
+    "title": [
+        {
+            "value": "Scottish Deerhound Puppies Pictures"
+        }
+    ],
+    "created": [
+        {
+            "value": "2025-12-14T19:20:09+00:00"
+        }
+    ],
+    "changed": [
+        {
+            "value": "2026-01-10T20:51:33+00:00"
+        }
+    ],
+    "promote": [
+        {
+            "value": true
+        }
+    ],
+    "sticky": [
+        {
+            "value": false
+        }
+    ],
+    "default_langcode": [
+        {
+            "value": true
+        }
+    ],
+    "revision_translation_affected": [
+        {
+            "value": true
+        }
+    ],
+    "moderation_state": [
+        {
+            "value": "published"
+        }
+    ],
+    "path": [
+        {
+            "alias": "\/updates\/2025-12\/scottish-deerhound-puppies-pictures",
+            "langcode": "en"
+        }
+    ],
+    "publish_on": [],
+    "unpublish_on": [],
+    "publish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "unpublish_state": [
+        {
+            "value": "_none"
+        }
+    ],
+    "field_content": [
+        {
+            "value": "<drupal-media data-entity-type=\"media\" data-entity-uuid=\"aa4ebdad-ed9a-4cd2-9f2c-e36ff47585f2\" data-align=\"left\">&nbsp;<\/drupal-media><p>It's hard to believe that these beautiful Scottish deerhound puppies are now six weeks old. The Florida weather is cooperating and it's nice enough for them to spend much of their day on the back porch enjoying stretching their legs and romping together. So much fun to watch their individual personalities develop.<\/p><p>&nbsp;<\/p><p>&nbsp;<\/p><drupal-media data-entity-type=\"media\" data-entity-uuid=\"2a1580d0-d263-4bec-a35a-04b0b239b418\" data-align=\"center\">&nbsp;<\/drupal-media><p>&nbsp;<\/p><drupal-media data-entity-type=\"media\" data-entity-uuid=\"2bdf5e12-bcf4-403c-87d5-b68c7972aebd\" data-align=\"center\">&nbsp;<\/drupal-media><p>&nbsp;<\/p>",
+            "format": "content_format",
+            "processed": "<div class=\"align-left media media--type-image media--view-mode-medium\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/uncropped_500w_webp\/public\/2026-01\/Red-porch-Dec13-4600.jpg.webp?itok=9qWT3Ngg 500w, \/sites\/default\/files\/styles\/uncropped_600w_webp\/public\/2026-01\/Red-porch-Dec13-4600.jpg.webp?itok=eD5SyLRT 600w, \/sites\/default\/files\/styles\/uncropped_720w_webp\/public\/2026-01\/Red-porch-Dec13-4600.jpg.webp?itok=DgW5XeXY 720w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"720\" height=\"708\">\n                  <img loading=\"lazy\" width=\"500\" height=\"492\" src=\"\/sites\/default\/files\/styles\/uncropped_500w_webp\/public\/2026-01\/Red-porch-Dec13-4600.jpg.webp?itok=9qWT3Ngg\" alt=\"Red boy sitting on the porch\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n<p>It's hard to believe that these beautiful Scottish deerhound puppies are now six weeks old. The Florida weather is cooperating and it's nice enough for them to spend much of their day on the back porch enjoying stretching their legs and romping together. So much fun to watch their individual personalities develop.<\/p>\n<p>&nbsp;<\/p>\n<p>&nbsp;<\/p>\n<div class=\"align-center media media--type-image media--view-mode-medium\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/uncropped_500w_webp\/public\/2026-01\/Yellow-porch-Dec13-4488.jpg.webp?itok=jGL2D0ad 500w, \/sites\/default\/files\/styles\/uncropped_600w_webp\/public\/2026-01\/Yellow-porch-Dec13-4488.jpg.webp?itok=Nn1y7z3I 600w, \/sites\/default\/files\/styles\/uncropped_720w_webp\/public\/2026-01\/Yellow-porch-Dec13-4488.jpg.webp?itok=MmzBnraR 720w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"720\" height=\"960\">\n                  <img loading=\"lazy\" width=\"500\" height=\"667\" src=\"\/sites\/default\/files\/styles\/uncropped_500w_webp\/public\/2026-01\/Yellow-porch-Dec13-4488.jpg.webp?itok=jGL2D0ad\" alt=\"Yellow girl laying on the porch\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n<p>&nbsp;<\/p>\n<div class=\"align-center media media--type-image media--view-mode-medium\">\n  \n      \n  <div class=\"field field--name-field-media-image field--type-image field--label-visually_hidden\">\n    <div class=\"field__label visually-hidden\">Image<\/div>\n              <div class=\"field__item\">    <picture>\n                  <source srcset=\"\/sites\/default\/files\/styles\/uncropped_500w_webp\/public\/2026-01\/Green-porch-Dec13-4627.jpg.webp?itok=cclPn4mc 500w, \/sites\/default\/files\/styles\/uncropped_600w_webp\/public\/2026-01\/Green-porch-Dec13-4627.jpg.webp?itok=ICpbytcl 600w, \/sites\/default\/files\/styles\/uncropped_720w_webp\/public\/2026-01\/Green-porch-Dec13-4627.jpg.webp?itok=tEZ1_bfa 720w\" media=\"all and (min-width: 500px)\" type=\"image\/webp\" sizes=\"100vw\" width=\"720\" height=\"891\">\n                  <img loading=\"lazy\" width=\"500\" height=\"619\" src=\"\/sites\/default\/files\/styles\/uncropped_500w_webp\/public\/2026-01\/Green-porch-Dec13-4627.jpg.webp?itok=cclPn4mc\" alt=\"Green boy sitting on porch step\" class=\"img-fluid\">\n\n  <\/picture>\n\n<\/div>\n          <\/div>\n\n  <\/div>\n<p>&nbsp;<\/p>\n"
+        }
+    ],
+    "field_description": [
+        {
+            "value": "The Hound Ridge Scottish deerhound litter of puppies are now six weeks old and enjoying porch time."
+        }
+    ],
+    "field_featured_image": [
+        {
+            "target_type": "media",
+            "target_uuid": "d4aa5bdd-6d50-4196-b94f-fd15504c2639"
+        }
+    ],
+    "field_tags": [
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "d5299cdf-5f81-4568-aa41-a37cadbdaa56"
+        },
+        {
+            "target_type": "taxonomy_term",
+            "target_uuid": "233bca58-ba04-4667-b262-042d52c0d5b1"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+uuid: 86957264-7713-4b61-b9a0-925a6a73929b
+langcode: en
+status: true
+dependencies: {  }
+id: puppy_homing_questionnaire
+label: 'Puppy Homing Questionnaire'
+recipients:
+  - info@HoundRidge.net
+reply: ''
+weight: 0
+message: 'Thank you for your interest. We will respond as soon as we can.'
+redirect: /
