@@ -403,7 +403,7 @@ class Highlight extends ProcessorPluginBase implements PluginFormInterface {
       }
 
       if ($this->getDataTypeHelper()->isTextType($field->getType())) {
-        $fields_by_datasource[$field->getDatasourceId()][$path] = $field_id;
+        $fields_by_datasource[(string) $field->getDatasourceId()][$path] = $field_id;
       }
     }
 
@@ -587,6 +587,10 @@ class Highlight extends ProcessorPluginBase implements PluginFormInterface {
     foreach ($values as $value_index => $value) {
       if ($total_length >= $excerpt_length) {
         break;
+      }
+
+      if ($value === NULL) {
+        continue;
       }
 
       $text = $this->prepareTextForExcerpt($value);
@@ -887,6 +891,10 @@ class Highlight extends ProcessorPluginBase implements PluginFormInterface {
     // Take text from the first available field/value.
     foreach ($field_data as $field_info) {
       foreach ($field_info['values'] as $value) {
+        if ($value === NULL) {
+          continue;
+        }
+
         $text = $this->prepareTextForExcerpt($value);
         if ($text) {
           $snippet = mb_substr($text, 0, $excerpt_length);

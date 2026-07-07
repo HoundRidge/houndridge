@@ -43,6 +43,7 @@ abstract class RecipeSelectionFormBase extends FormBase implements InstallerForm
       ],
       '#type' => 'actions',
     ];
+    $form['#title'] = '';
     return $form;
   }
 

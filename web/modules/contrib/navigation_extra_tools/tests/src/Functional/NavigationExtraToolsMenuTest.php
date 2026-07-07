@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\navigation_extra_tools\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\RequirementsPageTrait;
 use Drupal\user\UserInterface;
 
 // cSpell:ignore toolshelp
@@ -15,6 +16,8 @@ use Drupal\user\UserInterface;
  * @group navigation_extra_tools
  */
 final class NavigationExtraToolsMenuTest extends BrowserTestBase {
+
+  use RequirementsPageTrait;
 
   /**
    * {@inheritdoc}
@@ -168,6 +171,8 @@ final class NavigationExtraToolsMenuTest extends BrowserTestBase {
   public function testRunUpdates(): void {
     // Test clicking "Run updates".
     $this->clickLink('Run updates');
+    // Fix requirements for unsupported PHP versions.
+    $this->updateRequirementsProblem();
     $this->assertSession()->responseContains('Drupal database update');
   }
 

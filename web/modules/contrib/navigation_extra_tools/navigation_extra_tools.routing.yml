@@ -118,7 +118,7 @@ navigation_extra_tools.project_browser:
     _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
     _title: 'Project Browser'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'access project browser clear storage'
 
 navigation_extra_tools.project_browser.clear_storage:
   path: '/admin/project_browser/clear'
@@ -126,4 +126,4 @@ navigation_extra_tools.project_browser.clear_storage:
     _controller: '\Drupal\navigation_extra_tools\Controller\NavigationProjectBrowserController::clearStorage'
     _title: 'Clear storage'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'access project browser clear storage'

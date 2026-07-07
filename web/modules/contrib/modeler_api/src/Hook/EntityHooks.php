@@ -5,7 +5,6 @@ namespace Drupal\modeler_api\Hook;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Extension\Extension;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
@@ -49,8 +48,6 @@ class EntityHooks {
    *
    * @param array $entity_types
    *   The entity type definitions.
-   *
-   * @phpstan-ignore-next-line
    */
   #[Hook('entity_type_build')]
   public function entityTypeBuild(array &$entity_types): void {
@@ -65,16 +62,18 @@ class EntityHooks {
         continue;
       }
       $type = $owner->configEntityTypeId();
-      /**
-       * @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types
-       */
-      $entity_types[$type]
-        ->setAccessClass(AccessControlHandler::class)
-        ->setListBuilderClass(ListBuilder::class)
-        ->setLinkTemplate('collection', '/' . $basePath)
-        ->setFormClass('delete', DeleteForm::class)
-        ->setLinkTemplate('edit-form', '/' . $basePath . '/{' . $type . '}/edit')
-        ->setLinkTemplate('delete-form', '/' . $basePath . '/{' . $type . '}/delete');
+      if (isset($entity_types[$type])) {
+        /**
+        * @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types
+        */
+        $entity_types[$type]
+          ->setAccessClass(AccessControlHandler::class)
+          ->setListBuilderClass(ListBuilder::class)
+          ->setLinkTemplate('collection', '/' . $basePath)
+          ->setFormClass('delete', DeleteForm::class)
+          ->setLinkTemplate('edit-form', '/' . $basePath . '/{' . $type . '}/edit')
+          ->setLinkTemplate('delete-form', '/' . $basePath . '/{' . $type . '}/delete');
+      }
     }
     $alreadyRunning = FALSE;
   }
@@ -87,8 +86,6 @@ class EntityHooks {
    *
    * @return array
    *   An array of operations.
-   *
-   * @phpstan-ignore-next-line
    */
   #[Hook('entity_operation')]
   public function entityOperation(EntityInterface $entity): array {
@@ -197,154 +194,41 @@ class EntityHooks {
   }
 
   /**
-   * Implements hook_config_schema_info_alter().
+   * Implements hook_entity_operation_alter().
    *
-   * @param array $definitions
-   *   The schema definitions.
+   * When a model uses the fallback modeler and there are more than two modelers
+   * available, the default edit operation would lead to an access denied
+   * response because there is no way to auto-switch to a single modeler.
+   * Remove the edit button in that case.
    *
-   * @phpstan-ignore-next-line
+   * @param array $operations
+   *   The operations array.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity.
    */
-  #[Hook('config_schema_info_alter')]
-  public function configSchemaInfoAlter(array &$definitions): void {
-    foreach ($this->modelOwnerPluginManager->getAllInstances(TRUE) as $owner) {
-      $provider = $owner->configEntityProviderId();
-      $entityTypeId = $owner->configEntityTypeId();
-      $key = implode('.', [$provider, $entityTypeId, '*']);
-      if (!isset($definitions[$key]['mapping']['third_party_settings']['mapping']['modeler_api'])) {
-        $definitions[$key]['mapping']['third_party_settings']['type'] = 'mapping';
-        $definitions[$key]['mapping']['third_party_settings']['mapping'] = [
-          'modeler_api' => [
-            'type' => 'mapping',
-            'mapping' => [
-              'modeler_id' => [
-                'type' => 'string',
-                'label' => 'ID',
-              ],
-              'data' => [
-                'type' => 'string',
-                'label' => 'Raw data, or an md5 hash of the raw data if that is stored externally',
-              ],
-              'changelog' => [
-                'type' => 'text',
-                'label' => 'Changelog',
-              ],
-              'label' => [
-                'type' => 'label',
-                'label' => 'Label',
-              ],
-              'documentation' => [
-                'type' => 'text',
-                'label' => 'Documentation',
-              ],
-              'tags' => [
-                'type' => 'sequence',
-                'label' => 'Changelog',
-                'sequence' => [
-                  'type' => 'string',
-                  'label' => 'Tag',
-                ],
-              ],
-              'version' => [
-                'type' => 'string',
-                'label' => 'Version',
-              ],
-              'annotations' => [
-                'type' => 'sequence',
-                'label' => 'Annotations',
-                'sequence' => [
-                  'type' => 'mapping',
-                  'label' => 'Annotation',
-                  'mapping' => [
-                    'text' => [
-                      'type' => 'label',
-                      'label' => 'Text',
-                    ],
-                    'assigned_to' => [
-                      'type' => 'sequence',
-                      'label' => 'Assigned to',
-                      'sequence' => [
-                        'type' => 'string',
-                        'label' => 'Target ID',
-                      ],
-                    ],
-                  ],
-                ],
-              ],
-              'colors' => [
-                'type' => 'sequence',
-                'label' => 'Colors',
-                'sequence' => [
-                  'type' => 'mapping',
-                  'label' => 'Color',
-                  'mapping' => [
-                    'fill' => [
-                      'type' => 'string',
-                      'label' => 'Fill color',
-                    ],
-                    'stroke' => [
-                      'type' => 'string',
-                      'label' => 'Stroke color',
-                    ],
-                  ],
-                ],
-              ],
-              'swimlanes' => [
-                'type' => 'sequence',
-                'label' => 'Swimlanes',
-                'sequence' => [
-                  'type' => 'mapping',
-                  'label' => 'Swimlane',
-                  'mapping' => [
-                    'name' => [
-                      'type' => 'string',
-                      'label' => 'Name',
-                    ],
-                    'components' => [
-                      'type' => 'sequence',
-                      'label' => 'Components',
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-        ];
-      }
+  #[Hook('entity_operation_alter')]
+  public function entityOperationAlter(array &$operations, EntityInterface $entity): void {
+    if (!isset($operations['edit'])) {
+      return;
     }
-  }
-
-  /**
-   * Implements hook_system_info_alter().
-   *
-   * @param array $info
-   *   The info file contents, passed by reference so that it can be altered.
-   * @param \Drupal\Core\Extension\Extension $file
-   *   Full information about the module or theme.
-   * @param string $type
-   *   Either 'module' or 'theme', depending on the type of .info.yml file that
-   *   was passed.
-   *
-   * @phpstan-ignore-next-line
-   */
-  #[Hook('system_info_alter')]
-  public function systemInfoAlter(array &$info, Extension $file, string $type): void {
-    if ($type === 'module') {
-      foreach ($this->modelOwnerPluginManager->getAllInstances(TRUE) as $owner) {
-        $provider = $owner->getPluginDefinition()['provider'];
-        if (str_ends_with($file->getPathname(), '/' . $provider . '.info.yml')) {
-          $name = 'entity.' . $owner->configEntityTypeId() . '.collection';
-          if ($route = $this->modelerApiService->getRouteByName($name)) {
-            $info['configure'] = $name;
-          }
-        }
+    $modelers = $this->modelerManager->getAllInstances();
+    if (count($modelers) <= 2) {
+      return;
+    }
+    if (
+      $entity instanceof ConfigEntityInterface &&
+      ($owner = $this->modelerApiService->findOwner($entity)) &&
+      $owner->configEntityBasePath()
+    ) {
+      $modeler = $owner->getModeler($entity);
+      if ($modeler === NULL || $modeler->getPluginId() === 'fallback') {
+        unset($operations['edit']);
       }
     }
   }
 
   /**
    * Implements hook_modules_installed().
-   *
-   * @phpstan-ignore-next-line
    */
   #[Hook('modules_installed')]
   public function modulesInstalled(array $modules, bool $is_syncing): void {

@@ -2,11 +2,17 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests access to the scheduled content overview page and user tab.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerViewsAccessTest extends SchedulerBrowserTestBase {
 
   /**
@@ -98,6 +104,7 @@ class SchedulerViewsAccessTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataViewScheduledContentUser
    */
+  #[DataProvider('dataViewScheduledContentUser')]
   public function testViewScheduledContentUser($entityTypeId, $bundle) {
     $this->createScheduledItems($entityTypeId, $bundle);
     $url_end = ($entityTypeId == 'node') ? 'scheduled' : "scheduled_{$entityTypeId}";
@@ -202,6 +209,7 @@ class SchedulerViewsAccessTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testViewScheduledContentOverview($entityTypeId, $bundle) {
     $this->createScheduledItems($entityTypeId, $bundle);
     $scheduled_url = $this->adminUrl('scheduled', $entityTypeId, $bundle);

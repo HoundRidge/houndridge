@@ -2,11 +2,16 @@
 
 namespace Drupal\Tests\scheduler\Kernel;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests the migration of Drupal 7 scheduler configuration.
  *
  * @group scheduler_kernel
  */
+#[Group('scheduler_kernel')]
+#[RunTestsInSeparateProcesses]
 class MigrateSchedulerConfigTest extends MigrateSchedulerTestBase {
 
   /**

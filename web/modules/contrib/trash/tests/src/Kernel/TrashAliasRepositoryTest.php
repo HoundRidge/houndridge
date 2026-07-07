@@ -25,6 +25,11 @@ class TrashAliasRepositoryTest extends TrashKernelTestBase {
   ];
 
   /**
+   * {@inheritdoc}
+   */
+  protected array $additionalTrashEntityTypes = ['path_alias' => []];
+
+  /**
    * The alias repository service.
    */
   protected AliasRepositoryInterface $aliasRepository;
@@ -40,14 +45,15 @@ class TrashAliasRepositoryTest extends TrashKernelTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    $this->installEntitySchema('path_alias');
-
-    // Enable trash for path_alias entity type.
-    $this->enableEntityTypesForTrash(['path_alias']);
-
-    // Get services after container rebuild.
     $this->aliasRepository = $this->container->get('path_alias.repository');
     $this->aliasManager = $this->container->get('path_alias.manager');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function installAdditionalEntitySchemas(): void {
+    $this->installEntitySchema('path_alias');
   }
 
   /**
@@ -181,8 +187,7 @@ class TrashAliasRepositoryTest extends TrashKernelTestBase {
     $alias->delete();
 
     // Try to reload - should be null since it was hard deleted.
-    $alias = PathAlias::load($alias->id());
-    $this->assertNull($alias, 'Alias was hard deleted when trash is disabled.');
+    $this->assertEmpty(PathAlias::load($alias->id()), 'Alias was hard deleted when trash is disabled.');
   }
 
   /**
@@ -209,8 +214,7 @@ class TrashAliasRepositoryTest extends TrashKernelTestBase {
     $this->assertEquals('/test-cache', $path, 'Deleted alias not found after cache clear.');
 
     // Restore the alias.
-    $storage = $this->container->get('entity_type.manager')->getStorage('path_alias');
-    $storage->restoreFromTrash([$alias]);
+    $this->restoreEntity('path_alias', $alias->id());
 
     // The cache should be cleared again, so lookup should find it.
     $path = $this->aliasManager->getPathByAlias('/test-cache', 'en');

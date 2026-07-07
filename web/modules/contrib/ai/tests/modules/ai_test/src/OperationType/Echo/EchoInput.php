@@ -2,12 +2,12 @@
 
 namespace Drupal\ai_test\OperationType\Echo;
 
-use Drupal\ai\OperationType\InputInterface;
+use Drupal\ai\OperationType\InputBase;
 
 /**
  * Input object for echo operations.
  */
-class EchoInput implements InputInterface {
+class EchoInput extends InputBase {
 
   /**
    * The constructor.
@@ -22,27 +22,6 @@ class EchoInput implements InputInterface {
    */
   public function toString(): string {
     return $this->input;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDebugData(): array {
-    return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDebugData(array $debugData): void {
-    // Do nothing.
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setDebugDataValue(string $key, $value): void {
-    // Do nothing.
   }
 
   /**

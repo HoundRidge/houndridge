@@ -4,18 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\RecipeKit\Installer\Form;
 
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Installer\Form\SiteSettingsForm;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Decorates the installer's database settings form.
- *
- * We cannot rely on the install system reliably invoking the install profile's
- * hook_form_alter in the early installer, so the only way to ensure that we
- * can customize this form is to decorate its form class.
  *
  * @see \Drupal\RecipeKit\Installer\Hooks::installTasksAlter()
  *
@@ -24,33 +17,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   removed at any time, without warning. External code should not interact
  *   with this class.
  */
-final class SiteSettingsFormDecorator implements FormInterface, ContainerInjectionInterface {
-
-  public function __construct(
-    private readonly SiteSettingsForm $decorated,
-  ) {}
+final class SiteSettingsFormDecorator extends AlterBase {
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): self {
-    return new self(
-      SiteSettingsForm::create($container),
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getFormId(): string {
-    return $this->decorated->getFormId();
-  }
+  protected const string DECORATES = SiteSettingsForm::class;
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $form = $this->decorated->buildForm($form, $form_state);
+    $form = parent::buildForm($form, $form_state);
 
     $sqlite_key = 'Drupal\sqlite\Driver\Database\sqlite';
     // Default to SQLite, if available, because it doesn't require any
@@ -64,20 +42,6 @@ final class SiteSettingsFormDecorator implements FormInterface, ContainerInjecti
       unset($form['settings'][$sqlite_key]['database']);
     }
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-    $this->decorated->validateForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $this->decorated->submitForm($form, $form_state);
   }
 
 }

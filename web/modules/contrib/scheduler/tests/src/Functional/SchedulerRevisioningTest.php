@@ -3,12 +3,17 @@
 namespace Drupal\Tests\scheduler\Functional;
 
 use Drupal\Core\Entity\EntityInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests revision options when Scheduler publishes or unpublishes content.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerRevisioningTest extends SchedulerBrowserTestBase {
 
   /**
@@ -45,12 +50,17 @@ class SchedulerRevisioningTest extends SchedulerBrowserTestBase {
    */
   protected function assertRevisionCount(EntityInterface $entity, int $expected, string $message = '') {
     if (!$entity->getEntityType()->isRevisionable()) {
+      // Cannot run this check, as there will be no revision table.
       return;
     }
-    // Because we are not deleting any revisions we can take a short cut and use
-    // getLatestRevisionId() which will effectively be the number of revisions.
+    // Count the number of revisions.
     $storage = $this->entityStorageObject($entity->getEntityTypeId());
-    $count = $storage->getLatestRevisionId($entity->id());
+    $query = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->allRevisions()
+      ->condition($entity->getEntityType()->getKey('id'), $entity->id())
+      ->execute();
+    $count = count(array_keys($query));
     $this->assertEquals($expected, (int) $count, $message);
   }
 
@@ -63,6 +73,7 @@ class SchedulerRevisioningTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testNewRevision($entityTypeId, $bundle) {
     $entityType = $this->entityTypeObject($entityTypeId, $bundle);
 
@@ -85,6 +96,10 @@ class SchedulerRevisioningTest extends SchedulerBrowserTestBase {
     $entityType->setThirdPartySetting('scheduler', 'publish_revision', TRUE)
       ->setThirdPartySetting('scheduler', 'unpublish_revision', TRUE)
       ->save();
+
+    // Create an extra entity, not used directly in the test, but having this
+    // extra ensures that the counting of revisions is tested thoroughly.
+    $this->createEntity($entityTypeId, $bundle, ['publish_on' => strtotime('-2 hours')]);
 
     // Test scheduled publication with revisioning enabled.
     $entity = $this->scheduleAndRunCron($entity, 'publish');
@@ -114,6 +129,7 @@ class SchedulerRevisioningTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataAlterCreationDate
    */
+  #[DataProvider('dataAlterCreationDate')]
   public function testAlterCreationDate($entityTypeId, $bundle) {
     // Ensure entities with past dates are scheduled not published immediately.
     $entityType = $this->entityTypeObject($entityTypeId, $bundle);

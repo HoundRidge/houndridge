@@ -318,6 +318,14 @@ class PhotoswipeSettings extends ConfigFormBase {
       '#required' => TRUE,
     ];
 
+    $form['downloadTitle'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Download Aria Label'),
+      '#default_value' => $config->get('options.downloadTitle'),
+      '#description' => $this->t('The aria-label that should be set on the download button.'),
+      '#required' => TRUE,
+    ];
+
     $form['indexIndicatorSep'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Index Indicator Separator'),
@@ -410,6 +418,7 @@ class PhotoswipeSettings extends ConfigFormBase {
       ->set('options.zoomTitle', $form_state->getValue('zoomTitle'))
       ->set('options.arrowPrevTitle', $form_state->getValue('arrowPrevTitle'))
       ->set('options.arrowNextTitle', $form_state->getValue('arrowNextTitle'))
+      ->set('options.downloadTitle', $form_state->getValue('downloadTitle'))
       ->set('options.indexIndicatorSep', $form_state->getValue('indexIndicatorSep'))
       ->set('options.errorMsg', $form_state->getValue('errorMsg'))
       ->set('options.preload', [

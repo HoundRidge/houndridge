@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\trash\Kernel;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Tests\workspaces\Kernel\WorkspaceTestTrait;
 use Drupal\trash\EntityQuery\Workspaces\QueryFactory;
 use Drupal\workspaces\Entity\Workspace;
@@ -22,11 +23,6 @@ class TrashWorkspacesTest extends TrashKernelTestBase {
   protected static $modules = [
     'workspaces',
   ];
-
-  /**
-   * The entity type manager.
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * {@inheritdoc}
@@ -80,32 +76,32 @@ class TrashWorkspacesTest extends TrashKernelTestBase {
     // Check loading the deleted nodes in a workspace.
     $storage = $this->entityTypeManager->getStorage('node');
 
-    $this->assertNull($storage->load($live_node->id()));
-    $this->assertNull($storage->loadRevision($live_node->getRevisionId()));
+    $this->assertEmpty($storage->load($live_node->id()));
+    $this->assertEmpty($storage->loadRevision($live_node->getRevisionId()));
 
-    $this->assertNull($storage->load($ws_node->id()));
-    $this->assertNull($storage->loadRevision($ws_node->getRevisionId()));
+    $this->assertEmpty($storage->load($ws_node->id()));
+    $this->assertEmpty($storage->loadRevision($ws_node->getRevisionId()));
 
     // Switch back to Live and check that the nodes are not marked as deleted.
     $this->switchToLive();
 
     $live_node = $storage->load($live_node->id());
-    $this->assertNotNull($live_node);
+    $this->assertNotEmpty($live_node);
     $this->assertTrue($live_node->isPublished());
-    $this->assertNotNull($storage->loadRevision($live_node->getRevisionId()));
+    $this->assertNotEmpty($storage->loadRevision($live_node->getRevisionId()));
     $this->assertFalse(trash_entity_is_deleted($live_node));
 
     $ws_node = $storage->load($ws_node->id());
-    $this->assertNotNull($ws_node);
+    $this->assertNotEmpty($ws_node);
     $this->assertFalse($ws_node->isPublished());
-    $this->assertNotNull($storage->loadRevision($ws_node->getRevisionId()));
+    $this->assertNotEmpty($storage->loadRevision($ws_node->getRevisionId()));
     $this->assertFalse(trash_entity_is_deleted($ws_node));
 
     // Publish the workspace and check that both nodes are now deleted in Live.
     $this->workspaces['stage']->publish();
 
-    $this->assertNull($storage->load($live_node->id()));
-    $this->assertNull($storage->load($ws_node->id()));
+    $this->assertEmpty($storage->load($live_node->id()));
+    $this->assertEmpty($storage->load($ws_node->id()));
   }
 
   /**

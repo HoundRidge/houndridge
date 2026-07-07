@@ -2,11 +2,17 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests the Query Tag Alter hook functions for the Scheduler module.
  *
  * @group scheduler_api
  */
+#[Group('scheduler_api')]
+#[RunTestsInSeparateProcesses]
 class SchedulerQueryTagsTest extends SchedulerBrowserTestBase {
 
   /**
@@ -31,6 +37,7 @@ class SchedulerQueryTagsTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataQueryTags
    */
+  #[DataProvider('dataQueryTags')]
   public function testPublishingQueryTags($entityTypeId, $bundle) {
     $this->drupalLogin($this->schedulerUser);
     $storage = $this->entityStorageObject($entityTypeId);
@@ -110,6 +117,7 @@ class SchedulerQueryTagsTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataQueryTags
    */
+  #[DataProvider('dataQueryTags')]
   public function testUnpublishingQueryTags($entityTypeId, $bundle) {
     $this->drupalLogin($this->schedulerUser);
     $storage = $this->entityStorageObject($entityTypeId);

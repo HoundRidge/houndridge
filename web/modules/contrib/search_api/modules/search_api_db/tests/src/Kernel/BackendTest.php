@@ -19,9 +19,10 @@ use Drupal\search_api\SearchApiException;
 use Drupal\search_api\Utility\Utility;
 use Drupal\search_api_db\DatabaseCompatibility\GenericDatabase;
 use Drupal\search_api_db\Plugin\search_api\backend\Database;
-use Drupal\search_api_db\Tests\DatabaseTestsTrait;
 use Drupal\Tests\search_api\Kernel\BackendTestBase;
 use Drupal\Tests\search_api\Kernel\TestLogger;
+use Drupal\Tests\search_api_db\DatabaseTestsTrait;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 // cspell:ignore foob fooblob
 
@@ -32,6 +33,7 @@ use Drupal\Tests\search_api\Kernel\TestLogger;
  *
  * @group search_api
  */
+#[RunTestsInSeparateProcesses]
 class BackendTest extends BackendTestBase {
 
   use DatabaseTestsTrait;

@@ -2,11 +2,17 @@
 
 namespace Drupal\Tests\scheduler\FunctionalJavascript;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests the JavaScript functionality of vertical tabs summary information.
  *
  * @group scheduler_js
  */
+#[Group('scheduler_js')]
+#[RunTestsInSeparateProcesses]
 class SchedulerJavascriptVerticalTabsTest extends SchedulerJavascriptTestBase {
 
   /**
@@ -14,6 +20,7 @@ class SchedulerJavascriptVerticalTabsTest extends SchedulerJavascriptTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testEditEntitySummary($entityTypeId, $bundle) {
     $this->drupalLogin($this->schedulerUser);
     /** @var \Drupal\Tests\WebAssert $assert */
@@ -107,6 +114,7 @@ class SchedulerJavascriptVerticalTabsTest extends SchedulerJavascriptTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testConfigureEntityTypeSummary($entityTypeId, $bundle) {
     /** @var \Drupal\Tests\WebAssert $assert */
     $assert = $this->assertSession();

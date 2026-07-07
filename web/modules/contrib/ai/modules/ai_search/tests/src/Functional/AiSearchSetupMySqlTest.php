@@ -20,6 +20,7 @@ class AiSearchSetupMySqlTest extends BrowserTestBase {
     'test_ai_provider_mysql',
     'test_ai_vdb_provider_mysql',
     'node',
+    'file',
     'taxonomy',
     'user',
     'system',
@@ -140,13 +141,13 @@ class AiSearchSetupMySqlTest extends BrowserTestBase {
     // Add fields.
     $page = $this->getSession()->getPage();
     // Rendered html.
-    $page->pressButton('edit-4');
+    $page->pressButton('rendered_item');
     $this->submitForm([
       'view_mode[entity:node][:default]' => 'default',
     ], 'Save');
     // Title.
     $this->drupalGet('admin/config/search/search-api/index/test_mysql_vdb_index/fields/add/nojs');
-    $page->pressButton('edit-23');
+    $page->pressButton('entity:node/title');
     // Done.
     $page->clickLink('edit-done');
 

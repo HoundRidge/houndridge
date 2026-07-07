@@ -3,6 +3,8 @@
 namespace Drupal\Tests\scheduler\Functional;
 
 use Drupal\node\Entity\NodeType;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the legacy API hook functions of the Scheduler module.
@@ -12,6 +14,8 @@ use Drupal\node\Entity\NodeType;
  *
  * @group scheduler_api
  */
+#[Group('scheduler_api')]
+#[RunTestsInSeparateProcesses]
 class SchedulerHooksLegacyTest extends SchedulerBrowserTestBase {
 
   /**
@@ -424,7 +428,7 @@ class SchedulerHooksLegacyTest extends SchedulerBrowserTestBase {
       'publish_on' => strtotime('-1 day'),
     ]);
     // 'green' nodes will have both fields hidden so is harder to test manually.
-    // Therefore introduce a different colour.
+    // Therefore introduce a different color.
     $node4 = $this->drupalCreateNode([
       'type' => $this->type,
       'status' => TRUE,

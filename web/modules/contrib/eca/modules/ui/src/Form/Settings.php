@@ -39,8 +39,7 @@ class Settings extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): Settings {
-    /** @var \Drupal\eca_ui\Form\Settings $instance */
+  public static function create(ContainerInterface $container): static {
     $instance = parent::create($container);
     $instance->defaultDocumentationDomain = $container->getParameter('eca.default_documentation_domain');
     $instance->tokenBrowser = $container->get('eca_ui.service.token_browser');

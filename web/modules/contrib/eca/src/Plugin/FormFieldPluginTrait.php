@@ -202,6 +202,12 @@ trait FormFieldPluginTrait {
           // a form field element here, catch the first defined child element.
           $element = &$this->jumpToFirstFieldChild($element);
         }
+        elseif (isset($element[$key])) {
+          // If the element contains a children element with the same key, then
+          // the found element is a container, and the children element should
+          // be returned.
+          $element = $element[$key];
+        }
 
         return $element;
       }
@@ -254,11 +260,15 @@ trait FormFieldPluginTrait {
     $field_name = $this->configuration['field_name'];
     if (mb_strpos($field_name, '.')) {
       $this->configuration['field_name'] = str_replace('.', '][', $field_name);
-      return $this->getTargetElement();
+      $result = &$this->getTargetElement();
+      $this->configuration['field_name'] = $field_name;
+      return $result;
     }
     if (mb_strpos($field_name, ':')) {
       $this->configuration['field_name'] = str_replace(':', '][', $field_name);
-      return $this->getTargetElement();
+      $result = &$this->getTargetElement();
+      $this->configuration['field_name'] = $field_name;
+      return $result;
     }
 
     return $nothing;
@@ -418,11 +428,15 @@ trait FormFieldPluginTrait {
       $field_name = $this->configuration['field_name'];
       if (mb_strpos($field_name, '.')) {
         $this->configuration['field_name'] = str_replace('.', '][', $field_name);
-        return $this->getSubmittedValue($found);
+        $value = &$this->getSubmittedValue($found);
+        $this->configuration['field_name'] = $field_name;
+        return $value;
       }
       if (mb_strpos($field_name, ':')) {
         $this->configuration['field_name'] = str_replace(':', '][', $field_name);
-        return $this->getSubmittedValue($found);
+        $value = &$this->getSubmittedValue($found);
+        $this->configuration['field_name'] = $field_name;
+        return $value;
       }
     }
 

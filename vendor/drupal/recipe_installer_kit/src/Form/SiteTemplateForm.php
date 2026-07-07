@@ -57,6 +57,7 @@ final class SiteTemplateForm extends RecipeSelectionFormBase {
             // vendor prefix.
             'packages' => ["drupal/$name"],
             'description' => $recipe->description,
+            'extra' => $recipe->getExtra('recipe_installer_kit'),
           ];
         }
       }
@@ -101,6 +102,20 @@ final class SiteTemplateForm extends RecipeSelectionFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     global $install_state;
     parent::submitForm($form, $form_state);
+
+    // If only one recipe has been chosen, and it's one of the choices from this
+    // form, use that recipe's finish URL if it specifies one.
+    // @see Hooks::installTasks()
+    $packages = $install_state['parameters']['recipes'];
+    if (count($packages) === 1) {
+      $choice = array_find(
+        $this->getChoices(),
+        fn (array $choice): bool => $choice['packages'] === $packages,
+      );
+      if (isset($choice['extra']['finish_url'])) {
+        $install_state['parameters']['finish_url'] = $choice['extra']['finish_url'];
+      }
+    }
 
     // Indicate that we're done with this form.
     // @see ::toInstallTask()

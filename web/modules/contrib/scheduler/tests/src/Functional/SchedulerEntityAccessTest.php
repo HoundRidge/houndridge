@@ -2,6 +2,10 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests that Scheduler cron has full access to the scheduled entities.
  *
@@ -25,6 +29,8 @@ namespace Drupal\Tests\scheduler\Functional;
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerEntityAccessTest extends SchedulerBrowserTestBase {
 
   /**
@@ -39,6 +45,7 @@ class SchedulerEntityAccessTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataEntityAccess
    */
+  #[DataProvider('dataEntityAccess')]
   public function testEntityAccess($entityTypeId, $bundle, $field, $status) {
     $storage = $this->entityStorageObject($entityTypeId);
     // scheduler_access_test_install() sets node_access_needs_rebuild(TRUE) and

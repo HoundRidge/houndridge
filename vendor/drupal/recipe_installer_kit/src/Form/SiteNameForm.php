@@ -42,7 +42,9 @@ final class SiteNameForm extends FormBase implements InstallerFormInterface {
       '#type' => 'textfield',
       '#title' => $this->t('Site name'),
       '#required' => TRUE,
-      '#default_value' => $install_state['forms']['install_configure_form']['site_name'] ?? $this->t('My Drupal CMS site'),
+      '#default_value' =>  $install_state['forms']['install_configure_form']['site_name'] ?? $this->t('My @name site', [
+        '@name' => $install_state['profile_info']['distribution']['name'] ?? $this->t('Drupal'),
+      ]),
     ];
     $form['actions'] = [
       '#type' => 'actions',

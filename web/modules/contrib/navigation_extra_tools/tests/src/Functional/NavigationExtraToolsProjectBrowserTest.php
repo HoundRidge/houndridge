@@ -44,7 +44,7 @@ final class NavigationExtraToolsProjectBrowserTest extends BrowserTestBase {
     // Create and log in an administrative user.
     $this->adminUser = $this->drupalCreateUser([
       'access navigation',
-      'access administration pages',
+      'access project browser clear storage',
     ]);
     $this->drupalLogin($this->adminUser);
   }

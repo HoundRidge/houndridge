@@ -25,12 +25,25 @@ class PhotoswipeInline extends FilterBase {
     $text = '<div class="photoswipe-gallery">' . $text . '</div>';
     $dom = Html::load($text);
 
+    /** @var \Dom\NodeList $elements */
     $elements = $dom->getElementsByTagName('img');
     if ($elements->length === 0) {
       return new FilterProcessResult(Html::serialize($dom));
     }
 
+    /** @var \Dom\Node $element */
     foreach ($elements as $element) {
+      // If the editor already added a class in the ckeditor we skip adding
+      // photoswipe since the image is intended for a different use-case.
+      $parent = $element->parentNode;
+      while ($parent) {
+        if ($parent->nodeName === 'a') {
+          // Skip to the next $element in the outer loop.
+          continue 2;
+        }
+        $parent = $parent->parentNode;
+      }
+
       if (!$element->hasAttribute('class') || str_contains($element->getAttribute('class'), 'photoswipe') === FALSE) {
         $anchor = $dom->createElement('a');
         $element->parentNode->insertBefore($anchor, $element);

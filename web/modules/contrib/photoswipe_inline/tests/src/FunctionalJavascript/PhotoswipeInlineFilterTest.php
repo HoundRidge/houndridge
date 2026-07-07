@@ -137,4 +137,25 @@ class PhotoswipeInlineFilterTest extends WebDriverTestBase {
     $session->elementAttributeContains('css', 'a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe', 'data-pswp-height', '217');
   }
 
+  /**
+   * Test that an anchor tag wrapped img does not get altered.
+   */
+  public function testInlinePhotoSwipeWithAnchorTags(): void {
+    $session = $this->assertSession();
+
+    $this->node = $this->createNode([
+      'body' => [
+        'value' => '<a href="https://www.drupal.org" target="_blank"><img src="https://www.drupal.org/files/cta/graphic/Association_Supporting_Partner_Badge_3.png" alt="Supporting Partner Badge" width="217" height="217"></a>',
+        'format' => 'full_html',
+      ],
+    ]);
+
+    $this->drupalGet('node/' . $this->node->id());
+
+    $this->assertNotNull($session->waitForElement('css', '.photoswipe-gallery'));
+    $session->elementNotExists('css', 'a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe');
+    $session->elementNotExists('css', '.photoswipe-gallery a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe');
+    $session->elementNotExists('css', 'a[href*="Association_Supporting_Partner_Badge_3.png"].photoswipe > img[src*="Association_Supporting_Partner_Badge_3.png"]');
+  }
+
 }

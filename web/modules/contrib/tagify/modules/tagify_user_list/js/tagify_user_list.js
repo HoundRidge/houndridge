@@ -1,5 +1,6 @@
 // eslint-disable-next-line func-names
 (function ($, Drupal, drupalSettings, Sortable) {
+  // cspell:ignore whitelist
   Drupal.behaviors.tagifyAutocompleteUserList = {
     attach: function attach() {
       // see https://github.com/yairEO/tagify#ajax-whitelist
@@ -152,10 +153,16 @@
          * @return {string} - The HTML template for the dropdown header.
          */
         function dropdownHeaderTemplate(suggestions) {
+          // Fallback to 'en' if the locale is not available.
+          const userLocale = navigator.language || 'en';
+          const pluralRule = new Intl.PluralRules(userLocale);
+          const pluralSuffix =
+            pluralRule.select(suggestions.length) === 'one' ? '' : 's';
+
           return !isTagLimitReached()
             ? `<div
             class="tagify__dropdown__count">
-              <span>${suggestions.length} members</span>
+                <span>${suggestions.length} member${pluralSuffix}</span>
             </div>`
             : '';
         }

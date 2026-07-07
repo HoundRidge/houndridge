@@ -3,12 +3,17 @@
 namespace Drupal\Tests\scheduler\Functional;
 
 use Drush\TestTraits\DrushTestTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Drush commands provided by Scheduler.
  *
  * @group scheduler_drush
  */
+#[Group('scheduler_drush')]
+#[RunTestsInSeparateProcesses]
 class SchedulerDrushTest extends SchedulerBrowserTestBase {
 
   use DrushTestTrait;
@@ -44,6 +49,7 @@ class SchedulerDrushTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testDrushCronPublishing($entityTypeId, $bundle) {
     // Create an entity which is scheduled for publishing.
     $title1 = $this->randomMachineName(20) . ' for publishing';

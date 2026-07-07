@@ -5,10 +5,13 @@ namespace Drupal\scheduler;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\EventDispatcher\Event;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -19,12 +22,20 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\scheduler\Event\SchedulerEvent;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Defines a scheduler manager.
+ *
+ * Implementing as a ContainerInjectionInterface causes the extra phpcs warning
+ * "\Drupal calls should be avoided in classes, use dependency injection".
+ * This is being covered in a PHPStan issue, see
+ * https://www.drupal.org/project/scheduler/issues/3507012
+ * Therefore ignore the sniff in this file.
+ * phpcs:disable DrupalPractice.Objects.GlobalDrupal.GlobalDrupal
  */
-class SchedulerManager {
+class SchedulerManager implements ContainerInjectionInterface {
 
   use StringTranslationTrait;
 
@@ -73,9 +84,12 @@ class SchedulerManager {
   /**
    * The time service.
    *
+   * This is public so that any class which has access to SchedulerManager can
+   * also use the $time without having to separately inject the TimeInterface.
+   *
    * @var \Drupal\Component\Datetime\TimeInterface
    */
-  protected $time;
+  public $time;
 
   /**
    * Entity Field Manager service object.
@@ -92,9 +106,39 @@ class SchedulerManager {
   private $pluginManager;
 
   /**
+   * The cache backend.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
+   */
+  protected $cacheBackend;
+
+  /**
+   * A static cache of plugins.
+   *
+   * @var array
+   */
+  protected array $plugins = [];
+
+  /**
+   * Messenger service object.
+   *
+   * @var Drupal\Core\Messenger\MessengerInterface
+   */
+  private $messenger;
+
+  /**
+   * The entity definition update manager.
+   *
+   * @var \Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface
+   */
+  protected $entityDefinitionUpdateManager;
+
+  /**
    * Constructs a SchedulerManager object.
    */
   public function __construct(
+    // Trailing comma is incompatible with PHPUnit 9.6.19 in Drupal 9.5 PHP 7.4.
+    // phpcs:disable Drupal.Functions.MultiLineFunctionDeclaration.MissingTrailingComma
     DateFormatterInterface $dateFormatter,
     LoggerInterface $logger,
     ModuleHandlerInterface $moduleHandler,
@@ -103,9 +147,10 @@ class SchedulerManager {
     EventDispatcherInterface $eventDispatcher,
     TimeInterface $time,
     EntityFieldManagerInterface $entityFieldManager,
-    // Trailing comma is incompatible with PHPUnit 9.6.19 in Drupal 9.5 PHP 7.4.
-    // phpcs:ignore Drupal.Functions.MultiLineFunctionDeclaration.MissingTrailingComma
-    SchedulerPluginManager $pluginManager
+    SchedulerPluginManager $pluginManager,
+    CacheBackendInterface $cacheBackend,
+    MessengerInterface $messenger,
+    EntityDefinitionUpdateManagerInterface $entityDefinitionUpdateManager
   ) {
     $this->dateFormatter = $dateFormatter;
     $this->logger = $logger;
@@ -116,6 +161,29 @@ class SchedulerManager {
     $this->time = $time;
     $this->entityFieldManager = $entityFieldManager;
     $this->pluginManager = $pluginManager;
+    $this->cacheBackend = $cacheBackend;
+    $this->messenger = $messenger;
+    $this->entityDefinitionUpdateManager = $entityDefinitionUpdateManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('date.formatter'),
+      $container->get('logger.channel.scheduler'),
+      $container->get('module_handler'),
+      $container->get('entity_type.manager'),
+      $container->get('config.factory'),
+      $container->get('event_dispatcher'),
+      $container->get('datetime.time'),
+      $container->get('entity_field.manager'),
+      $container->get('plugin.scheduler.manager'),
+      $container->get('cache.discovery'),
+      $container->get('messenger'),
+      $container->get('entity.definition_update_manager'),
+    );
   }
 
   /**
@@ -123,11 +191,10 @@ class SchedulerManager {
    *
    * All Scheduler events should be dispatched through this common function.
    *
-   * Drupal 8.8 and 8.9 use Symfony 3.4 and from Drupal 9.0 the Symfony version
-   * is 4.4. Starting with Symfony 4.3 the signature of the event dispatcher
+   * Starting with Symfony version 4.3 the signature of the event dispatcher
    * function has the parameters swapped round, the event object is first,
-   * followed by the event name string. At 9.0 the existing signature has to be
-   * used but from 9.1 the parameters must be switched.
+   * followed by the event name string. At Drupal 9.0 the existing signature has
+   * to be used but from 9.1 the parameters must be switched.
    *
    * @param \Drupal\Component\EventDispatcher\Event $event
    *   The event object.
@@ -208,8 +275,10 @@ class SchedulerManager {
         $p2 = $entity->id();
         $p3 = "{$process}ed";
         $p4 = $entity->getEntityTypeId();
-        $p5 = $plugin->typeFieldName();
-        $p6 = $entity->{$plugin->typeFieldName()}->entity->label();
+        $p5 = $plugin->typeFieldName() ?: 'entity_type';
+        $p6 = $this->hasBundleType($entity->getEntityTypeId()) && !empty($entity->{$plugin->typeFieldName()}->entity)
+          ? $entity->{$plugin->typeFieldName()}->entity->label()
+          : $entity->getEntityType()->getLabel();
         $p7 = "{$process}ing";
         // Get a list of the hook function implementations, as one of these will
         // have caused this exception.
@@ -250,8 +319,10 @@ class SchedulerManager {
         $query = $this->entityTypeManager->getStorage($entityTypeId)->getQuery()
           ->exists('publish_on')
           ->condition('publish_on', $this->time->getRequestTime(), '<=')
-          ->condition($plugin->typeFieldName(), $scheduler_enabled_types, 'IN')
           ->sort('publish_on');
+        if ($plugin->typeFieldName()) {
+          $query->condition($plugin->typeFieldName(), $scheduler_enabled_types, 'IN');
+        }
         // Disable access checks for this query.
         // @see https://www.drupal.org/node/2700209
         $query->accessCheck(FALSE);
@@ -373,25 +444,10 @@ class SchedulerManager {
           $failed = count($failed_hooks) > 0;
 
           // Create a set of variables for use in the log message.
-          $bundle_type = $entity->getEntityType()->getBundleEntityType();
-          $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
-          $links = [];
-          if ($entity->hasLinkTemplate('canonical')) {
-            $links[] = $entity->toLink($this->t('View @type', [
-              '@type' => strtolower($entity_type->label()),
-            ]))->toString();
-          }
-          if ($entity_type->hasLinkTemplate('edit-form')) {
-            $links[] = $entity_type->toLink($this->t('@label settings', [
-              '@label' => $entity_type->label(),
-            ]), 'edit-form')->toString();
-          }
-          $logger_variables = [
-            '@type' => $entity_type->label(),
+          $logger_variables = $this->getEntityLogContext($entity) + [
             '%title' => $entity->label(),
             '@successful_hooks' => implode(', ', $successful_hooks),
             '@failed_hooks' => implode(', ', $failed_hooks),
-            'link' => implode(' ', $links),
           ];
 
           if ($failed) {
@@ -475,8 +531,10 @@ class SchedulerManager {
         $query = $this->entityTypeManager->getStorage($entityTypeId)->getQuery()
           ->exists('unpublish_on')
           ->condition('unpublish_on', $this->time->getRequestTime(), '<=')
-          ->condition($plugin->typeFieldName(), $scheduler_enabled_types, 'IN')
           ->sort('unpublish_on');
+        if ($plugin->typeFieldName()) {
+          $query->condition($plugin->typeFieldName(), $scheduler_enabled_types, 'IN');
+        }
         // Disable access checks for this query.
         // @see https://www.drupal.org/node/2700209
         $query->accessCheck(FALSE);
@@ -591,25 +649,10 @@ class SchedulerManager {
           $failed = count($failed_hooks) > 0;
 
           // Create a set of variables for use in the log message.
-          $bundle_type = $entity->getEntityType()->getBundleEntityType();
-          $entity_type = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
-          $links = [];
-          if ($entity->hasLinkTemplate('canonical')) {
-            $links[] = $entity->toLink($this->t('View @type', [
-              '@type' => strtolower($entity_type->label()),
-            ]))->toString();
-          }
-          if ($entity_type->hasLinkTemplate('edit-form')) {
-            $links[] = $entity_type->toLink($this->t('@label settings', [
-              '@label' => $entity_type->label(),
-            ]), 'edit-form')->toString();
-          }
-          $logger_variables = [
-            '@type' => $entity_type->label(),
+          $logger_variables = $this->getEntityLogContext($entity) + [
             '%title' => $entity->label(),
             '@successful_hooks' => implode(', ', $successful_hooks),
             '@failed_hooks' => implode(', ', $failed_hooks),
-            'link' => implode(' ', $links),
           ];
 
           if ($failed) {
@@ -755,7 +798,7 @@ class SchedulerManager {
         });
       }
       else {
-        // Use getImplementations() to maintain compatibility with Drupal 8.9.
+        // Use getImplementations() to maintain compatibility with Drupal 9.0.
         $implementations = $this->moduleHandler->getImplementations($hookName);
         array_walk($implementations, function (&$module) use ($hookName, &$all_hook_implementations) {
           $all_hook_implementations[] = $module . "_" . $hookName;
@@ -763,51 +806,6 @@ class SchedulerManager {
       }
     }
     return $all_hook_implementations;
-  }
-
-  /**
-   * Gives details and throws exception when a required action is missing.
-   *
-   * This displays a screen error message which is useful if the cron run was
-   * initiated via the site UI. This will also be shown on the terminal if cron
-   * was run via drush. If the Config Update module is installed then a link is
-   * given to the actions report in Config UI, which lists the missing items and
-   * provides a button to import from source. If Config Update is not installed
-   * then a link is provided to its Drupal project page.
-   *
-   * @param string $action_id
-   *   The id of the missing action.
-   * @param string $process
-   *   The Scheduler process being run, 'publish' or 'unpublish'.
-   */
-  protected function missingAction(string $action_id, string $process) {
-    $logger_variables = ['%action_id' => $action_id];
-    // If the Config Update module is available then link to the UI report. If
-    // not then link to the project page on drupal.org.
-    if (\Drupal::moduleHandler()->moduleExists('config_update')) {
-      // If the report UI sub-module is enabled then link directly to the
-      // actions report. Otherwise link to 'Extend' so it can be enabled.
-      if (\Drupal::moduleHandler()->moduleExists('config_update_ui')) {
-        $link = Link::fromTextAndUrl($this->t('Config Update for actions'), Url::fromRoute('config_update_ui.report', [
-          'report_type' => 'type',
-          'name' => 'action',
-        ]));
-      }
-      else {
-        $link = Link::fromTextAndUrl($this->t('Enable Config Update Reports'), Url::fromRoute('system.modules_list', ['filter' => 'config_update']));
-      }
-      $logger_variables['link'] = $link->toString();
-      $logger_variables[':url'] = $link->getUrl()->toString();
-    }
-    else {
-      $project_page = 'https://www.drupal.org/project/config_update';
-      $logger_variables[':url'] = $project_page;
-      $logger_variables['link'] = Link::fromTextAndUrl('Config Update project page', Url::fromUri($project_page))->toString();
-    }
-
-    \Drupal::messenger()->addError($this->t("Action '%action_id' is missing. Use <a href=':url'>Config Update</a> to import the missing action.", $logger_variables));
-    $this->logger->warning("Action '%action_id' is missing. Use Config Update to import the missing action.", $logger_variables);
-    throw new \Exception("Action '{$action_id}' is missing. Scheduled $process halted.");
   }
 
   /**
@@ -857,14 +855,257 @@ class SchedulerManager {
   /**
    * Helper method to access the settings of this module.
    *
+   * This is public so that any class which has access to SchedulerManager can
+   * also use it without having to separately inject the configFactory.
+   *
    * @param string $key
    *   The key of the configuration.
    *
    * @return \Drupal\Core\Config\ImmutableConfig
    *   The value of the configuration item requested.
    */
-  protected function setting($key) {
+  public function setting($key) {
     return $this->configFactory->get('scheduler.settings')->get($key);
+  }
+
+  /**
+   * Gets no-bundle settings config for an entity type.
+   *
+   * @param string $entityTypeId
+   *   The entity type id.
+   *
+   * @return \Drupal\Core\Config\ImmutableConfig
+   *   The config object.
+   */
+  public function entityTypeNoBundleConfig(string $entityTypeId) {
+    return $this->configFactory->get('scheduler.no_bundle_entity_type_settings.' . $entityTypeId);
+  }
+
+  /**
+   * Gets an entity-level scheduler setting for no-bundle entity types.
+   *
+   * @param string $entityTypeId
+   *   The entity type id.
+   * @param string $setting
+   *   The setting key.
+   * @param mixed $default
+   *   The fallback setting.
+   *
+   * @return mixed
+   *   The setting value.
+   */
+  public function getNoBundleEntityTypeSetting(string $entityTypeId, string $setting, $default) {
+    return $this->entityTypeNoBundleConfig($entityTypeId)->get($setting) ?? $default;
+  }
+
+  /**
+   * Builds shared scheduler form elements for entity type settings forms.
+   *
+   * Used by both SchedulerNoBundleSettingsForm::buildForm() and
+   * _scheduler_entity_type_form_alter() to avoid duplication.
+   *
+   * @param array $defaults
+   *   Flat keyed array of resolved setting values.
+   * @param bool $isRevisionable
+   *   Whether the entity type supports revisions.
+   * @param bool $hasCreatedTime
+   *   Whether the entity type implements getCreatedTime().
+   * @param array $params
+   *   Translation params: @type, %type, @singular, @plural, @item, @items.
+   *   @item is the composite label used in singular contexts (e.g. "remote
+   *   video media item" for bundled entities, or just the singular label for
+   *   non-bundled entities). @items is the plural equivalent.
+   *
+   * @return array
+   *   Form elements for publish, unpublish, and entity_edit_layout groups.
+   */
+  public function buildSchedulerFormElements(array $defaults, bool $isRevisionable, bool $hasCreatedTime, array $params): array {
+    $elements = [];
+
+    $elements['publish'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Publishing'),
+      '#weight' => 1,
+      '#open' => TRUE,
+    ];
+    $elements['publish']['scheduler_publish_enable'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable scheduled publishing for @items', $params),
+      '#default_value' => $defaults['publish_enable'],
+    ];
+    $elements['publish']['scheduler_publish_touch'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Change %type creation time to match the scheduled publish time', $params),
+      '#default_value' => $defaults['publish_touch'],
+      '#states' => [
+        'visible' => [
+          ':input[name="scheduler_publish_enable"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    if (!$hasCreatedTime) {
+      $elements['publish']['scheduler_publish_touch']['#disabled'] = TRUE;
+      $elements['publish']['scheduler_publish_touch']['#default_value'] = FALSE;
+      $elements['publish']['scheduler_publish_touch']['#description'] = $this->t('The entity type does not support changing the creation time.');
+      $elements['publish']['scheduler_publish_touch']['#access'] = FALSE;
+    }
+    $elements['publish']['scheduler_publish_required'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Require scheduled publishing'),
+      '#default_value' => $defaults['publish_required'],
+      '#states' => [
+        'visible' => [
+          ':input[name="scheduler_publish_enable"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    if ($isRevisionable) {
+      $elements['publish']['scheduler_publish_revision'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Create a new revision on publishing'),
+        '#default_value' => $defaults['publish_revision'],
+        '#states' => [
+          'visible' => [
+            ':input[name="scheduler_publish_enable"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+    }
+    $elements['publish']['advanced'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Advanced options'),
+      '#open' => FALSE,
+      '#states' => [
+        'visible' => [
+          ':input[name="scheduler_publish_enable"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $elements['publish']['advanced']['scheduler_publish_past_date'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Action to be taken for publication dates in the past'),
+      '#default_value' => $defaults['publish_past_date'],
+      '#options' => [
+        'error' => $this->t('Display an error message - do not allow dates in the past'),
+        'publish' => $this->t('Publish the @item immediately after saving', $params),
+        'schedule' => $this->t('Schedule the @item for publication on the next cron run', $params),
+      ],
+    ];
+    // This option is not relevant if the full 'change creation time' option is
+    // selected, or when past dates are not allowed. Hence only show it when
+    // the main option is not checked and the past dates option is not 'error'.
+    $elements['publish']['advanced']['scheduler_publish_past_date_created'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Change %type creation time to match the published time, for dates before the %type was created', $params),
+      '#description' => $this->t('The created time is only altered when the scheduled publishing time is earlier than the existing creation time.'),
+      '#default_value' => $defaults['publish_past_date_created'],
+      '#states' => [
+        'visible' => [
+          ':input[name="scheduler_publish_touch"]' => ['checked' => FALSE],
+          ':input[name="scheduler_publish_past_date"]' => ['!value' => 'error'],
+        ],
+      ],
+    ];
+    if (!$hasCreatedTime) {
+      $elements['publish']['advanced']['scheduler_publish_past_date_created']['#disabled'] = TRUE;
+      $elements['publish']['advanced']['scheduler_publish_past_date_created']['#default_value'] = FALSE;
+      $elements['publish']['advanced']['scheduler_publish_past_date_created']['#description'] = $this->t('The entity type does not support changing the creation time.');
+    }
+
+    $elements['unpublish'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Unpublishing'),
+      '#weight' => 2,
+      '#open' => TRUE,
+    ];
+    $elements['unpublish']['scheduler_unpublish_enable'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable scheduled unpublishing for @items', $params),
+      '#default_value' => $defaults['unpublish_enable'],
+    ];
+    $elements['unpublish']['scheduler_unpublish_required'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Require scheduled unpublishing'),
+      '#default_value' => $defaults['unpublish_required'],
+      '#states' => [
+        'visible' => [
+          ':input[name="scheduler_unpublish_enable"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    if ($isRevisionable) {
+      $elements['unpublish']['scheduler_unpublish_revision'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Create a new revision on unpublishing'),
+        '#default_value' => $defaults['unpublish_revision'],
+        '#states' => [
+          'visible' => [
+            ':input[name="scheduler_unpublish_enable"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+    }
+
+    // The 'entity_edit_layout' fieldset contains options to alter the layout
+    // of entity edit pages. The #states processing only caters for AND and does
+    // not do OR. So to set the state to visible if either of the boxes are
+    // ticked we use the fact that logical 'X = A or B' is equivalent to
+    // 'not X = not A and not B'.
+    $elements['entity_edit_layout'] = [
+      '#type' => 'details',
+      '#title' => $this->t('@type edit page', $params),
+      '#weight' => 3,
+      '#states' => [
+        '!visible' => [
+          ':input[name="scheduler_publish_enable"]' => ['!checked' => TRUE],
+          ':input[name="scheduler_unpublish_enable"]' => ['!checked' => TRUE],
+        ],
+      ],
+    ];
+    $elements['entity_edit_layout']['scheduler_fields_display_mode'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Display scheduling date input fields in'),
+      '#default_value' => $defaults['fields_display_mode'],
+      '#options' => [
+        'vertical_tab' => $this->t('Vertical tab'),
+        'fieldset' => $this->t('Separate fieldset'),
+      ],
+      '#description' => $this->t('Use this option to specify how the scheduler fields are displayed when editing @items', $params),
+    ];
+    $elements['entity_edit_layout']['scheduler_expand_fieldset'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Expand fieldset or vertical tab'),
+      '#default_value' => $defaults['expand_fieldset'],
+      '#options' => [
+        'when_required' => $this->t('Expand only when a scheduled date exists or when a date is required'),
+        'always' => $this->t('Always open the fieldset or vertical tab'),
+      ],
+    ];
+    $elements['entity_edit_layout']['scheduler_show_message_after_update'] = [
+      '#type' => 'checkbox',
+      '#prefix' => '<strong>' . $this->t('Show message') . '</strong>',
+      '#title' => $this->t('Show a confirmation message when a scheduled @item is saved', $params),
+      '#default_value' => $defaults['show_message_after_update'],
+    ];
+
+    return $elements;
+  }
+
+  /**
+   * Checks if an entity type uses bundles.
+   *
+   * @param string $entityTypeId
+   *   The entity type id.
+   *
+   * @return bool
+   *   TRUE if the entity type has a bundle key and bundle entity type.
+   */
+  public function hasBundleType(string $entityTypeId): bool {
+    if (!$plugin = $this->getPlugin($entityTypeId)) {
+      return FALSE;
+    }
+    $entity_type = $plugin->entityTypeObject();
+    return (bool) $entity_type->getBundleEntityType() && (bool) $plugin->typeFieldName();
   }
 
   /**
@@ -881,7 +1122,11 @@ class SchedulerManager {
    *   The value of the setting.
    */
   public function getThirdPartySetting(EntityInterface $entity, $setting, $default) {
-    $typeFieldName = $this->getPlugin($entity->getEntityTypeId())->typeFieldName();
+    $entityTypeId = $entity->getEntityTypeId();
+    if (!$this->hasBundleType($entityTypeId)) {
+      return $this->getNoBundleEntityTypeSetting($entityTypeId, $setting, $default);
+    }
+    $typeFieldName = $this->getPlugin($entityTypeId)->typeFieldName();
     if (empty($entity->$typeFieldName)) {
       // Avoid exception and give details if the typeFieldName does not exist.
       $params = [
@@ -889,13 +1134,58 @@ class SchedulerManager {
         '%id' => $this->getPlugin($entity->getEntityTypeId())->getPluginId(),
         '%entity' => $entity->getEntityTypeId(),
       ];
-      \Drupal::messenger()->addError($this->t("Field '%field' specified by typeFieldName in the Scheduler plugin %id is not found in entity type %entity", $params));
+      $this->messenger->addError($this->t("Field '%field' specified by typeFieldName in the Scheduler plugin %id is not found in entity type %entity", $params));
       $this->logger->error("Field '%field' specified by typeFieldName in the Scheduler plugin %id is not found in entity type %entity", $params);
       return $default;
     }
     else {
       return $entity->$typeFieldName->entity->getThirdPartySetting('scheduler', $setting, $default);
     }
+  }
+
+  /**
+   * Builds logging context for publish/unpublish messages.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The processed entity.
+   *
+   * @return array
+   *   Array containing type label and contextual links.
+   */
+  protected function getEntityLogContext(EntityInterface $entity): array {
+    $entity_type_id = $entity->getEntityTypeId();
+    $entity_type_label = (string) $entity->getEntityType()->getLabel();
+    $links = [];
+
+    if ($this->hasBundleType($entity_type_id)) {
+      $bundle_type = $entity->getEntityType()->getBundleEntityType();
+      $bundle_entity = $this->entityTypeManager->getStorage($bundle_type)->load($entity->bundle());
+      if ($bundle_entity) {
+        $entity_type_label = (string) $bundle_entity->label();
+        if ($bundle_entity->hasLinkTemplate('edit-form')) {
+          $links[] = $bundle_entity->toLink($this->t('@label settings', [
+            '@label' => $bundle_entity->label(),
+          ]), 'edit-form')->toString();
+        }
+      }
+    }
+    else {
+      $links[] = Link::fromTextAndUrl(
+        $this->t('@label settings', ['@label' => $entity_type_label]),
+        Url::fromRoute('scheduler.no_bundle_settings_form', ['entity_type_id' => $entity_type_id])
+      )->toString();
+    }
+
+    if ($entity->hasLinkTemplate('canonical')) {
+      $links[] = $entity->toLink($this->t('View @type', [
+        '@type' => strtolower($entity_type_label),
+      ]))->toString();
+    }
+
+    return [
+      '@type' => $entity_type_label,
+      'link' => implode(' ', array_filter($links)),
+    ];
   }
 
   /**
@@ -910,30 +1200,43 @@ class SchedulerManager {
    *   Array of loaded entity objects, keyed by id.
    */
   protected function loadEntities(array $ids, string $type) {
+    if (empty($ids)) {
+      return [];
+    }
     /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
     $storage = $this->entityTypeManager->getStorage($type);
-    $entities = [];
-    foreach ($ids as $id) {
-      // Avoid errors when an implementation of hook_scheduler_{type}_list has
-      // added an id of the wrong type.
-      if (!$entity = $storage->load($id)) {
-        $this->logger->warning('Entity id @id is not a @type entity. Processing skipped.', [
-          '@id' => $id,
-          '@type' => $type,
-        ]);
-        continue;
-      }
-      // If the entity type is revisionable then load the latest revision. For
-      // moderated entities this may be an unpublished draft update of a
-      // currently published entity.
-      if ($entity->getEntityType()->isRevisionable()) {
-        $vid = $storage->getLatestRevisionId($id);
-        $entities[$id] = $storage->loadRevision($vid);
-      }
-      else {
-        $entities[$id] = $entity;
+    $entity_type = $storage->getEntityType();
+
+    // If the entity type is revisionable then load the latest revision for each
+    // id. For moderated entities this may be an unpublished draft update of a
+    // currently published entity.
+    if ($entity_type->isRevisionable()) {
+      $revision_ids = $storage->getQuery()
+        ->condition($entity_type->getKey('id'), $ids, 'IN')
+        ->accessCheck(FALSE)
+        ->latestRevision()
+        ->execute();
+      $entities = [];
+      if (!empty($revision_ids)) {
+        foreach ($storage->loadMultipleRevisions(array_keys($revision_ids)) as $revision) {
+          $entities[$revision->id()] = $revision;
+        }
       }
     }
+    else {
+      // The entity type is not revisionable.
+      $entities = $storage->loadMultiple($ids);
+    }
+
+    // Log each missing ID. This can happen when an implementation of
+    // hook_scheduler_{type}_list has added an id of the wrong type.
+    foreach (array_diff($ids, array_keys($entities)) as $missing_id) {
+      $this->logger->warning('Entity id @id is not a @type entity. Processing skipped.', [
+        '@id' => $missing_id,
+        '@type' => $type,
+      ]);
+    }
+
     return $entities;
   }
 
@@ -955,7 +1258,7 @@ class SchedulerManager {
   /**
    * Gets instances of applicable Scheduler plugins for the enabled modules.
    *
-   * @param string $provider
+   * @param string|null $provider
    *   Optional. Filter the plugins to return only those that are provided by
    *   the named $provider module.
    *
@@ -963,30 +1266,11 @@ class SchedulerManager {
    *   Array of plugin objects, keyed by the entity type the plugin supports.
    */
   public function getPlugins(?string $provider = NULL) {
-    $cache = \Drupal::cache()->get('scheduler.plugins');
-    if (!empty($cache) && !empty($cache->data) && empty($provider)) {
-      return $cache->data;
-    }
-
-    $definitions = $this->getPluginDefinitions();
-    $plugins = [];
-    foreach ($definitions as $definition) {
-      $plugin = $this->pluginManager->createInstance($definition['id']);
-      $dependency = $plugin->dependency();
-      // Ignore plugins if there is a dependency module and it is not enabled.
-      if ($dependency && !\Drupal::moduleHandler()->moduleExists($dependency)) {
-        continue;
-      }
-      // Ignore plugins that do not match the specified provider module name.
-      if ($provider && $definition['provider'] != $provider) {
-        continue;
-      }
-      $plugins[$plugin->entityType()] = $plugin;
-    }
-
-    // Save to the cache only when not filtered for a particular a provider.
-    if (empty($provider)) {
-      \Drupal::cache()->set('scheduler.plugins', $plugins);
+    $plugins = $this->doGetPlugins();
+    if ($provider) {
+      $plugins = array_filter($plugins, function ($plugin) use ($provider) {
+        return $plugin->getPluginDefinition()['provider'] === $provider;
+      });
     }
     return $plugins;
   }
@@ -995,7 +1279,9 @@ class SchedulerManager {
    * Reset the scheduler plugins cache.
    */
   public function invalidatePluginCache() {
-    \Drupal::cache()->invalidate('scheduler.plugins');
+    $this->plugins = [];
+    $this->cacheBackend->delete('scheduler.entity_form_ids');
+    $this->cacheBackend->delete('scheduler.entity_type_form_ids');
   }
 
   /**
@@ -1040,10 +1326,15 @@ class SchedulerManager {
    *
    * @return array
    *   The entity's type/bundle names that are enabled for the required process.
+   *   The single entityTypeId if the entity does not have bundles.
    */
   public function getEnabledTypes($entityTypeId, $process) {
     if (!$plugin = $this->getPlugin($entityTypeId)) {
       return [];
+    }
+    if (!$this->hasBundleType($entityTypeId)) {
+      $enabled = $this->getNoBundleEntityTypeSetting($entityTypeId, $process . '_enable', $this->setting('default_' . $process . '_enable'));
+      return $enabled ? [$entityTypeId] : [];
     }
     $types = $plugin->getTypes();
     $types = array_filter($types, function ($bundle) use ($process) {
@@ -1059,11 +1350,18 @@ class SchedulerManager {
    *   List of entity add/edit form IDs for all registered scheduler plugins.
    */
   public function getEntityFormIds() {
+    $cache = $this->cacheBackend->get('scheduler.entity_form_ids');
+    if ($cache) {
+      return $cache->data;
+    }
+
     $plugins = $this->getPlugins();
     $form_ids = [];
     foreach ($plugins as $plugin) {
       $form_ids = array_merge($form_ids, $plugin->entityFormIDs());
     }
+
+    $this->cacheBackend->set('scheduler.entity_form_ids', $form_ids, Cache::PERMANENT, ['entity_bundles']);
     return $form_ids;
   }
 
@@ -1074,11 +1372,16 @@ class SchedulerManager {
    *   List of entity type add/edit form IDs for registered scheduler plugins.
    */
   public function getEntityTypeFormIds() {
+    $cache = $this->cacheBackend->get('scheduler.entity_type_form_ids');
+    if ($cache) {
+      return $cache->data;
+    }
     $plugins = $this->getPlugins();
     $form_ids = [];
     foreach ($plugins as $plugin) {
       $form_ids = array_merge($form_ids, $plugin->entityTypeFormIDs());
     }
+    $this->cacheBackend->set('scheduler.entity_type_form_ids', $form_ids, Cache::PERMANENT, ['entity_bundles']);
     return $form_ids;
   }
 
@@ -1172,15 +1475,14 @@ class SchedulerManager {
    *   Labels of the entity types updated.
    */
   public function entityUpdate() {
-    $entityUpdateManager = \Drupal::entityDefinitionUpdateManager();
     $updated = [];
-    $list = $entityUpdateManager->getChangeList();
+    $list = $this->entityDefinitionUpdateManager->getChangeList();
     foreach ($list as $entity_type_id => $definitions) {
       if (($definitions['field_storage_definitions']['publish_on'] ?? 0) || ($definitions['field_storage_definitions']['unpublish_on'] ?? 0)) {
-        $entity_type = $entityUpdateManager->getEntityType($entity_type_id);
+        $entity_type = $this->entityDefinitionUpdateManager->getEntityType($entity_type_id);
         $fields = scheduler_entity_base_field_info($entity_type);
         foreach ($fields as $field_name => $field_definition) {
-          $entityUpdateManager->installFieldStorageDefinition($field_name, $entity_type_id, $entity_type_id, $field_definition);
+          $this->entityDefinitionUpdateManager->installFieldStorageDefinition($field_name, $entity_type_id, $entity_type_id, $field_definition);
         }
         $this->logger->notice('%entity entity type updated with %publish_on and %unpublish_on fields.', [
           '%entity' => $entity_type->getLabel(),
@@ -1288,9 +1590,7 @@ class SchedulerManager {
    */
   public function entityRevert(array $only_these_types = []) {
     // Find all changed entity definitions.
-    $entityUpdateManager = \Drupal::entityDefinitionUpdateManager();
-    $changeList = $entityUpdateManager->getChangeList();
-
+    $changeList = $this->entityDefinitionUpdateManager->getChangeList();
     $output = [];
     if ($only_these_types) {
       // First remove any non-existent entity types requested.
@@ -1319,8 +1619,8 @@ class SchedulerManager {
         foreach (['publish_on', 'unpublish_on'] as $field_name) {
           $change = ($changeList[$entity_type_id]['field_storage_definitions'][$field_name] ?? NULL);
           // If the field is marked as deleted then remove it.
-          if ($change == $entityUpdateManager::DEFINITION_DELETED && $field = $entityUpdateManager->getFieldStorageDefinition($field_name, $entity_type_id)) {
-            $entityUpdateManager->uninstallFieldStorageDefinition($field);
+          if ($change == $this->entityDefinitionUpdateManager::DEFINITION_DELETED && $field = $this->entityDefinitionUpdateManager->getFieldStorageDefinition($field_name, $entity_type_id)) {
+            $this->entityDefinitionUpdateManager->uninstallFieldStorageDefinition($field);
             $output["{$entity_type_id} fields"] = $this->t('Scheduler fields removed from @entityType', [
               '@entityType' => $entityType->getLabel(),
             ]);
@@ -1440,7 +1740,7 @@ class SchedulerManager {
     // inform the admin that there is potentially some manual work to do.
     $uri = 'https://www.drupal.org/project/scheduler/issues/3320341';
     $link = Link::fromTextAndUrl($this->t('Scheduler issue 3320341'), Url::fromUri($uri));
-    \Drupal::messenger()->addMessage($this->t(
+    $this->messenger->addMessage($this->t(
       'The Scheduler fields are now hidden by default and automatically changed to be displayed when an entity
       bundle is enabled for scheduling. If you have previously manually hidden scheduler fields for enabled
       entity types then these fields will now be displayed. You will need to manually hide them again or
@@ -1485,6 +1785,31 @@ class SchedulerManager {
       ]);
     }
     return $output;
+  }
+
+  /**
+   * Gets instances of applicable Scheduler plugins for the enabled modules.
+   *
+   * @return \Drupal\Component\Plugin\PluginInspectionInterface[]
+   *   Array of plugin objects, keyed by the entity type the plugin supports.
+   */
+  protected function doGetPlugins(): array {
+    if (!empty($this->plugins)) {
+      return $this->plugins;
+    }
+
+    $definitions = $this->getPluginDefinitions();
+    foreach ($definitions as $definition) {
+      $plugin = $this->pluginManager->createInstance($definition['id']);
+      $dependency = $plugin->dependency();
+      // Ignore plugins if there is a dependency module and it is not enabled.
+      if ($dependency && !$this->moduleHandler->moduleExists($dependency)) {
+        continue;
+      }
+      $this->plugins[$plugin->entityType()] = $plugin;
+    }
+
+    return $this->plugins;
   }
 
 }

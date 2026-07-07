@@ -2,11 +2,17 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests the Scheduler interaction with Devel Generate module.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerDevelGenerateTest extends SchedulerBrowserTestBase {
 
   /**
@@ -99,6 +105,7 @@ class SchedulerDevelGenerateTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataDevelGenerate
    */
+  #[DataProvider('dataDevelGenerate')]
   public function testDevelGenerate($entityTypeId, $enabled) {
     $this->drupalLogin($this->adminUser);
     $entityType = $this->entityTypeObject($entityTypeId, $enabled ? NULL : 'non-enabled');

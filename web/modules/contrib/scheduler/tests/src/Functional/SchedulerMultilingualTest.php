@@ -3,12 +3,17 @@
 namespace Drupal\Tests\scheduler\Functional;
 
 use Drupal\language\Entity\ConfigurableLanguage;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the scheduling functions for node translations.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerMultilingualTest extends SchedulerBrowserTestBase {
 
   /**
@@ -114,6 +119,7 @@ class SchedulerMultilingualTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataPublishingTranslations
    */
+  #[DataProvider('dataPublishingTranslations')]
   public function testPublishingTranslations($publish_on_translatable, $unpublish_on_translatable, $status_translatable, array $expected_status_values_before, array $expected_status_values_after) {
     // Show the languages, this is for info and debug only.
     $this->drupalGet('admin/config/regional/language');

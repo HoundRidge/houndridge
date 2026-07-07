@@ -2,11 +2,17 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests the options for scheduling dates to be required during add/edit.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerRequiredTest extends SchedulerBrowserTestBase {
 
   /**
@@ -14,6 +20,7 @@ class SchedulerRequiredTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataRequiredScheduling
    */
+  #[DataProvider('dataRequiredScheduling')]
   public function testRequiredScheduling($id, $publish_required, $unpublish_required, $operation, $scheduled, $status, $publish_expected, $unpublish_expected, $message) {
 
     $this->drupalLogin($this->schedulerUser);

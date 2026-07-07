@@ -2,6 +2,10 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests some permissions of the Scheduler module.
  *
@@ -11,6 +15,8 @@ namespace Drupal\Tests\scheduler\Functional;
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
 
   /**
@@ -98,6 +104,7 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataPermissionsTest
    */
+  #[DataProvider('dataPermissionsTest')]
   public function testUserPermissionsAdd($entityTypeId, $bundle, $user) {
     $titleField = $this->titleField($entityTypeId);
 
@@ -156,6 +163,7 @@ class SchedulerPermissionsTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataPermissionsTest
    */
+  #[DataProvider('dataPermissionsTest')]
   public function testUserPermissionsEdit($entityTypeId, $bundle, $user) {
     $storage = $this->entityStorageObject($entityTypeId);
     $titleField = $this->titleField($entityTypeId);

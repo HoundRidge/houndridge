@@ -1,5 +1,6 @@
 // eslint-disable-next-line func-names
 (function ($, Drupal, drupalSettings, Sortable) {
+  // cspell:ignore whitelist
   Drupal.behaviors.tagifyAutocomplete = {
     attach: function attach(context) {
       // See: https://github.com/yairEO/tagify#ajax-whitelist.
@@ -82,20 +83,30 @@
          * @return {string} The input string with matching letters wrapped in <strong> tags.
          */
         function highlightMatchingLetters(inputTerm, searchTerm) {
+          inputTerm = inputTerm == null ? '' : inputTerm.toString();
+          searchTerm = searchTerm == null ? '' : searchTerm.toString();
           // Escape special characters in the search term.
           const escapedSearchTerm = searchTerm.replace(
             /[.*+?^${}()|[\]\\]/g,
             '\\$&',
           );
-          // Create a regular expression to match the search term globally and case insensitively.
-          const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
-          // Check if there are any matches.
+          // Without a search term there is nothing to highlight: escape and return.
           if (!escapedSearchTerm) {
-            // If no matches found, return the original input string.
-            return inputTerm;
+            return Drupal.checkPlain(inputTerm);
           }
-          // Replace matching letters with the same letters wrapped in <strong> tags.
-          return inputTerm.replace(regex, '<strong>$1</strong>');
+          // Highlight on the RAW term, then escape each piece individually, so
+          // the <strong> wrapping never lands inside an HTML entity produced by
+          // escaping (e.g. the "a" in "&amp;"), which would corrupt it.
+          // String.split with a capturing group yields matches at odd indices.
+          const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
+          return inputTerm
+            .split(regex)
+            .map((segment, index) =>
+              index % 2 === 1
+                ? `<strong>${Drupal.checkPlain(segment)}</strong>`
+                : Drupal.checkPlain(segment),
+            )
+            .join('');
         }
 
         /**
@@ -105,7 +116,7 @@
          */
         function entityIdMarkup(entityId) {
           return parseInt(input.dataset.showEntityId, 10) && entityId
-            ? `<div id="tagify__tag-items" class="tagify__tag_with-entity-id"><div class='tagify__tag__entity-id-wrap'><span class='tagify__tag-entity-id'>${entityId}</span></div></div>`
+            ? `<div id="tagify__tag-items" class="tagify__tag_with-entity-id"><div class='tagify__tag__entity-id-wrap'><span class='tagify__tag-entity-id'>${Drupal.checkPlain(entityId)}</span></div></div>`
             : '';
         }
 
@@ -196,19 +207,19 @@
          */
         function tagTemplate(tagData) {
           // Avoid 'undefined' values on paste event.
-          const label = tagData.label ?? tagData.value;
+          const label = Drupal.checkPlain(tagData.label ?? tagData.value);
 
-          return `<tag title="${tagData.label}"
+          return `<tag title="${label}"
             contenteditable='false'
             spellcheck='false'
             tabIndex="-1"
             class="tagify__tag ${tagData.class ? tagData.class : ''}"
             ${this.getAttributes(tagData)}>
               <x id="tagify__tag-remove-button"
-                title='Remove ${tagData.label}'
+                title='Remove ${label}'
                 class='tagify__tag__removeBtn'
                 role='button'
-                aria-label='remove ${tagData.label} tag'
+                aria-label='remove ${label} tag'
                 tabindex="0">
               </x>
               ${tagMarkup(
@@ -253,6 +264,10 @@
          </footer>`
             : '';
         }
+
+        // Check if input is inside gin sidebar.
+        const isInGinSidebar = !!input.closest('#gin_sidebar');
+
         // Tagify initialization.
         // eslint-disable-next-line no-undef
         const tagify = new Tagify(input, {
@@ -278,7 +293,7 @@
                     tabindex="0"
                     role="option">
                     <p>${drupalSettings.tagify.information_message.no_matching_suggestions}</p>
-                    <strong class="tagify--value">${data.value}</strong>
+                    <strong class="tagify--value">${Drupal.checkPlain(data.value)}</strong>
                   </div>`;
               }
               // Don't show the no match item immediately.
@@ -292,6 +307,11 @@
           maxTags: cardinality > 0 ? cardinality : Infinity,
           pasteAsTags: false,
         });
+
+        // Prevent BEF from autosubmitting when typing in Tagify.
+        if (tagify.DOM.input) {
+          tagify.DOM.input.setAttribute('data-bef-auto-submit-exclude', '1');
+        }
 
         let controller;
 
@@ -318,6 +338,104 @@
             tagify.updateValueByDOMTags();
           },
         });
+
+        // Split the taxonomy terms into groups, when rendering the suggestions list dropdown:
+        // (since each term also has a 'parent' property)
+        tagify.dropdown.createListHTML = (suggestionsList) => {
+          if (isTagLimitReached()) {
+            return '';
+          }
+          const parentsOfTerms = suggestionsList.reduce((acc, suggestion) => {
+            const parent = suggestion.parent_name || '';
+
+            if (!acc[parent]) acc[parent] = [suggestion];
+            else acc[parent].push(suggestion);
+
+            return acc;
+          }, {});
+
+          // Build a set of parent names that have children
+          const parentNamesWithChildren = new Set();
+          Object.keys(parentsOfTerms).forEach((key) => {
+            if (key) {
+              parentNamesWithChildren.add(key);
+            }
+          });
+
+          const getTermsSuggestionsHTML = (parentTerms) =>
+            parentTerms
+              .map((suggestion) => {
+                if (
+                  typeof suggestion === 'string' ||
+                  typeof suggestion === 'number'
+                )
+                  suggestion = { value: suggestion };
+
+                const value = tagify.dropdown.getMappedValue.call(
+                  tagify,
+                  suggestion,
+                );
+
+                // Keep the raw value on the data model; the dropdown item
+                // template (via highlightMatchingLetters) and the tag template
+                // both escape with Drupal.checkPlain at render time. Escaping
+                // here would corrupt the tag's stored value (double-escaping).
+                suggestion.label = value;
+
+                return tagify.settings.templates.dropdownItem.apply(tagify, [
+                  suggestion,
+                ]);
+              })
+              .join('');
+
+          // Assign the item to a group.
+          return Object.entries(parentsOfTerms)
+            .map(([parentName, childName]) => {
+              if (parentName) {
+                // Find the parent suggestion to get its attributes
+                const parentSuggestion = suggestionsList.find(
+                  (s) => s.label === parentName && !s.parent_name,
+                );
+
+                // Create parent header (clickable only if parentSelection is enabled)
+                let parentHeaderHTML = '';
+                const isParentSelectionEnabled = parseInt(
+                  input.dataset.parentSelection,
+                  10,
+                );
+
+                if (parentSuggestion && isParentSelectionEnabled) {
+                  const value = tagify.dropdown.getMappedValue.call(
+                    tagify,
+                    parentSuggestion,
+                  );
+                  // Keep the raw value on the data model; rendering escapes it.
+                  parentSuggestion.label = value;
+
+                  parentHeaderHTML = `<div class="tagify__dropdown__item tagify__dropdown__item--parent" ${
+                    tagify.getAttributes
+                      ? tagify.getAttributes(parentSuggestion)
+                      : ''
+                  } tabindex="0" role="option">
+                    <div class="tagify__dropdown__item-highlighted dropdown_group">${Drupal.checkPlain(parentName)}</div>
+                  </div>`;
+                } else {
+                  parentHeaderHTML = `<span class="dropdown_group">${Drupal.checkPlain(parentName)}</span>`;
+                }
+
+                return `<div class="tagify__dropdown__itemsGroup" data-title="${Drupal.checkPlain(parentName)}">
+                ${parentHeaderHTML}
+                ${getTermsSuggestionsHTML(childName)}
+              </div>`;
+              }
+              // Filter out items that are parents with children
+              const filteredChildName = childName.filter(
+                (item) => !parentNamesWithChildren.has(item.label),
+              );
+              return getTermsSuggestionsHTML(filteredChildName);
+            })
+            .join('');
+        };
 
         /**
          * Handles autocomplete functionality for the input field using Tagify.
@@ -356,6 +474,7 @@
               const newWhitelistData = newWhitelist.map((current) => ({
                 value: current.entity_id,
                 entity_id: current.entity_id,
+                parent_name: current.parent_name,
                 info_label: current.info_label,
                 label: current.label,
                 editable: current.editable,
@@ -408,6 +527,13 @@
         // callback listener argument is a String).
         tagify.on('change', onChange);
 
+        // Add gin-sidebar class to dropdown when shown in sidebar context.
+        if (isInGinSidebar) {
+          tagify.on('dropdown:show', () => {
+            tagify.DOM.dropdown.classList.add('tagify__dropdown--gin-sidebar');
+          });
+        }
+
         // If 'On click' dropdown suggestions is enabled (Simulated 'Select').
         if (!tagify.settings.dropdown.enabled) {
           const tagsElement = document.querySelector(`.${identifier}`);
@@ -432,6 +558,51 @@
         // If 'On click' dropdown suggestions is enabled.
         if (!tagify.settings.dropdown.enabled) {
           document.addEventListener('click', handleClickEvent);
+        }
+
+        // For GET forms (BEF exposed filters), keep the URL clean by replacing
+        // the JSON-valued tagify input with individual hidden inputs per entity
+        // ID. We remove the name immediately (so the JSON never submits) and
+        // keep the hidden inputs in sync via Tagify's change event.
+        //
+        // Note: we check the DOM .method property (not a CSS attribute selector)
+        // because Drupal exposed-filter forms often omit the method attribute
+        // and rely on the HTML default (GET). The attribute selector
+        // [method="get"] would not match those forms.
+        //
+        // We re-evaluate the form reference inside syncHiddenInputs via the
+        // Tagify DOM scope so that AJAX page updates do not leave hidden inputs
+        // orphaned in a detached form element.
+        const formEl = input.closest('form');
+        const inputName = input.name;
+        if (formEl && formEl.method.toLowerCase() === 'get' && inputName) {
+          input.removeAttribute('name');
+
+          const syncHiddenInputs = () => {
+            const currentForm = tagify.DOM.scope.closest('form');
+            if (!currentForm) {
+              return;
+            }
+            currentForm
+              .querySelectorAll(
+                `input[data-tagify-field="${CSS.escape(inputName)}"]`,
+              )
+              .forEach((el) => el.remove());
+            tagify.value
+              .filter((tag) => tag.entity_id != null)
+              .forEach((tag) => {
+                const hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = `${inputName}[]`;
+                hidden.dataset.tagifyField = inputName;
+                hidden.value = tag.entity_id;
+                currentForm.appendChild(hidden);
+              });
+          };
+
+          tagify.on('change', syncHiddenInputs);
+          // Initial sync covers pre-selected tags restored from URL params.
+          syncHiddenInputs();
         }
       });
     },
@@ -458,7 +629,12 @@
          * @return {int} - The number of selected tags.
          */
         function countSelectedTags() {
-          const tagsElement = document.querySelector(`.${identifier}`);
+          const tagsElement = identifier
+            ? document.querySelector(`.${identifier}`)
+            : null;
+          if (!tagsElement) {
+            return 0;
+          }
           const tagElements = tagsElement.querySelectorAll('.tagify__tag');
           return tagElements.length;
         }
@@ -478,30 +654,70 @@
          * @return {string} The input string with matching letters wrapped in <strong> tags.
          */
         function highlightMatchingLetters(inputTerm, searchTerm) {
+          inputTerm = inputTerm == null ? '' : inputTerm.toString();
+          searchTerm = searchTerm == null ? '' : searchTerm.toString();
           // Escape special characters in the search term.
           const escapedSearchTerm = searchTerm.replace(
             /[.*+?^${}()|[\]\\]/g,
             '\\$&',
           );
-          // Create a regular expression to match the search term globally and case insensitively.
-          const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
-          // Check if there are any matches.
+          // Without a search term there is nothing to highlight: escape and return.
           if (!escapedSearchTerm) {
-            // If no matches found, return the original input string.
-            return inputTerm;
+            return Drupal.checkPlain(inputTerm);
           }
-          // Replace matching letters with the same letters wrapped in <strong> tags.
-          return inputTerm.replace(regex, '<strong>$1</strong>');
+          // Highlight on the RAW term, then escape each piece individually, so
+          // the <strong> wrapping never lands inside an HTML entity produced by
+          // escaping (e.g. the "a" in "&amp;"), which would corrupt it.
+          // String.split with a capturing group yields matches at odd indices.
+          const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
+          return inputTerm
+            .split(regex)
+            .map((segment, index) =>
+              index % 2 === 1
+                ? `<strong>${Drupal.checkPlain(segment)}</strong>`
+                : Drupal.checkPlain(segment),
+            )
+            .join('');
+        }
+
+        /**
+         * Generates HTML markup for an entity id.
+         * @param {string} entityId - The entity id.
+         * @return {string} The entity id markup HTML.
+         */
+        function entityIdMarkup(entityId) {
+          return parseInt(select.dataset.showEntityId, 10) && entityId
+            ? `<div id="tagify__tag-items" class="tagify__tag_with-entity-id"><div class='tagify__tag__entity-id-wrap'><span class='tagify__tag-entity-id'>${Drupal.checkPlain(entityId)}</span></div></div>`
+            : '';
+        }
+
+        /**
+         * Generates HTML markup for a tag.
+         * @param {string} tagLabel - The label.
+         * @param {string} tagEntityId - The entity id.
+         * @return {string} The tag markup HTML.
+         */
+        function tagMarkup(tagLabel, tagEntityId) {
+          return `<div id="tagify__tag-items">${tagEntityId}
+            <span class="${
+              tagEntityId
+                ? 'tagify__tag-text-with-entity-id'
+                : 'tagify__tag-text'
+            }">${tagLabel}</span>
+            </div>`;
         }
 
         /**
          * Generates HTML markup for a tag based on the provided tagData.
-         *
-         * @param {Object} tagData - Data for the tag, including value, text, class, etc.
-         * @return {string} - HTML markup for the generated tag.
+         * @param {Object} tagData - Data for the tag, including value, entity_id, class, etc.
+         * @return {string} - The HTML markup for the generated tag.
          */
         function tagTemplate(tagData) {
-          return `<tag title="${tagData.text}"
+          const text = Drupal.checkPlain(tagData.text);
+          // Avoid 'undefined' values on paste event.
+          const label = text ?? Drupal.checkPlain(tagData.label);
+
+          return `<tag title="${text}"
             contenteditable='false'
             spellcheck='false'
             tabIndex="-1"
@@ -514,9 +730,7 @@
             aria-label='remove tag'
             tabIndex="0">
             </x>
-            <div id="tagify__tag-items">
-            <span class='tagify__tag-text'>${tagData.text}</span>
-            </div>
+              ${tagMarkup(label, entityIdMarkup(tagData.value))}
           </tag>`;
         }
 
@@ -536,12 +750,25 @@
               this.state.inputText,
             );
 
-            return `<div class='${dropdownItemClass}'
-              value="${tagData.value}"
-              tabindex="0"
-              role="option">
-              <div class="tagify__dropdown__item-highlighted">${highlightedText}</div>
-            </div>`;
+            const event = new CustomEvent('tagifyDropDownItemTemplate', {
+              bubbles: true,
+              detail: {
+                template: `
+                  <div class='${dropdownItemClass}'
+                    value="${Drupal.checkPlain(tagData.value)}"
+                    tabindex="0"
+                    role="option">
+                    <div class="tagify__dropdown__item-highlighted">${highlightedText}</div>
+                  </div>`,
+                classNames,
+                tagData,
+                highlightedText,
+                select,
+              },
+            });
+
+            select.dispatchEvent(event);
+            return event.detail.template;
           }
 
           return '';
@@ -549,15 +776,59 @@
 
         const options = [];
         const selected = [];
-        // eslint-disable-next-line func-names
-        [...this.options].forEach(function (option) {
-          if (!option.value || !option.text) {
+        const parentStack = [];
+        let hasHierarchy = false;
+
+        [...this.options].forEach((option) => {
+          // Skip empty values and the Views/BEF 'All' sentinel (used for the
+          // "- Any -" no-filter option). Its leading dash would falsely set
+          // hasHierarchy=true and silence the entire dropdown.
+          if (!option.value || option.value === 'All' || !option.text) {
             return;
           }
-          options.push({ value: option.value, text: option.text });
-          if (option.selected) {
-            selected.push({ value: option.value, text: option.text });
+
+          // Extract hierarchy level based on leading dashes
+          const match = option.text.match(/^(-+)\s*/); // Matches leading dashes
+          const level = match ? match[1].length : 0; // Number of dashes determines depth
+          const text = option.text.replace(/^(-+\s*)/, ''); // Remove leading dashes
+
+          if (level > 0) {
+            hasHierarchy = true;
           }
+
+          // Adjust parent stack based on depth
+          while (
+            parentStack.length > 0 &&
+            parentStack[parentStack.length - 1].level >= level
+          ) {
+            parentStack.pop();
+          }
+
+          // Determine parent
+          const parent =
+            parentStack.length > 0
+              ? parentStack[parentStack.length - 1].text
+              : null;
+
+          // Store the current option
+          const optionData = { value: option.value, text, label: text, parent };
+          options.push(optionData);
+
+          // Add to selected if applicable
+          if (option.selected) {
+            selected.push(optionData);
+          }
+
+          // Push current item as a potential parent
+          parentStack.push({ text, level });
+        });
+
+        // Sorting: Ensure parents appear before children
+        options.sort((a, b) => {
+          if (!a.parent && b.parent) return -1;
+          if (a.parent && !b.parent) return 1;
+          if (a.parent === b.parent) return a.level - b.level;
+          return 0;
         });
 
         /**
@@ -576,6 +847,9 @@
 
           return '';
         }
+
+        // Check if select is inside gin sidebar.
+        const isInGinSidebar = !!select.closest('#gin_sidebar');
 
         // Insert an input element to attach Tagify. Unfortunately, it is not
         // possible to attach Tagify directly to the select element because the
@@ -609,7 +883,7 @@
               value="noMatch"
               tabindex="0"
               role="option">
-                <p>${drupalSettings.tagify_select.information_message.no_matching_suggestions} </p><strong class="tagify--value">${data.value}</strong>
+                <p>${drupalSettings.tagify_select.information_message.no_matching_suggestions} </p><strong class="tagify--value">${Drupal.checkPlain(data.value)}</strong>
               </div>`
                 : '',
           },
@@ -621,10 +895,82 @@
           placeholder,
         });
 
+        // Custom function to group taxonomy terms in the dropdown
+        tagify.dropdown.createListHTML = (suggestionsList) => {
+          if (isTagLimitReached() && !mode) {
+            return '';
+          }
+
+          // Grouping suggestions by their parent category
+          const parentsOfTerms = suggestionsList.reduce((acc, suggestion) => {
+            const parent = suggestion.parent || '';
+            if (!acc[parent]) acc[parent] = [suggestion];
+            else acc[parent].push(suggestion);
+            return acc;
+          }, {});
+
+          // Function to generate HTML for terms within a parent group
+          const parentNamesWithChildren = new Set();
+          Object.keys(parentsOfTerms).forEach((key) => {
+            if (key) parentNamesWithChildren.add(key);
+          });
+
+          const getTermsSuggestionsHTML = (parentTerms) =>
+            parentTerms
+              .map((suggestion) => {
+                return tagify.settings.templates.dropdownItem.apply(tagify, [
+                  suggestion,
+                ]);
+              })
+              .join('');
+
+          // Generate final grouped dropdown list
+          return Object.entries(parentsOfTerms)
+            .map(([parentName, childName]) => {
+              if (parentName) {
+                const parentSuggestion = suggestionsList.find(
+                  (s) => s.label === parentName && !s.parent,
+                );
+
+                const isParentSelectionEnabled = parseInt(
+                  select.dataset.parentSelection,
+                  10,
+                );
+                let parentHeaderHTML = '';
+
+                if (parentSuggestion && isParentSelectionEnabled) {
+                  parentHeaderHTML = `<div class="tagify__dropdown__item tagify__dropdown__item--parent" ${
+                    tagify.getAttributes
+                      ? tagify.getAttributes(parentSuggestion)
+                      : ''
+                  } tabindex="0" role="option">
+                    <div class="tagify__dropdown__item-highlighted dropdown_group">${Drupal.checkPlain(parentName)}</div>
+                  </div>`;
+                } else {
+                  parentHeaderHTML = `<span class="dropdown_group">${Drupal.checkPlain(parentName)}</span>`;
+                }
+
+                return `<div class="tagify__dropdown__itemsGroup" data-title="${Drupal.checkPlain(parentName)}">
+          ${parentHeaderHTML}
+          ${getTermsSuggestionsHTML(childName)}
+        </div>`;
+              }
+
+              const filteredChildName = childName.filter(
+                (item) => !parentNamesWithChildren.has(item.label),
+              );
+
+              return getTermsSuggestionsHTML(filteredChildName);
+            })
+            .join('');
+        };
+
         // Remove tagify--select class to keep Tagify styles.
-        if (select.dataset.mode) {
+        if (select.dataset.mode && identifier) {
           const tagsElement = document.querySelector(`.${identifier}`);
-          tagsElement.classList.remove('tagify--select');
+          if (tagsElement) {
+            tagsElement.classList.remove('tagify--select');
+          }
         }
 
         /**
@@ -659,12 +1005,37 @@
           if (!value) return;
           const option = select.querySelector(`option[value="${value}"]`);
           if (option) {
+            // In 'select' mode Tagify fires 'add' before 'remove', so the
+            // outgoing tag's option is still selected when 'change' fires.
+            // Deselect everything first so the underlying <select> is in sync
+            // before the change event triggers a form submission.
+            if (mode === 'select') {
+              [...select.options].forEach((opt) => {
+                opt.selected = false;
+              });
+            }
             select.removeChild(option);
             select.appendChild(option);
             option.selected = true;
           }
           // Trigger a native change event so Drupal's AJAX system responds.
           select.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+
+        /**
+         * Listens to change tag event and updates select values accordingly.
+         */
+        // eslint-disable-next-line func-names
+        tagify.on('change', function (e) {
+          // Trigger a native change event so Drupal's AJAX system responds.
+          JSON.parse(e.detail.value).forEach((item) => {
+            const { value } = item;
+            const option = select.querySelector(`option[value="${value}"]`);
+            if (option) {
+              option.selected = true;
+              select.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          });
         });
 
         /**
@@ -681,6 +1052,13 @@
           // Trigger a native change event so Drupal's AJAX system responds.
           select.dispatchEvent(new Event('change', { bubbles: true }));
         });
+
+        // Add gin-sidebar class to dropdown when shown in sidebar context.
+        if (isInGinSidebar) {
+          tagify.on('dropdown:show', () => {
+            tagify.DOM.dropdown.classList.add('tagify__dropdown--gin-sidebar');
+          });
+        }
       });
     },
   };

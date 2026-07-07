@@ -2,15 +2,17 @@
 
 namespace Drupal\ai\Base;
 
+use Drupal\ai\Exception\AiSetupFailureException;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\File\FileExists;
 use Drupal\ai\Dto\TokenUsageDto;
+use Drupal\ai\Dto\ChatProviderLimitsDto;
 use Drupal\ai\Enum\AiProviderCapability;
 use Drupal\ai\Exception\AiQuotaException;
 use Drupal\ai\Exception\AiRateLimitException;
+use Drupal\ai\Exception\AiRequestErrorException;
 use Drupal\ai\Exception\AiResponseErrorException;
-use Drupal\ai\Exception\AiSetupFailureException;
 use Drupal\ai\OperationType\Chat\ChatInput;
 use Drupal\ai\OperationType\Chat\ChatInterface;
 use Drupal\ai\OperationType\Chat\ChatMessage;
@@ -38,6 +40,7 @@ use Drupal\ai\OperationType\TextToSpeech\TextToSpeechOutput;
 use Drupal\ai\ProviderClient\OpenAiBasedProviderClientInterface;
 use Drupal\ai\Traits\OperationType\EmbeddingsTrait;
 use OpenAI\Client;
+use OpenAI\Responses\Meta\MetaInformation;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -77,6 +80,29 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
   protected string $endpoint = '';
 
   /**
+   * The rate limit headers.
+   *
+   * @var array
+   */
+  protected array $rateLimitHeaders = [];
+
+  /**
+   * The image mime types the image endpoints may return, with file extension.
+   */
+  protected const ALLOWED_IMAGE_MIME_TYPES = [
+    'image/png' => 'png',
+    'image/jpeg' => 'jpeg',
+    'image/webp' => 'webp',
+  ];
+
+  /**
+   * The audio mime types the audio endpoints may return, with file extension.
+   */
+  protected const ALLOWED_AUDIO_MIME_TYPES = [
+    'audio/mpeg' => 'mp3',
+  ];
+
+  /**
    * {@inheritdoc}
    */
   public function isUsable(?string $operation_type = NULL, array $capabilities = []): bool {
@@ -112,7 +138,7 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
    * {@inheritdoc}
    */
   public function hasAuthentication(): bool {
-    return !empty($this->apiKey);
+    return TRUE;
   }
 
   /**
@@ -134,18 +160,12 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
 
   /**
    * Loads the OpenAI Client with authentication if not initialized.
+   *
+   * @throws \Drupal\ai\Exception\AiSetupFailureException
+   *   Thrown when the API key cannot be loaded or authentication setup fails.
    */
   protected function loadClient(): void {
     if (empty($this->client)) {
-      if (!$this->hasAuthentication()) {
-        try {
-          $this->setAuthentication($this->loadApiKey());
-        }
-        catch (AiSetupFailureException $e) {
-          throw new AiSetupFailureException('Failed to authenticate with AI provider: ' . $e->getMessage(), $e->getCode(), $e);
-        }
-      }
-
       $this->client = $this->createClient();
     }
   }
@@ -185,13 +205,30 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
    *
    * @return \OpenAI\Client
    *   The configured OpenAI client instance.
+   *
+   * @throws \Drupal\ai\Exception\AiSetupFailureException
+   *   Thrown when the API key cannot be loaded or authentication setup fails.
    */
   protected function createClient(): Client {
     $clientFactory = \OpenAI::factory();
 
     // Only set the API key if it is not empty.
     if ($this->hasAuthentication()) {
-      $clientFactory = $clientFactory->withApiKey($this->apiKey);
+      // Only set authentication when not set.
+      if (empty($this->apiKey)) {
+        try {
+          $key = $this->loadApiKey();
+        }
+        catch (AiSetupFailureException $e) {
+          $this->loggerFactory->get('ai')->error($e->getMessage());
+        }
+        if (!empty($key)) {
+          $this->setAuthentication($key);
+        }
+      }
+      if (!empty($this->apiKey)) {
+        $clientFactory = $clientFactory->withApiKey($this->apiKey);
+      }
     }
 
     $client = $clientFactory->withHttpClient($this->httpClient);
@@ -336,7 +373,9 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
         $chat_output = new ChatOutput($message, $response, []);
       }
       else {
-        $response = $this->client->chat()->create($payload)->toArray();
+        $initialResponse = $this->client->chat()->create($payload);
+        $this->captureRateLimitHeaders($initialResponse?->meta());
+        $response = $initialResponse->toArray();
         $message = new ChatMessage($response['choices'][0]['message']['role'], $response['choices'][0]['message']['content'] ?? '', []);
 
         // Handle tool calls if present.
@@ -353,13 +392,16 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
           }
         }
         $chat_output = new ChatOutput($message, $response, []);
+        if ($rate_limits = $this->mapRateLimits()) {
+          $chat_output->setRateLimits($rate_limits);
+        }
         $chat_output = $this->setChatTokenUsage($chat_output, $response);
       }
 
       return $chat_output;
     }
-    catch (\Exception $e) {
-      $this->handleApiException($e);
+    catch (\Throwable $e) {
+      $this->handleApiThrowable($e);
       throw $e;
     }
     return new ChatOutput($message, $response, []);
@@ -371,24 +413,29 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
   public function moderation(string|ModerationInput $input, ?string $model_id = NULL, array $tags = []): ModerationOutput {
     $this->loadClient();
 
+    // Do not allow empty model IDs for moderation.
+    if (empty($model_id)) {
+      throw new AiRequestErrorException('Model ID is required for moderation requests.');
+    }
+
     if ($input instanceof ModerationInput) {
       $input = $input->getPrompt();
     }
 
     $payload = [
-      'model' => $model_id ?? 'text-moderation-latest',
+      'model' => $model_id,
       'input' => $input,
     ] + $this->configuration;
 
     try {
       $response = $this->client->moderations()->create($payload)->toArray();
-      $normalized = new ModerationResponse($response['results'][0]['flagged'], $response['results'][0]['category_scores']);
-      return new ModerationOutput($normalized, $response, []);
     }
-    catch (\Exception $e) {
-      $this->handleApiException($e);
+    catch (\Throwable $e) {
+      $this->handleApiThrowable($e);
       throw $e;
     }
+    $normalized = new ModerationResponse($response['results'][0]['flagged'], $response['results'][0]['category_scores']);
+    return new ModerationOutput($normalized, $response, []);
   }
 
   /**
@@ -409,8 +456,8 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
     try {
       $response = $this->client->images()->create($payload)->toArray();
     }
-    catch (\Exception $e) {
-      $this->handleApiException($e);
+    catch (\Throwable $e) {
+      $this->handleApiThrowable($e);
     }
 
     $images = [];
@@ -420,21 +467,17 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
 
     foreach ($response['data'] as $data) {
       if (isset($data['b64_json'])) {
-        $images[] = new ImageFile(base64_decode($data['b64_json']), 'image/png', 'generated.png');
-      }
-      elseif (isset($data['url']) && !empty($data['url'])) {
-        try {
-          $image_content = file_get_contents($data['url']);
-          if ($image_content !== FALSE) {
-            $images[] = new ImageFile($image_content, 'image/png', 'generated.png');
-          }
+        $image_content = base64_decode($data['b64_json'], TRUE);
+        if ($image_content === FALSE) {
+          throw new AiResponseErrorException('Failed to decode base64 image data from the API response.');
         }
-        catch (\Exception $e) {
-          $this->loggerFactory->get('ai')->error('Failed to fetch image from URL @url: @message', [
-            '@url' => $data['url'],
-            '@message' => $e->getMessage(),
-          ]);
+        // Determine the mime type from the actual binary data, so that only
+        // real images can end up in the output.
+        $mime_type = $this->detectMimeType($image_content, static::ALLOWED_IMAGE_MIME_TYPES);
+        if ($mime_type === NULL) {
+          throw new AiResponseErrorException('The API returned an image with an unsupported mime type.');
         }
+        $images[] = new ImageFile(base64_decode($image_content), 'image/png', 'generated.png');
       }
     }
 
@@ -462,13 +505,19 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
 
     try {
       $response = $this->client->audio()->speech($payload);
-      $output = new AudioFile($response, 'audio/mpeg', 'speech.mp3');
-      return new TextToSpeechOutput([$output], $response, []);
     }
-    catch (\Exception $e) {
-      $this->handleApiException($e);
+    catch (\Throwable $e) {
+      $this->handleApiThrowable($e);
       throw $e;
     }
+    // Determine the mime type from the actual binary data, so that only
+    // real audio files can end up in the output.
+    $mime_type = $this->detectMimeType($response, static::ALLOWED_AUDIO_MIME_TYPES);
+    if ($mime_type === NULL) {
+      throw new AiResponseErrorException('The API returned an audio file with an unsupported mime type.');
+    }
+    $output = new AudioFile($response, 'audio/mpeg', 'speech.mp3');
+    return new TextToSpeechOutput([$output], $response, []);
   }
 
   /**
@@ -491,12 +540,17 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
 
     try {
       $response = $this->client->audio()->transcribe($payload)->toArray();
-      return new SpeechToTextOutput($response['text'], $response, []);
     }
-    catch (\Exception $e) {
-      $this->handleApiException($e);
+    catch (\Throwable $e) {
+      $this->handleApiThrowable($e);
       throw $e;
     }
+    finally {
+      if (is_resource($input)) {
+        fclose($input);
+      }
+    }
+    return new SpeechToTextOutput($response['text'], $response, []);
   }
 
   /**
@@ -516,12 +570,12 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
 
     try {
       $response = $this->client->embeddings()->create($payload)->toArray();
-      return new EmbeddingsOutput($response['data'][0]['embedding'], $response, []);
     }
-    catch (\Exception $e) {
-      $this->handleApiException($e);
+    catch (\Throwable $e) {
+      $this->handleApiThrowable($e);
       throw $e;
     }
+    return new EmbeddingsOutput($response['data'][0]['embedding'], $response, []);
   }
 
   /**
@@ -545,6 +599,43 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
   }
 
   /**
+   * Handle any Throwable from the API client.
+   *
+   * Call sites catching \Throwable should route through this method. PHP
+   * errors (e.g. \TypeError from the OpenAI PHP client) are wrapped in an
+   * AiResponseErrorException so that all consumers receive a regular
+   * exception they can catch. Everything else delegates to
+   * handleApiException(), preserving backwards compatibility with
+   * subclasses that override handleApiException(\Exception $e).
+   *
+   * Subclasses that want a single hook covering both exceptions and errors
+   * may override this method directly.
+   *
+   * Two methods exist — handleApiException(\Exception) and
+   * handleApiThrowable(\Throwable) — because a previous widening of
+   * handleApiException() to \Throwable was an incompatible change
+   * that broke subclasses (e.g. the Anthropic provider) overriding it with
+   * \Exception. The wider hook was reintroduced here as an opt-in method
+   * so contributed providers can keep their existing overrides.
+   *
+   * @param \Throwable $e
+   *   The throwable to handle.
+   *
+   * @throws \Drupal\ai\Exception\AiRateLimitException
+   * @throws \Drupal\ai\Exception\AiQuotaException
+   * @throws \Drupal\ai\Exception\AiResponseErrorException
+   * @throws \Exception
+   */
+  protected function handleApiThrowable(\Throwable $e): void {
+    // Wrap PHP errors (TypeError, ValueError, etc.) in an
+    // AiResponseErrorException so consumers can catch a single exception type.
+    if ($e instanceof \Error) {
+      throw new AiResponseErrorException($e->getMessage(), $e->getCode(), $e);
+    }
+    $this->handleApiException($e);
+  }
+
+  /**
    * Helper function to set the token usage on chat output.
    *
    * @param \Drupal\ai\OperationType\Chat\ChatOutput $chat_output
@@ -564,6 +655,98 @@ abstract class OpenAiBasedProviderClientBase extends AiProviderClientBase implem
       cached: $response['usage']['prompt_tokens_details']['cached_tokens'] ?? NULL,
     ));
     return $chat_output;
+  }
+
+  /**
+   * Maps rate limit headers to a ChatProviderLimitsDto object.
+   *
+   * @return \Drupal\ai\Dto\ChatProviderLimitsDto|null
+   *   The rate limits DTO or NULL if no headers are available.
+   */
+  protected function mapRateLimits(): ?ChatProviderLimitsDto {
+    if (empty($this->rateLimitHeaders)) {
+      return NULL;
+    }
+
+    $dto = new ChatProviderLimitsDto(
+      rateLimitMaxRequests: isset($this->rateLimitHeaders['x-ratelimit-limit-requests']) ? (int) $this->rateLimitHeaders['x-ratelimit-limit-requests'] : NULL,
+      rateLimitMaxTokens: isset($this->rateLimitHeaders['x-ratelimit-limit-tokens']) ? (int) $this->rateLimitHeaders['x-ratelimit-limit-tokens'] : NULL,
+      rateLimitRemainingRequests: isset($this->rateLimitHeaders['x-ratelimit-remaining-requests']) ? (int) $this->rateLimitHeaders['x-ratelimit-remaining-requests'] : NULL,
+      rateLimitRemainingTokens: isset($this->rateLimitHeaders['x-ratelimit-remaining-tokens']) ? (int) $this->rateLimitHeaders['x-ratelimit-remaining-tokens'] : NULL,
+      rateLimitResetRequests: isset($this->rateLimitHeaders['x-ratelimit-reset-requests']) ? $this->parseResetTime($this->rateLimitHeaders['x-ratelimit-reset-requests']) : NULL,
+      rateLimitResetTokens: isset($this->rateLimitHeaders['x-ratelimit-reset-tokens']) ? $this->parseResetTime($this->rateLimitHeaders['x-ratelimit-reset-tokens']) : NULL,
+    );
+
+    if ($dto->empty()) {
+      return NULL;
+    }
+    return $dto;
+
+  }
+
+  /**
+   * Detects the mime type of binary data and validates it.
+   *
+   * @param string $binary
+   *   The binary data to check.
+   * @param array|string $allowed
+   *   Either an array of accepted mime types keyed by mime type, or a
+   *   primary mime type such as "image" or "audio" that the detected mime
+   *   type has to belong to.
+   *
+   * @return string|null
+   *   The detected mime type, or NULL if it is not allowed.
+   */
+  protected function detectMimeType(string $binary, array|string $allowed): ?string {
+    $finfo = new \finfo(FILEINFO_MIME_TYPE);
+    $mime_type = $finfo->buffer($binary);
+    if (!is_string($mime_type)) {
+      return NULL;
+    }
+    if (is_array($allowed)) {
+      return isset($allowed[$mime_type]) ? $mime_type : NULL;
+    }
+    return str_starts_with($mime_type, $allowed . '/') ? $mime_type : NULL;
+  }
+
+  /**
+   * Parses reset time to seconds.
+   *
+   * @param string $resetTime
+   *   The reset time string.
+   *
+   * @return int|null
+   *   The time in seconds or NULL.
+   */
+  protected function parseResetTime(string $resetTime): ?int {
+    if (preg_match('/(\d+)m(\d+)s/', $resetTime, $matches)) {
+      return ((int) $matches[1] * 60) + (int) $matches[2];
+    }
+    if (preg_match('/(\d+)s/', $resetTime, $matches)) {
+      return (int) $matches[1];
+    }
+    if (preg_match('/(\d+)ms/', $resetTime, $matches)) {
+      return 0;
+    }
+    if (is_numeric($resetTime)) {
+      return max(0, (int) $resetTime - time());
+    }
+    return NULL;
+  }
+
+  /**
+   * Captures rate limit headers from the response object.
+   *
+   * @param \OpenAI\Responses\Meta\MetaInformation|null $metaInformation
+   *   Open AI meta information object.
+   */
+  protected function captureRateLimitHeaders(?MetaInformation $metaInformation): void {
+    $this->rateLimitHeaders['x-ratelimit-limit-requests'] = $metaInformation?->requestLimit?->limit;
+    $this->rateLimitHeaders['x-ratelimit-remaining-requests'] = $metaInformation?->requestLimit?->remaining;
+    $this->rateLimitHeaders['x-ratelimit-reset-requests'] = $metaInformation?->requestLimit?->reset;
+    $this->rateLimitHeaders['x-ratelimit-limit-tokens'] = $metaInformation?->tokenLimit?->limit;
+    $this->rateLimitHeaders['x-ratelimit-remaining-tokens'] = $metaInformation?->tokenLimit?->remaining;
+    $this->rateLimitHeaders['x-ratelimit-reset-tokens'] = $metaInformation?->tokenLimit?->reset;
   }
 
 }

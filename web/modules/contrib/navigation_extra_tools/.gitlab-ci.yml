@@ -34,5 +34,6 @@ variables:
   OPT_IN_TEST_PREVIOUS_MINOR: 1
   OPT_IN_TEST_NEXT_MINOR: 1
   OPT_IN_TEST_NEXT_MAJOR: 1
+  RUN_JOB_UPGRADE_STATUS: 1
 
   _CSPELL_WORDS: inkscape, lostcarpark, reloadable, webprofiler

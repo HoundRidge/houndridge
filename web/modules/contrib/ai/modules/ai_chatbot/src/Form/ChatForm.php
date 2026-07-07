@@ -11,9 +11,10 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\ai\OperationType\Chat\ChatMessage;
 use Drupal\ai_assistant_api\AiAssistantApiRunner;
 use Drupal\ai_assistant_api\Data\UserMessage;
+use Drupal\Component\Utility\Xss;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Drupal\ai\Response\AiStreamedResponse;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -22,6 +23,39 @@ use Symfony\Component\Yaml\Yaml;
 class ChatForm extends FormBase {
 
   use DependencySerializationTrait;
+
+  /**
+   * Allowed tags.
+   *
+   * These are the allowed tags for the LLM response. We allow anything that
+   * can be expressed in markdown.
+   *
+   * @var array
+   */
+  protected array $allowedTags = [
+    'a',
+    'b',
+    'blockquote',
+    'br',
+    'code',
+    'del',
+    'em',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'hr',
+    'i',
+    'img',
+    'li',
+    'ol',
+    'p',
+    'pre',
+    'strong',
+    'ul',
+  ];
 
   /**
    * Construct the chat.
@@ -133,12 +167,13 @@ class ChatForm extends FormBase {
     // Send the query to OpenAI.
     if ($this->getRequest()->isXmlHttpRequest()) {
       try {
-        $http_response = new StreamedResponse();
         // Process.
         $response = $this->aiAssistantRunner->process();
         // If its a failure, the variable is a string, just output;.
         if ($response->getNormalized() instanceof ChatMessage) {
           $output = $response->getNormalized()->getText();
+          // Sanitize the output.
+          $output = Xss::filter($output, $this->allowedTags);
           // Show structured results if wanted.
           if ($this->getChatConfig($form_state)['show_structured_results']) {
             $structured = $this->aiAssistantRunner->getStructuredResults();
@@ -151,22 +186,23 @@ class ChatForm extends FormBase {
           $form_state->setResponse($http_response);
         }
         else {
+          $http_response = new AiStreamedResponse();
           $http_response->setCallback(function () use ($response, $form_state) {
             $full_response = "";
             $this->aiAssistantRunner->startSession();
             foreach ($response->getNormalized() as $message) {
               echo $message->getText();
               $full_response .= $message->getText();
-              ob_flush();
               flush();
             }
+            // Sanitize the full response.
+            $full_response = Xss::filter($full_response, $this->allowedTags);
             // Show structured results if wanted.
             if ($this->getChatConfig($form_state)['show_structured_results']) {
               $structured = $this->aiAssistantRunner->getStructuredResults();
               if ($structured) {
                 echo "\n\n<details>\n\n```\n" . Yaml::dump($structured, 10) . "\n```\n\n</details>";
                 $full_response .= "\n\n<details>\n\n```\n" . Yaml::dump($structured, 10) . "\n```\n\n</details>";
-                ob_flush();
                 flush();
               }
             }

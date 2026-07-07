@@ -2,11 +2,17 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests the options and processing when dates are entered in the past.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerPastDatesTest extends SchedulerBrowserTestBase {
 
   /**
@@ -14,6 +20,7 @@ class SchedulerPastDatesTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testSchedulerPastDates($entityTypeId, $bundle) {
     $storage = $this->entityStorageObject($entityTypeId);
     $titleField = $this->titleField($entityTypeId);

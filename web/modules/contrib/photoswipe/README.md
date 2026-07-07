@@ -90,3 +90,41 @@ follows:
 ~~~
 {{ attach_photoswipe({'bgOpacity': 0.2}) }}
 ~~~
+
+### Combining Multiple Fields into a Shared Gallery
+By default, each field using the Photoswipe formatter gets wrapped in its own `photoswipe-gallery` class. If you want to combine images from multiple fields (or multiple paragraphs/blocks) into a single, shared gallery, you can check the **Remove photoswipe-gallery wrapper class** option in each field formatter's settings.
+
+Once the default wrapper class is disabled, you must manually wrap the fields in a container that has the `photoswipe-gallery` class. Here are a few ways to do this.
+*If you don't add one, `js/prepare-galleries.js` will add a fallback around each image!*
+
+#### 1. Using the Fences Module
+If you are using the [Fences](https://www.drupal.org/project/fences) module to customize your field markup, you can:
+- Edit the parent entity/paragraph containing the fields.
+- Configure the Fences wrapper settings on the container element or parent field.
+- Add `photoswipe-gallery` to the custom CSS classes of the wrapper element.
+
+#### 2. Manually in Twig Templates (Theme)
+You can wrap the fields in your custom twig template (e.g., `paragraph--my-gallery.html.twig` or `node--article.html.twig`).
+
+```twig
+{# Wrap multiple fields into a single shared gallery #}
+<div class="photoswipe-gallery my-custom-gallery-layout">
+  {{ content.field_gallery_images_1 }}
+  {{ content.field_gallery_images_2 }}
+</div>
+```
+
+#### 3. Using the Views Module
+If you are displaying multiple fields in a View:
+- Disable the default wrapper class on the fields.
+- In your View's format settings (e.g., Grid or HTML List), add `photoswipe-gallery` to the Row class or the Inner class.
+- Alternatively, rewrite the output of a field or use a custom Views template to wrap multiple fields in a `<div class="photoswipe-gallery">` container.
+
+### Download Button
+The Photoswipe formatter includes a **Show download button** setting that adds a
+download button to the PhotoSwipe toolbar.
+
+If you enable the **Remove photoswipe-gallery wrapper class** setting and
+provide your own `photoswipe-gallery` wrapper instead, you must add the
+`data-show-download-button` data attribute to that wrapper yourself to show
+the download button.

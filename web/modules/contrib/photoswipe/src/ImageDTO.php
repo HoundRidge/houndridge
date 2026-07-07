@@ -106,6 +106,7 @@ class ImageDTO {
     $this->thirdPartySettings = $variables['third_party_settings'];
 
     // Retrieve the entity with the current translation context:
+    // @phpstan-ignore-next-line
     $this->entity = isset($variables['entity']) ? \Drupal::service('entity.repository')->getTranslationFromContext($variables['entity']) : NULL;
     $this->item = $variables['item'];
 

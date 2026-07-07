@@ -2,11 +2,17 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests entity types which are not enabled for scheduling.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerNonEnabledTypeTest extends SchedulerBrowserTestBase {
 
   /**
@@ -21,6 +27,7 @@ class SchedulerNonEnabledTypeTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataNonEnabledScenarios
    */
+  #[DataProvider('dataNonEnabledScenarios')]
   public function testNonEnabledType($id, $entityTypeId, $bundle, $description, $publishing_enabled, $unpublishing_enabled) {
     // Give adminUser the permissions to use the field_ui 'manage form display'
     // tab for the entity type being tested.

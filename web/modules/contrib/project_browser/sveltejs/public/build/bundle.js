@@ -968,11 +968,17 @@
         messenger.remove(messageId);
       }
 
+      const params = new URLSearchParams();
+      projectIds.forEach((id, index) => {
+        params.set(`projects[${index}]`, id);
+      });
+      params.set('destination', window.location.pathname);
+
       await new Drupal$1.Ajax(
         null,
         document.createElement('div'),
         {
-          url: `${BASE_URL}admin/modules/project_browser/activate?projects=${projectIds.join(',')}&destination=${window.location.pathname}`,
+          url: `${BASE_URL}admin/modules/project_browser/activate?${params.toString()}`,
         },
       ).execute();
     }
@@ -8984,7 +8990,7 @@
     	};
     }
 
-    // (216:10) {#if rowsCount}
+    // (216:10) {#if rowsCount && paginate}
     function create_if_block_3(ctx) {
     	let t_value = /*Drupal*/ ctx[6].formatPlural(/*rowsCount*/ ctx[1], `${numberFormatter.format(1)} Result`, `${numberFormatter.format(/*rowsCount*/ ctx[1])} Results`) + "";
     	let t;
@@ -9109,7 +9115,7 @@
     	let t1;
     	let current;
     	let if_block0 = (/*numberOfFilters*/ ctx[11] > 0 || /*numberOfSorts*/ ctx[12] > 1) && create_if_block_4(ctx);
-    	let if_block1 = /*rowsCount*/ ctx[1] && create_if_block_3(ctx);
+    	let if_block1 = /*rowsCount*/ ctx[1] && /*paginate*/ ctx[9] && create_if_block_3(ctx);
     	let if_block2 = /*matches*/ ctx[46] && create_if_block_2(ctx);
 
     	return {
@@ -9140,7 +9146,7 @@
     		p(ctx, dirty) {
     			if (/*numberOfFilters*/ ctx[11] > 0 || /*numberOfSorts*/ ctx[12] > 1) if_block0.p(ctx, dirty);
 
-    			if (/*rowsCount*/ ctx[1]) {
+    			if (/*rowsCount*/ ctx[1] && /*paginate*/ ctx[9]) {
     				if (if_block1) {
     					if_block1.p(ctx, dirty);
     				} else {

@@ -49,6 +49,15 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
   use ChatTrait;
 
   /**
+   * The image mime types the image endpoints may return, with file extension.
+   */
+  protected const ALLOWED_IMAGE_MIME_TYPES = [
+    'image/png' => 'png',
+    'image/jpeg' => 'jpeg',
+    'image/webp' => 'webp',
+  ];
+
+  /**
    * The helper to use.
    *
    * @var \Drupal\ai_provider_openai\OpenAiHelper
@@ -111,15 +120,21 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
     if (preg_match('/gpt-3.5-turbo/', $model_id)) {
       $generalConfig['max_tokens']['default'] = 2048;
     }
-    // Do this change for o1, o3 and gpt-5 models.
-    if (str_starts_with($model_id, 'gpt-5') || str_starts_with($model_id, 'o1') || str_starts_with($model_id, 'o3')) {
+    // Do this change for o1, o3, o4 and gpt-5 models.
+    if (str_starts_with($model_id, 'gpt-5') || str_starts_with($model_id, 'o1') || str_starts_with($model_id, 'o3') || str_starts_with($model_id, 'o4')) {
       if (array_key_exists('max_tokens', $generalConfig)) {
         $generalConfig['max_completion_tokens'] = $generalConfig['max_tokens'];
         unset($generalConfig['max_tokens']);
       }
+      // Also remove specific configs for these models.
+      foreach (['frequency_penalty', 'top_p', 'presence_penalty', 'temperature'] as $config) {
+        if (isset($generalConfig[$config])) {
+          unset($generalConfig[$config]);
+        }
+      }
     }
     // Handle image generation models.
-    if (($model_id == 'dall-e-3') || strpos($model_id, 'gpt-image') === 0) {
+    if (strpos($model_id, 'gpt-image') === 0) {
       $generalConfig['quality'] = [
         'label' => 'Quality',
         'description' => 'The quality of the images that will be generated.',
@@ -165,34 +180,6 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
       ];
       // Remove response_format as it's not supported.
       unset($generalConfig['response_format']);
-    }
-    elseif ($model_id == 'dall-e-3') {
-      $generalConfig['quality']['constraints'] = [
-        'options' => [
-          'hd',
-          'standard',
-        ],
-      ];
-
-      $generalConfig['size']['default'] = '1024x1024';
-      $generalConfig['size']['constraints']['options'] = [
-        '1024x1024',
-        '1024x1792',
-        '1792x1024',
-      ];
-      $generalConfig['style'] = [
-        'label' => 'Style',
-        'description' => 'The style of the images that will be generated.',
-        'type' => 'string',
-        'default' => 'vivid',
-        'required' => FALSE,
-        'constraints' => [
-          'options' => [
-            'vivid',
-            'natural',
-          ],
-        ],
-      ];
     }
 
     if ($model_id == 'text-embedding-3-large') {
@@ -274,18 +261,19 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
     if ($input instanceof ChatInput) {
       $chat_input = [];
       // Add a system role if wanted.
-      if ($this->chatSystemRole) {
+      $system_prompt = $input->getSystemPrompt();
+      if ($system_prompt) {
         // If its o1 or o3 in it, we add it as a user message.
         if (preg_match('/(o1|o3)/i', $model_id)) {
           $chat_input[] = [
             'role' => 'user',
-            'content' => $this->chatSystemRole,
+            'content' => $system_prompt,
           ];
         }
         else {
           $chat_input[] = [
             'role' => 'system',
-            'content' => $this->chatSystemRole,
+            'content' => $system_prompt,
           ];
         }
       }
@@ -367,25 +355,26 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
         'json_schema' => $input->getChatStructuredJsonSchema(),
       ];
     }
-    // Include usage for streamed responses.
-    if ($this->streamed) {
-      $payload['stream_options']['include_usage'] = TRUE;
-    }
+
+    $usage = [];
     try {
       if ($this->streamed) {
+        $payload['stream_options']['include_usage'] = TRUE;
         $response = $this->client->chat()->createStreamed($payload);
         $message = new OpenAiChatMessageIterator($response);
       }
       // If we are in a fibre, we will use a streamed response as the SDK
       // doesn't support direct async.
       elseif (\Fiber::getCurrent()) {
-        $payload['stream_options'] = [
-          'include_usage' => TRUE,
-        ];
+        $payload['stream_options']['include_usage'] = TRUE;
         $response = $this->client->chat()->createStreamed($payload);
         $stream = new OpenAiChatMessageIterator($response);
         // We consume the stream in a fiber.
         foreach ($stream as $chunk) {
+          // Set the usage if it is available.
+          if (is_array($chunk->getRaw()) && count($chunk->getRaw()) && !empty($chunk->getRaw()['usage'])) {
+            $usage['usage'] = $chunk->getRaw()['usage'];
+          }
           // Suspend fiber if we haven't finished yet.
           if (empty($stream->getFinishReason())) {
             \Fiber::suspend();
@@ -409,6 +398,7 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
         if (!empty($tools)) {
           $message->setTools($tools);
         }
+        $usage['usage'] = $response['usage'] ?? [];
       }
     }
     catch (\Exception $e) {
@@ -431,8 +421,8 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
     $chat_output = new ChatOutput($message, $response, []);
 
     // We only set the token usage if its not streamed or in a fiber.
-    if (!$this->streamed && !\Fiber::getCurrent()) {
-      $this->setChatTokenUsage($chat_output, $response);
+    if (count($usage)) {
+      $this->setChatTokenUsage($chat_output, $usage);
     }
 
     return $chat_output;
@@ -472,6 +462,16 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
       'model' => $model_id,
       'prompt' => $input,
     ] + $this->configuration;
+    // Always request base64 encoded images so the image data comes directly
+    // from the API response and never has to be downloaded from a URL. GPT
+    // Image models do not support the response_format parameter and always
+    // return base64 encoded data.
+    if (strpos($model_id, 'gpt-image') === 0) {
+      unset($payload['response_format']);
+    }
+    else {
+      $payload['response_format'] = 'b64_json';
+    }
 
     try {
       $response = $this->client->images()->create($payload)->toArray();
@@ -502,43 +502,24 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
       // Check if this is a gpt-image-1 response.
       $is_gpt_image = strpos($model_id, 'gpt-image') === 0 || isset($data['revised_prompt']);
 
-      if (isset($data['b64_json'])) {
-        // Determine image type based on output_format if available.
-        $mime_type = 'image/png';
-        $file_ext = 'png';
-        if (isset($payload['output_format'])) {
-          switch ($payload['output_format']) {
-            case 'jpeg':
-              $mime_type = 'image/jpeg';
-              $file_ext = 'jpeg';
-              break;
-
-            case 'webp':
-              $mime_type = 'image/webp';
-              $file_ext = 'webp';
-              break;
-          }
-        }
-        $images[] = new ImageFile(base64_decode($data['b64_json']), $mime_type, ($is_gpt_image ? 'gpt-image' : 'dalle') . '.' . $file_ext);
+      if (empty($data['b64_json'])) {
+        $this->logger->error('No base64 image data found in response.');
+        continue;
       }
-      // Try url if b64_json is not available.
-      elseif (isset($data['url']) && !empty($data['url'])) {
-        try {
-          $image_content = file_get_contents($data['url']);
-          if ($image_content !== FALSE) {
-            $images[] = new ImageFile($image_content, 'image/png', ($is_gpt_image ? 'gpt-image' : 'dalle') . '.png');
-          }
-          else {
-            $this->logger->error('Failed to fetch image from URL: @url', ['@url' => $data['url']]);
-          }
-        }
-        catch (\Exception $e) {
-          $this->logger->error('Error fetching image URL: @error', ['@error' => $e->getMessage()]);
-        }
+      $image_content = base64_decode($data['b64_json'], TRUE);
+      if ($image_content === FALSE) {
+        $this->logger->error('The image data in the response is not valid base64.');
+        continue;
       }
-      else {
-        $this->logger->error('No valid image data found in response');
+      // Determine the mime type from the actual binary data, so that only
+      // real images can end up in the output.
+      $mime_type = $this->detectMimeType($image_content, static::ALLOWED_IMAGE_MIME_TYPES);
+      if ($mime_type === NULL) {
+        $this->logger->error('The returned image data is not a valid image.');
+        continue;
       }
+      $file_ext = static::ALLOWED_IMAGE_MIME_TYPES[$mime_type];
+      $images[] = new ImageFile($image_content, $mime_type, 'openai.' . $file_ext);
     }
 
     // If no images were successfully created, throw an error.
@@ -582,6 +563,11 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
       else {
         throw $e;
       }
+    }
+    // Check that the returned binary actually is audio data. Raw PCM has no
+    // header to detect a mime type from, so it cannot be checked.
+    if (($payload['response_format'] ?? 'mp3') !== 'pcm' && $this->detectMimeType((string) $response, 'audio') === NULL) {
+      throw new AiResponseErrorException('The returned data is not valid audio data.');
     }
     $output = new AudioFile($response, 'audio/mpeg', 'openai.mp3');
 
@@ -674,12 +660,12 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
     return [
       'key_config_name' => 'api_key',
       'default_models' => [
-        'chat' => 'gpt-4.1',
-        'chat_with_image_vision' => 'gpt-4.1',
-        'chat_with_complex_json' => 'gpt-4.1',
-        'chat_with_tools' => 'gpt-4.1',
-        'chat_with_structured_response' => 'gpt-4.1',
-        'text_to_image' => 'dall-e-3',
+        'chat' => 'gpt-5.2',
+        'chat_with_image_vision' => 'gpt-5.2',
+        'chat_with_complex_json' => 'gpt-5.2',
+        'chat_with_tools' => 'gpt-5.2',
+        'chat_with_structured_response' => 'gpt-5.2',
+        'text_to_image' => 'gpt-image-1',
         'embeddings' => 'text-embedding-3-small',
         'moderation' => 'omni-moderation-latest',
         'text_to_speech' => 'tts-1-hd',
@@ -800,7 +786,7 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
           break;
 
         case 'text_to_image':
-          if (!preg_match('/^(dall-e|clip|gpt-image)/i', $model['id'])) {
+          if (!preg_match('/^(clip|gpt-image)/i', $model['id'])) {
             continue 2;
           }
           break;
@@ -824,7 +810,19 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
       }
 
       // Include all GPT models for JSON output capability.
-      if (in_array(AiModelCapability::ChatJsonOutput, $capabilities) && !preg_match('/^(gpt-4|gpt-4o|o1|o3|gpt-4-turbo)/i', $model['id'])) {
+      if (in_array(AiModelCapability::ChatJsonOutput, $capabilities) && !preg_match('/^(gpt-4|gpt-4o|o1|o3|gpt-4-turbo|gpt-5)/i', $model['id'])) {
+        continue;
+      }
+      // Only allow models that support tools/function calling.
+      if (in_array(AiModelCapability::ChatTools, $capabilities) && !preg_match('/^(gpt-4\.1(?![0-9])|gpt-4o|gpt-4-turbo|gpt-5|o1|o3|o4)/i', $model['id'])) {
+        continue;
+      }
+      // Only allow models that support structured responses.
+      if (in_array(AiModelCapability::ChatStructuredResponse, $capabilities) && !preg_match('/^(gpt-4\.1(?![0-9])|gpt-4o|gpt-4-turbo|gpt-5|o1|o3|o4)/i', $model['id'])) {
+        continue;
+      }
+      // Only allow models that support both tools and structured responses.
+      if (in_array(AiModelCapability::ChatCombinedToolsAndStructuredResponse, $capabilities) && !preg_match('/^(gpt-4\.1(?![0-9])|gpt-4o|gpt-4-turbo|gpt-5|o1|o3|o4)/i', $model['id'])) {
         continue;
       }
       // Don't allow audio or video for now.
@@ -849,6 +847,31 @@ class OpenAiProvider extends OpenAiBasedProviderClientBase {
     }
 
     return $models;
+  }
+
+  /**
+   * Detects the mime type of binary data and validates it.
+   *
+   * @param string $binary
+   *   The binary data to check.
+   * @param array|string $allowed
+   *   Either an array of accepted mime types keyed by mime type, or a
+   *   primary mime type such as "image" or "audio" that the detected mime
+   *   type has to belong to.
+   *
+   * @return string|null
+   *   The detected mime type, or NULL if it is not allowed.
+   */
+  protected function detectMimeType(string $binary, array|string $allowed): ?string {
+    $finfo = new \finfo(FILEINFO_MIME_TYPE);
+    $mime_type = $finfo->buffer($binary);
+    if (!is_string($mime_type)) {
+      return NULL;
+    }
+    if (is_array($allowed)) {
+      return isset($allowed[$mime_type]) ? $mime_type : NULL;
+    }
+    return str_starts_with($mime_type, $allowed . '/') ? $mime_type : NULL;
   }
 
   /**

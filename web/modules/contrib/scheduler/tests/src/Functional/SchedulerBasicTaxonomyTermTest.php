@@ -2,11 +2,16 @@
 
 namespace Drupal\Tests\scheduler\Functional;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+
 /**
  * Tests the modules primary functions with a Taxonomy Term entity type.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerBasicTaxonomyTermTest extends SchedulerBrowserTestBase {
 
   /**

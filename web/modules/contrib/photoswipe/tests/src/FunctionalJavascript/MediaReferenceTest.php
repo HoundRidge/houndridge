@@ -118,7 +118,10 @@ class MediaReferenceTest extends PhotoswipeJsTestBase {
     $page->selectFieldOption('fields[field_media_image][settings_edit_form][settings][photoswipe_thumbnail_style_first]', 'large');
     $page->pressButton('Update');
     $page->pressButton('edit-submit');
-    $session->pageTextContains('Your settings have been saved.');
+    $this->drupalGet('admin/structure/types/manage/article/display');
+    $page->pressButton('edit-fields-field-media-image-settings-edit');
+    $this->assertNotNull($session->waitForElementVisible('css', 'select[id*=edit-fields-field-media-image-settings-edit-form-settings-photoswipe-thumbnail-style-first]'));
+    $session->elementExists('css', 'select[id*="edit-fields-field-media-image-settings-edit-form-settings-photoswipe-thumbnail-style-first"] > option[value="large"][selected="selected"]');
   }
 
   /**

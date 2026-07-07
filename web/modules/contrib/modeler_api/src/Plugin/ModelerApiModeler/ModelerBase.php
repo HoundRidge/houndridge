@@ -10,8 +10,10 @@ use Drupal\Core\Extension\ExtensionPathResolver;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Plugin\PluginBase;
+use Drupal\modeler_api\Form\Settings;
 use Drupal\modeler_api\Plugin\ModelerApiModelOwner\ModelOwnerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -192,6 +194,20 @@ abstract class ModelerBase extends PluginBase implements ModelerInterface {
   /**
    * {@inheritdoc}
    */
+  public function getTemplate(): bool {
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getStorage(): string {
+    return '';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getDocumentation(): string {
     return '';
   }
@@ -227,7 +243,7 @@ abstract class ModelerBase extends PluginBase implements ModelerInterface {
   /**
    * {@inheritdoc}
    */
-  public function configForm(ModelOwnerInterface $owner): AjaxResponse {
+  public function configForm(ModelOwnerInterface $owner): JsonResponse {
     return new AjaxResponse();
   }
 
@@ -273,6 +289,26 @@ abstract class ModelerBase extends PluginBase implements ModelerInterface {
         '#default_value' => $config['executable'],
       ];
     }
+    if ($owner->supportsTemplate()) {
+      $form['template'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Template'),
+        '#description' => $this->t('If checked, the model will be used as a template for new models.'),
+        '#default_value' => $config['template'],
+      ];
+    }
+    $form['storage'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Storage of raw data'),
+      '#default_value' => $config['storage'] ?? '',
+      '#options' => [
+        '' => $this->t('Default'),
+        Settings::STORAGE_OPTION_NONE => $this->t('Do not store raw model data'),
+        Settings::STORAGE_OPTION_SEPARATE => $this->t('Store raw data in separate config entity'),
+        Settings::STORAGE_OPTION_THIRD_PARTY => $this->t('Store raw data with config as third-party setting'),
+      ],
+      '#disabled' => $owner->enforceDefaultStorageMethod(),
+    ];
     $form['documentation'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Documentation'),

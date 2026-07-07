@@ -5,6 +5,9 @@ namespace Drupal\Tests\scheduler\Functional;
 use Drupal\commerce_product\Entity\ProductType;
 use Drupal\media\Entity\MediaType;
 use Drupal\node\Entity\NodeType;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the API hook functions of the Scheduler module.
@@ -14,6 +17,8 @@ use Drupal\node\Entity\NodeType;
  *
  * @group scheduler_api
  */
+#[Group('scheduler_api')]
+#[RunTestsInSeparateProcesses]
 class SchedulerHooksTest extends SchedulerBrowserTestBase {
 
   /**
@@ -104,6 +109,7 @@ class SchedulerHooksTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testList($entityTypeId, $bundle) {
     $storage = $this->entityStorageObject($entityTypeId);
     $this->drupalLogin($this->schedulerUser);
@@ -164,6 +170,7 @@ class SchedulerHooksTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testListAlter($entityTypeId, $bundle) {
     $storage = $this->entityStorageObject($entityTypeId);
     $this->drupalLogin($this->schedulerUser);
@@ -261,6 +268,7 @@ class SchedulerHooksTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataCustomEntityTypes
    */
+  #[DataProvider('dataCustomEntityTypes')]
   public function testPublishingAllowed($entityTypeId, $bundle) {
     $storage = $this->entityStorageObject($entityTypeId);
     $titleField = $this->titleField($entityTypeId);
@@ -331,6 +339,7 @@ class SchedulerHooksTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataCustomEntityTypes
    */
+  #[DataProvider('dataCustomEntityTypes')]
   public function testUnpublishingAllowed($entityTypeId, $bundle) {
     $storage = $this->entityStorageObject($entityTypeId);
     $titleField = $this->titleField($entityTypeId);
@@ -427,6 +436,7 @@ class SchedulerHooksTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testHideDateField($entityTypeId, $bundle) {
     $this->drupalLogin($this->schedulerUser);
 
@@ -483,6 +493,7 @@ class SchedulerHooksTest extends SchedulerBrowserTestBase {
    *
    * @dataProvider dataStandardEntityTypes
    */
+  #[DataProvider('dataStandardEntityTypes')]
   public function testPublishUnpublishProcess($entityTypeId, $bundle) {
     // $this->drupalLogin($this->schedulerUser);
     $storage = $this->entityStorageObject($entityTypeId);
@@ -504,7 +515,7 @@ class SchedulerHooksTest extends SchedulerBrowserTestBase {
       'publish_on' => strtotime('-1 day'),
     ]);
     // 'Green' will have both fields hidden so is harder to test manually.
-    // Therefore introduce a different colour - Blue.
+    // Therefore introduce a different color - Blue.
     $entity4 = $this->createEntity($entityTypeId, $bundle, [
       'status' => TRUE,
       'title' => "Blue $entityTypeId will cause a failure on unpublishing",

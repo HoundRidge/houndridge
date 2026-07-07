@@ -4,12 +4,16 @@ namespace Drupal\Tests\scheduler\Functional;
 
 use Drupal\Core\Url;
 use Drupal\scheduler\Form\SchedulerCronForm;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the Scheduler lightweight cron urls and admin form.
  *
  * @group scheduler
  */
+#[Group('scheduler')]
+#[RunTestsInSeparateProcesses]
 class SchedulerLightweightCronTest extends SchedulerBrowserTestBase {
 
   /**

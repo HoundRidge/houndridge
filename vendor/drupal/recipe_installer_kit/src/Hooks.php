@@ -77,6 +77,14 @@ final class Hooks {
       }
     }
 
+    // If one of the configuration forms chose a finish URL, use it at the end
+    // of the install process. For backwards compatibility, the finish URL
+    // specified by the profile itself (if any) takes precedence. We can't use
+    // $install_state directly here because it might not be a reference.
+    // @see install_drupal()
+    // @see \Drupal\RecipeKit\Installer\Form\SiteTemplateForm::submitForm()
+    $GLOBALS['install_state']['profile_info']['distribution']['install']['finish_url'] ??= $install_state['parameters']['finish_url'] ?? NULL;
+
     return [
       'uninstall_profile' => [
         // As a final task, uninstall the install profile.
@@ -146,10 +154,10 @@ final class Hooks {
    * last. If the core translations fail to download, the install process will
    * stop with an exception.
    *
-   * @return string|null
-   *   Output from `install_download_translation()`, if there was any.
+   *  @return mixed
+   *  Return value from `install_download_translation()`.
    */
-  public static function downloadTranslations(array &$install_state): ?string {
+  public static function downloadTranslations(array &$install_state): mixed {
     // Temporarily disable the interactive installer so that
     // `install_download_translation()` won't reload the page.
     $was_interactive = $install_state['interactive'];
@@ -307,10 +315,12 @@ final class Hooks {
    */
   public static function applyRecipes(array &$install_state): array {
     // Apply required recipes first, followed by any additional recipes the user
-    // has chosen (i.e., via our forms).
+    // has chosen (i.e., via our forms). If no recipes were chosen by the user
+    // (e.g., the recipe selection form was skipped), fall back to the default
+    // recipes defined in the profile.
     $recipes_to_apply = array_merge(
       $install_state['profile_info']['recipes']['required'] ?? [],
-      $install_state['parameters']['recipes'] ?? [],
+      $install_state['parameters']['recipes'] ?? $install_state['profile_info']['recipes']['default'] ?? [],
     );
 
     // If the installer ran before but failed mid-stream, don't reapply any
@@ -401,7 +411,13 @@ final class Hooks {
    *   This method is internal, which means it could be changed in any way, or
    *   removed at any time, without warning. Don't rely on it.
    */
-  public static function getRecipePath(?string $name = NULL): string {
+  public static function getRecipePath(string $name = ''): string {
+    // Special handling for core, which is the only package that legitimately
+    // includes several recipes.
+    if (str_starts_with($name, 'drupal/core:')) {
+      return str_replace('drupal/core:', \Drupal::root() . '/core/recipes/', $name);
+    }
+
     try {
       return InstalledVersions::getInstallPath($name);
     }
