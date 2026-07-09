@@ -6,7 +6,7 @@ package: Tome
 dependencies:
   - tome:tome_sync
 
-# Information added by Drupal.org packaging script on 2026-02-01
-version: '8.x-1.14'
+# Information added by Drupal.org packaging script on 2026-07-09
+version: '8.x-1.15'
 project: 'tome'
-datestamp: 1769930693
+datestamp: 1783568558

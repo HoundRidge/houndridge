@@ -19,7 +19,7 @@ class PathautoItemNormalizer extends PathItemNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($object, $format = NULL, array $context = []): array {
     $values = parent::normalize($object, $format, $context);
     if (!in_array('pathauto', array_keys($object->getProperties()))) {
       return $values;

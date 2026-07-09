@@ -14,7 +14,7 @@ class EntityReferenceItemNormalizer extends EntityReferenceFieldItemNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($field_item, $format = NULL, array $context = []): array {
     $values = parent::normalize($field_item, $format, $context);
     if (isset($values['target_id']) && is_numeric($values['target_id'])) {
       unset($values['target_id']);

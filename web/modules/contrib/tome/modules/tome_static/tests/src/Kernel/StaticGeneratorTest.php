@@ -224,6 +224,7 @@ class StaticGeneratorTest extends TestBase {
     $this->assertContains('/use.svg', $invoke_paths);
     $this->assertContains('/twitter_image.png', $invoke_paths);
     $this->assertContains('/og_image.png', $invoke_paths);
+    $this->assertContains("/$module_path/assets/apple-touch-icon.png", $invoke_paths);
     $this->assertNotContains('data:image/jpeg;base64,x', $invoke_paths);
 
     $static->exportPaths($invoke_paths);
@@ -235,6 +236,7 @@ class StaticGeneratorTest extends TestBase {
     $this->assertFileExists("$base_dir/$module_path/js/baz.js");
     $this->assertFileExists("$base_dir/$module_path/assets/druplicon-1.png");
     $this->assertFileExists("$base_dir/$module_path/assets/file with space.png");
+    $this->assertFileExists("$base_dir/$module_path/assets/apple-touch-icon.png");
     $this->assertFileExists("$base_dir/core/misc/druplicon.png");
   }
 

@@ -15,7 +15,7 @@ class FieldItemNormalizer extends BaseFieldItemNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($object, $format = NULL, array $context = []): array {
     $values = parent::normalize($object, $format, $context);
     if ($object instanceof ComplexDataInterface) {
       foreach ($object->getDataDefinition()->getPropertyDefinitions() as $name => $property) {

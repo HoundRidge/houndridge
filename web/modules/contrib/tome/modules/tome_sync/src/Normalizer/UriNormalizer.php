@@ -50,7 +50,7 @@ class UriNormalizer extends PrimitiveDataNormalizer implements DenormalizerInter
   /**
    * {@inheritdoc}
    */
-  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($object, $format = NULL, array $context = []): array {
     $value = parent::normalize($object, $format, $context);
     if (!empty($value) && strpos($value, 'entity:') === 0) {
       $parts = explode('/', str_replace('entity:', '', $value));

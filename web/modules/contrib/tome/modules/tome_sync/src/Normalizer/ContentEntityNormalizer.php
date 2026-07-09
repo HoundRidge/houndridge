@@ -38,7 +38,7 @@ class ContentEntityNormalizer extends BaseContentEntityNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($entity, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($entity, $format = NULL, array $context = []): array {
     $values = parent::normalize($entity, $format, $context);
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
     $entity_type = $entity->getEntityType();

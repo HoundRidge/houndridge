@@ -92,8 +92,10 @@ module:
   telephone: 0
   text: 0
   token: 0
+  tome: 0
   tome_base: 0
   tome_static: 0
+  tome_sync: 0
   trash: 0
   update: 0
   user: 0

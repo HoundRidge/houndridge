@@ -42,6 +42,7 @@ class TestController extends ControllerBase {
 <img src=\"data:image/jpeg;base64,x\" />
 <meta name=\"twitter:image\" content=\"/twitter_image.png\" />
 <meta property=\"og:image\" content=\"/og_image.png\" />
+<link rel=\"apple-touch-icon\" href=\"/$module_path/assets/apple-touch-icon.png\" />
 <svg><use xlink:href='/use.svg'></use></svg>",
       '#attached' => [
         'library' => [

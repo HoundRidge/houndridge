@@ -452,6 +452,7 @@ class StaticGenerator implements StaticGeneratorInterface {
       'icon',
       'image_src',
       'manifest',
+      'apple-touch-icon',
     ];
     /** @var \DOMElement $node */
     foreach ($document->getElementsByTagName('link') as $node) {

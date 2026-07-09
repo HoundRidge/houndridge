@@ -39,7 +39,24 @@ class PathAliasNormalizer extends ContentEntityNormalizer {
    * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity field manager.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityTypeRepositoryInterface $entity_type_repository = NULL, EntityFieldManagerInterface $entity_field_manager = NULL, EntityRepositoryInterface $entity_repository) {
+  public function __construct(
+    EntityTypeManagerInterface $entity_type_manager,
+    ?EntityTypeRepositoryInterface $entity_type_repository = NULL,
+    ?EntityFieldManagerInterface $entity_field_manager = NULL,
+    ?EntityRepositoryInterface $entity_repository = NULL,
+  ) {
+    if (!$entity_type_repository) {
+      @trigger_error('Calling ' . __FUNCTION__ . ' without the $entity_type_repository argument is deprecated in tome:8.x-1.14 and is removed from tome:2.0.0.');
+      $entity_type_repository = \Drupal::service(EntityTypeRepositoryInterface::class);
+    }
+    if (!$entity_field_manager) {
+      @trigger_error('Calling ' . __FUNCTION__ . ' without the $entity_field_manager argument is deprecated in tome:8.x-1.14 and is removed from tome:2.0.0.');
+      $entity_field_manager = \Drupal::service(EntityFieldManagerInterface::class);
+    }
+    if (!$entity_repository) {
+      @trigger_error('Calling ' . __FUNCTION__ . ' without the $entity_repository argument is deprecated in tome:8.x-1.14 and is removed from tome:2.0.0.');
+      $entity_repository = \Drupal::service(EntityRepositoryInterface::class);
+    }
     parent::__construct($entity_type_manager, $entity_type_repository, $entity_field_manager);
     $this->entityRepository = $entity_repository;
   }
@@ -47,7 +64,7 @@ class PathAliasNormalizer extends ContentEntityNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($object, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($object, $format = NULL, array $context = []): array {
     $attributes = parent::normalize($object, $format, $context);
     foreach (['path', 'alias'] as $key) {
       if (!empty($attributes[$key][0]['value'])) {

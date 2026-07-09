@@ -17,7 +17,7 @@ class UserEntityNormalizer extends ContentEntityNormalizer {
   /**
    * {@inheritdoc}
    */
-  public function normalize($entity, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
+  public function normalize($entity, $format = NULL, array $context = []): array {
     $values = parent::normalize($entity, $format, $context);
     $excluded_user_keys = [
       'access',

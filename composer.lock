@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6bb5c05300a1add23d5d767420ab5ba",
+    "content-hash": "834756632ff52c3e944937f7d0d6e3d8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3067,17 +3067,17 @@
         },
         {
             "name": "drupal/dashboard",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/dashboard.git",
-                "reference": "2.1.0"
+                "reference": "2.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/dashboard-2.1.0.zip",
-                "reference": "2.1.0",
-                "shasum": "5ba992bcf57db7df8f1e78463c410c974eee0999"
+                "url": "https://ftp.drupal.org/files/projects/dashboard-2.2.0.zip",
+                "reference": "2.2.0",
+                "shasum": "2c382d098f1e029c190fa204ad3f846fbc214184"
             },
             "require": {
                 "drupal/core": "^11.2"
@@ -3088,8 +3088,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.1.0",
-                    "datestamp": "1756601749",
+                    "version": "2.2.0",
+                    "datestamp": "1768063362",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7707,17 +7707,17 @@
         },
         {
             "name": "drupal/tome",
-            "version": "1.14.0",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/tome.git",
-                "reference": "8.x-1.14"
+                "reference": "8.x-1.15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/tome-8.x-1.14.zip",
-                "reference": "8.x-1.14",
-                "shasum": "5affb61c244f245d4eeace771f525ab804d910d8"
+                "url": "https://ftp.drupal.org/files/projects/tome-8.x-1.15.zip",
+                "reference": "8.x-1.15",
+                "shasum": "3558e379ecabd5ac6e4d599acac38d4a0c5c33ef"
             },
             "require": {
                 "drupal/core": "^9 || ^10 || ^11",
@@ -7740,8 +7740,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.14",
-                    "datestamp": "1769930690",
+                    "version": "8.x-1.15",
+                    "datestamp": "1783568556",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
